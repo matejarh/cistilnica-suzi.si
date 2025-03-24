@@ -56,7 +56,7 @@ onMounted(() => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('home')">
                                 <ApplicationMark class="block h-14 w-auto" />
                                 </Link>
                             </div>
