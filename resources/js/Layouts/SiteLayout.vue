@@ -105,7 +105,7 @@ onMounted(() => {
                         <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">
                             <button
-                                class="inline-flex items-center justify-center p-2 rounded-md text-primary dark:text-primary-light hover:text-primary-dark dark:hover:text-primary hover:bg-primary-lighter dark:hover:bg-primary-darker focus:outline-none focus:bg-primary-lighter dark:focus:bg-primary-darker focus:text-primary-dark dark:focus:text-primary-light transition duration-150 ease-in-out"
+                                class="inline-flex items-center justify-center p-2 rounded-md text-neutral-light hover:text-white hover:bg-primary-light focus:outline-none focus:bg-primary-light focus:text-white transition duration-150 ease-in-out"
                                 @click="showingNavigationDropdown = !showingNavigationDropdown">
                                 <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
