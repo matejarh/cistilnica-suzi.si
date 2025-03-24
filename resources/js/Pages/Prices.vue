@@ -8,7 +8,7 @@ import { ref } from 'vue'
     <SiteLayout title="Dobrodošli">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-primary-light leading-tight">
-                Dobrodošli
+                Cenik
             </h2>
         </template>
 
@@ -18,8 +18,8 @@ import { ref } from 'vue'
 
                     <div class="p-6 lg:p-8 space-y-4 lg:space-y-6">
 
-                        <h1 class="font-heading text-4xl font-bold text-neutral-light">Dobrodošli v Čistilnici Suzi</h1>
-                        <p class="font-sans text-lg text-neutral-light">Vaša oblačila, popolnoma čista in sveža!</p>
+                        <h1 class="font-heading text-4xl font-bold text-neutral-light">Cenik</h1>
+                        <p class="font-sans text-lg text-neutral-light">cenik v izdelavi</p>
                     </div>
                 </div>
             </div>
