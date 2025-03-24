@@ -1,4 +1,5 @@
 <script setup>
+import ONasHeroSection from '@/Components/ONasHeroSection.vue';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import { ref } from 'vue'
 
@@ -17,8 +18,7 @@ import { ref } from 'vue'
                 <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
                     <div class="p-6 lg:p-8 space-y-4 lg:space-y-6">
 
-                        <h1 class="font-heading text-4xl font-bold text-neutral-light">O nas</h1>
-                        <p class="font-sans text-lg text-neutral-light">besedilo za O nas</p>
+                        <ONasHeroSection />
                     </div>
                 </div>
             </div>
