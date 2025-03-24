@@ -10,3 +10,16 @@ window.axios.defaults.headers.common['Referrer-Policy'] = 'strict-origin-when-cr
 window.axios.defaults.headers.common['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload';
 window.axios.defaults.headers.common['Feature-Policy'] = "geolocation 'none'; midi 'none'; notifications 'none'; push 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; vibrate 'none'; fullscreen 'none'; payment 'none'; usb 'none'";
 window.axios.defaults.headers.common['Permissions-Policy'] = "geolocation=(), microphone=(), camera=(), midi=(), encrypted-media=()";
+
+import Logo from '../images/logo1.png'
+
+const setFavicon = () => {
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    // link.type = 'image/png';
+    link.type = 'image/png';
+    link.rel = 'shortcut icon';
+    link.href = Logo;
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
+setFavicon()
