@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
@@ -15,6 +15,8 @@ const showingNavigationDropdown = ref(false);
 const logout = () => {
     router.post(route('logout'));
 };
+
+const year = computed(() => new Date().getFullYear());
 
 const createBubbles = (containerId, bubbleCount = 20) => {
     const container = document.getElementById(containerId);
@@ -34,6 +36,13 @@ const createBubbles = (containerId, bubbleCount = 20) => {
 
         container.appendChild(bubble);
     }
+};
+
+const scrollPosition = ref(0);
+
+const handleScroll = (e) => {
+  scrollPosition.value = e.target.scrollTop;
+  // emit("scrollTop", e.target.scrollTop);
 };
 
 onMounted(() => {
@@ -80,7 +89,7 @@ onMounted(() => {
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <NavLink :href="route('prijava')" :active="route().current('prijava')">
-                                Prijava na promocije
+                                Prijava na akcije
                             </NavLink>
                             <div class="ms-3 relative">
                                 <!-- Teams Dropdown -->
@@ -153,13 +162,13 @@ onMounted(() => {
                                 Prijava na akcije
                             </ResponsiveNavLink>
 
-<!--                             <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures"
+                            <!--                             <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures"
                                 :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
                                 API Tokens
                             </ResponsiveNavLink> -->
 
                             <!-- Authentication -->
-<!--                             <form method="POST" @submit.prevent="logout">
+                            <!--                             <form method="POST" @submit.prevent="logout">
                                 <ResponsiveNavLink as="button">
                                     Log Out
                                 </ResponsiveNavLink>
@@ -179,25 +188,38 @@ onMounted(() => {
             </header> -->
 
             <!-- Page Content -->
-            <main>
+            <main
+            @scroll="handleScroll"
+            class="overflow-y-auto h-full scrollbar-thin  scroll-smooth hover:scrollbar-thumb-primary active:scrollbar-thumb-primary-light scrollbar-thumb-primary scrollbar-track-transparent">
                 <slot />
             </main>
-            <!--             <div class="flex items-center justify-center h-full">
 
-                <div class="text-center max-w-md sm:max-w-lg lg:max-w-2xl w-full z-10">
-                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-                        Dobrodošli v Čistilnici Suzi
-                    </h1>
-                    <p class="mt-4 text-sm sm:text-base lg:text-lg">
-                        Bleščeče čisto, sveže in okolju prijazno
-                    </p>
-                    <button
-                        class="mt-6 px-4 py-2 sm:px-6 sm:py-3 bg-white text-primary font-semibold rounded-lg shadow-lg hover:bg-neutral-light transition duration-300"
-                    >
-                        Prijavite se za ponudbe
-                    </button>
+            <!-- Page Footer -->
+
+
+            <footer class="bg-primary shadow-sm mt-4 absolute bottom-0 w-full">
+                <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+                    <span class="text-sm text-neutral-light sm:text-center ">© {{ year }} <inertia-link
+                            :href="route('home')" class="hover:underline">Čistilnica Suzi</inertia-link>. Vse pravice pridržane.
+                    </span>
+                    <ul
+                        class="flex flex-wrap items-center mt-3 text-sm font-medium text-neutral-light  sm:mt-0">
+                        <li>
+                            <inertia-link :href="route('about')" class="hover:underline me-4 md:me-6">O nas</inertia-link>
+                        </li>
+                        <li>
+                            <inertia-link :href="route('prices')" class="hover:underline me-4 md:me-6">Cenik</inertia-link>
+                        </li>
+                        <li>
+                            <inertia-link :href="route('contact')" class="hover:underline me-4 md:me-6">Kontakt</inertia-link>
+                        </li>
+                        <li>
+                            <inertia-link :href="route('prijava')" class="hover:underline">Prijava na akcije</inertia-link>
+                        </li>
+                    </ul>
                 </div>
-            </div> -->
+            </footer>
+
         </div>
     </div>
 </template>
