@@ -5,6 +5,8 @@ import Banner from '@/Components/Banner.vue';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import CookieConsentPopup from '@/Components/CookieConsentPopup.vue';
+import ScrollToTop from '@/Components/ScrollToTop.vue';
 
 defineProps({
     title: String,
@@ -189,8 +191,9 @@ onMounted(() => {
 
             <!-- Page Content -->
             <main
+            id="main"
             @scroll="handleScroll"
-            class="overflow-y-auto h-full scrollbar-thin  scroll-smooth hover:scrollbar-thumb-primary active:scrollbar-thumb-primary-light scrollbar-thumb-primary scrollbar-track-transparent">
+            class="overflow-y-auto h-full custom-scrollbar scroll-smooth">
                 <slot />
             </main>
 
@@ -220,6 +223,9 @@ onMounted(() => {
                 </div>
             </footer>
 
+            <ScrollToTop :scrollTop="scrollPosition" />
+            <CookieConsentPopup />
+
         </div>
     </div>
 </template>
@@ -230,7 +236,28 @@ onMounted(() => {
     position: relative;
     overflow: hidden;
 } */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(14, 165, 233, 0.5) transparent;
+}
 
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(14, 165, 233, 0.5);
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(14, 165, 233, 0.7);
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
 .bubble {
     position: absolute;
     background: rgba(255, 255, 255, 0.3);
