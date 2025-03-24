@@ -49,7 +49,7 @@ onMounted(() => {
 
         <div id="container"
             class="relative h-screen text-white overflow-hidden bg-gradient-to-b from-primary to-primary-light bg-opacity-70 backdrop-blur-md">
-            <nav class="bg-primary  border-b border-primary-light z-50 bg-opacity-70 backdrop-blur-md">
+            <nav class="bg-primary  border-b border-primary-light z-50 bg-opacity-70 backdrop-blur-md relative">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -115,10 +115,19 @@ onMounted(() => {
 
                 <!-- Responsive Navigation Menu -->
                 <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-                    class="sm:hidden">
+                    class="sm:hidden absolute right-0 z-50 w-56 mt-2 origin-top-right bg-primary  divide-y divide-primary-light  rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
+                            Domov
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('about')" :active="route().current('about')">
+                            O nas
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('prices')" :active="route().current('prices')">
+                            Cenik
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('contact')" :active="route().current('contact')">
+                            Kontakt
                         </ResponsiveNavLink>
                     </div>
 
@@ -140,21 +149,21 @@ onMounted(() => {
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                                Profile
+                            <ResponsiveNavLink :href="route('prijava')" :active="route().current('prijava')">
+                                Prijava na akcije
                             </ResponsiveNavLink>
 
-                            <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures"
+<!--                             <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures"
                                 :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
                                 API Tokens
-                            </ResponsiveNavLink>
+                            </ResponsiveNavLink> -->
 
                             <!-- Authentication -->
-                            <form method="POST" @submit.prevent="logout">
+<!--                             <form method="POST" @submit.prevent="logout">
                                 <ResponsiveNavLink as="button">
                                     Log Out
                                 </ResponsiveNavLink>
-                            </form>
+                            </form> -->
 
 
                         </div>
