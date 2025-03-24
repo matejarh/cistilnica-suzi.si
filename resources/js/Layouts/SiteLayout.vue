@@ -197,7 +197,7 @@ onMounted(() => {
             <!-- Page Footer -->
 
 
-            <footer class="bg-primary shadow-sm mt-4 absolute bottom-0 w-full">
+            <footer class="bg-primary shadow-sm mt-4 absolute bottom-0 w-full bg-opacity-60 backdrop-blur-md">
                 <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
                     <span class="text-sm text-neutral-light sm:text-center ">© {{ year }} <inertia-link
                             :href="route('home')" class="hover:underline">Čistilnica Suzi</inertia-link>. Vse pravice pridržane.
