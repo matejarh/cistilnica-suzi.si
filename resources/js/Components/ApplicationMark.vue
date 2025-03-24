@@ -1,5 +1,5 @@
 <script setup>
-import Logo from "../../images/logoSuzi.png"
+import Logo from "../../images/logo1.png"
 </script>
 
 <template>
