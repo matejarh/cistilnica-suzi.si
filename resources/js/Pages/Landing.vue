@@ -1,7 +1,9 @@
 <script setup>
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import { ref } from 'vue'
+import HeroSection from '@/Components/HeroSection.vue';
 
+const appName = import.meta.env.VITE_APP_NAME;
 </script>
 
 <template>
@@ -15,12 +17,7 @@ import { ref } from 'vue'
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
-
-                    <div class="p-6 lg:p-8 space-y-4 lg:space-y-6">
-
-                        <h1 class="font-heading text-4xl font-bold text-neutral-light">Dobrodošli v Čistilnici Suzi</h1>
-                        <p class="font-sans text-lg text-neutral-light">Vaša oblačila, popolnoma čista in sveža!</p>
-                    </div>
+                    <HeroSection />
                 </div>
             </div>
         </div>
