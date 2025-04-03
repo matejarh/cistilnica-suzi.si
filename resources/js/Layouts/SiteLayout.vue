@@ -7,6 +7,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import CookieConsentPopup from '@/Components/CookieConsentPopup.vue';
 import ScrollToTop from '@/Components/ScrollToTop.vue';
+import EnvelopeIcon from '@/Icons/EnvelopeIcon.vue';
 
 defineProps({
     title: String,
@@ -90,10 +91,12 @@ onMounted(() => {
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <NavLink :href="route('prijava')" :active="route().current('prijava')">
-                                Prijava na akcije
-                            </NavLink>
                             <div class="ms-3 relative">
+                                <inertia-link class="text-center flex justify-center items-center flex-col active:font-bold" :href="route('prijava')" :active="route().current('prijava')">
+                                    <EnvelopeIcon :is-opened="route().current('prijava')" class="w-6 h-6 text-neutral-light" />
+
+                                    <span class="text-neutral-light text-sm font-medium">Prijava na akcije</span>
+                                </inertia-link>
                                 <!-- Teams Dropdown -->
 
                             </div>
