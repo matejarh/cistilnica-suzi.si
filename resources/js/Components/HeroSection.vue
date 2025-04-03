@@ -8,12 +8,11 @@ import Hero from "../../images/banner-hero.png";
             <div class="order-1 lg:mr-auto place-self-center text-center md:col-span-7">
                 <h1
                     class="font-heading max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-center text-primary-800 ">
-                    Čisto Sveže Popolno<br /><small>Čistilnica Suzi</small>
+                    Čistilnica Suzi<br /><small>brezhibna čistoča za vaše perilo</small>
                 </h1>
                 <p
                     class="font-sans max-w-2xl mb-6 font-light text-neutral-light lg:mb-8 md:text-lg lg:text-xl text-center ">
-                    Pranje perila in kemično čiščenje s profesionalnim pristopom.<br />
-                    Ohranite svoja oblačila kot nova!
+                    Kemično čiščenje, pranje in likanje z vrhunsko skrbnostjo.<br> Zaupajte nam svoje perilo in uživajte v popolni svežini!
                 </p>
                 <inertia-link :href="route('prices')"
                     class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-light focus:ring-4 focus:ring-primary">
