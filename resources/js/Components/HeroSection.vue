@@ -1,5 +1,8 @@
 <script setup>
+import ArrowRightIcon from "@/Icons/ArrowRightIcon.vue";
 import Hero from "../../images/banner-hero.png";
+import ButtonPrimary from "./ButtonPrimary.vue";
+import ButtonSecondary from "./ButtonSecondary.vue";
 </script>
 
 <template>
@@ -14,20 +17,14 @@ import Hero from "../../images/banner-hero.png";
                     class="font-sans max-w-2xl mb-6 font-light text-neutral-light lg:mb-8 md:text-lg lg:text-xl text-center ">
                     Kemično čiščenje, pranje in likanje z vrhunsko skrbnostjo.<br> Zaupajte nam svoje perilo in uživajte v popolni svežini!
                 </p>
-                <inertia-link :href="route('prices')"
-                    class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-light focus:ring-4 focus:ring-primary">
+                <ButtonPrimary as="link" :href="route('prices')">
                     Oglej si ponudbo
-                    <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </inertia-link>
-                <inertia-link :href="route('contact')"
-                    class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-neutral-light border border-neutral-light rounded-lg hover:bg-neutral-light hover:text-neutral-dark focus:ring-4 focus:ring-neutral-light ">
+                    <ArrowRightIcon class="w-5 h-5 ml-2 -mr-1" />
+                </ButtonPrimary>
+
+                <ButtonSecondary as="link" :href="route('contact')">
                     Kje nas najdete
-                </inertia-link>
+                </ButtonSecondary>
             </div>
             <div class="order-2 mb-6 lg:mb-0 lg:mt-0 md:col-span-5 md:flex">
                 <img :src="Hero" alt="hero1" class="rounded-lg"
