@@ -29,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Transition enter-active-class="animate__animated animate__bounceInLeft" leave-active-class="animate__animated animate__bounceOutRight">
+    <Transition enter-active-class="animate__bounceInLeft" leave-active-class="animate__bounceOutRight">
         <div v-if="showConsent" class="fixed bottom-0 left-0 right-0 bg-primary-dark text-white p-4 z-50">
             <div class="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <div class="text-sm mb-4 sm:mb-0">
@@ -60,3 +60,45 @@ onMounted(() => {
         </div>
     </Transition>
 </template>
+
+<style scoped>
+@keyframes bounceInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    60% {
+        opacity: 1;
+        transform: translateX(25%);
+    }
+    80% {
+        transform: translateX(-10%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceOutRight {
+    20% {
+        opacity: 1;
+        transform: translateX(-10%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.animate__bounceInLeft {
+    animation-name: bounceInLeft;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.animate__bounceOutRight {
+    animation-name: bounceOutRight;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+</style>
