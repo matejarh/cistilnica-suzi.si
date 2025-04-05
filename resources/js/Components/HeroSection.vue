@@ -29,8 +29,8 @@ import ButtonSecondary from "./ButtonSecondary.vue";
                     </ButtonSecondary>
                 </div>
             </div>
-            <div class="order-1 lg:order-2 mb-6 lg:mb-0  lg:mt-0 md:col-span-5 md:flex">
-                <img :src="Hero" alt="hero1" class="rounded-lg"
+            <div class="order-1 lg:order-2 mb-6 lg:mb-0 lg:mt-0 md:col-span-5 md:flex">
+                <img :src="Hero" alt="hero1" class="h-max-content"
                     style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5))" />
             </div>
         </div>
