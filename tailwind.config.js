@@ -38,6 +38,9 @@ export default {
                     dark: "#0891b2", // cyan-600
                 },
             },
+            height: {
+                'max-content': 'max-content', // Add support for height: max-content
+            },
         },
     },
 
