@@ -7,7 +7,7 @@ import ButtonSecondary from "./ButtonSecondary.vue";
 
 <template>
     <section class="bg-primary-100 dark:bg-primary-900 pt-20 sm:pt-10">
-        <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 md:grid-cols-12">
+        <div class="grid max-w-screen-xl px-4 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 md:grid-cols-12">
             <div class="order-2 lg:order-1 lg:mr-auto place-self-center text-center md:col-span-7">
                 <h1
                     class="font-heading max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-center text-primary-800 ">
@@ -29,7 +29,7 @@ import ButtonSecondary from "./ButtonSecondary.vue";
                     </ButtonSecondary>
                 </div>
             </div>
-            <div class="order-1 lg:order-2 mb-6 lg:mb-0 lg:mt-0 md:col-span-5 md:flex">
+            <div class="order-1 lg:order-2 mb-6 lg:mb-0  lg:mt-0 md:col-span-5 md:flex">
                 <img :src="Hero" alt="hero1" class="rounded-lg"
                     style="filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5))" />
             </div>
