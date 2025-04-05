@@ -14,7 +14,7 @@ const appName = import.meta.env.VITE_APP_NAME;
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="py-6 md:py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm mb-24">
                     <HeroSection />
