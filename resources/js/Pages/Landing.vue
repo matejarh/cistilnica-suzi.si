@@ -1,6 +1,5 @@
 <script setup>
 import SiteLayout from '@/Layouts/SiteLayout.vue';
-import { ref } from 'vue'
 import HeroSection from '@/Components/HeroSection.vue';
 
 const appName = import.meta.env.VITE_APP_NAME;
