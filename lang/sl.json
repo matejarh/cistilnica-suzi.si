@@ -56,7 +56,7 @@
     "Encrypted environment file already exists.": "Šifrirana datoteka okolja že obstaja.",
     "Encrypted environment file not found.": "Šifrirane datoteke okolja ni mogoče najti.",
     "Ensure your account is using a long, random password to stay secure.": "Poskrbite, da vaš račun uporablja dolgo in naključno geslo za večjo varnost.",
-    "Service Unavailable": "Storitve niso na voljo",
+    "Service Unavailable": "Stran trenutno ni na razpolago",
     "Set a new password for your account.": "Nastavite novo geslo za svoj račun.",
     "Set a new password for your team.": "Nastavite novo geslo za svojo ekipo.",
     "Set up two factor authentication": "Nastavite dvostopenjsko preverjanje pristnosti",
