@@ -42,7 +42,7 @@ const createBubbles = (containerId) => {
         const bubble = document.createElement("div");
         bubble.className = "bubble";
 
-        const size = Math.random() * 60 + 20; // Random size between 20px and 80px
+        const size = Math.random() * 80 + 20; // Random size between 20px and 80px
         bubble.style.width = `${size}px`;
         bubble.style.height = `${size}px`;
         bubble.style.left = `${Math.random() * 100}%`; // Random horizontal position
@@ -138,7 +138,8 @@ onBeforeUnmount(() => {
 }
 .bubble {
     position: absolute;
-    background: rgba(255, 255, 255, 0.3);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     animation: float 6s infinite ease-in-out;
     pointer-events: none;
@@ -151,17 +152,17 @@ onBeforeUnmount(() => {
     0% {
         transform: translateY(100%);
         /* Start below the container */
-        opacity: 0.8;
+        opacity: 0.5;
     }
 
     50% {
-        opacity: 1;
+        opacity: 0.8;
     }
 
     100% {
         transform: translateY(-100vh);
         /* Move to the top of the container */
-        opacity: 0.8;
+        opacity: 0.5;
     }
 }
 </style>
