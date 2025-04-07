@@ -103,12 +103,10 @@ onBeforeUnmount(() => {
             </main>
 
             <!-- Page Footer -->
-
-
             <Footer />
+
             <ScrollToTop :scrollTop="scrollPosition" />
             <CookieConsentPopup />
-
         </div>
     </div>
 </template>
