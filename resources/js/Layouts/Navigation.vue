@@ -127,12 +127,12 @@ onBeforeUnmount(() => {
                     >
                         {{ link.name }}
                     </ResponsiveNavLink>
+                    <hr class="border-neutral-light mb-4" />
                     <ResponsiveNavLink
                         :href="route('prijava')"
                         :active="route().current('prijava')"
                         class=""
                     >
-                    <hr class="border-neutral-light mb-4" />
                         <div class="flex items-center">
                             <EnvelopeIcon :is-opened="route().current('prijava')" class="w-6 h-6 me-2 text-neutral-light" />
                             <span class="text-neutral-light font-medium">Prijava na akcije</span>
