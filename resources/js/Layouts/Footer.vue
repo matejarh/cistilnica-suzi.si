@@ -3,6 +3,13 @@ import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
 const year = computed(() => new Date().getFullYear());
+
+const links = [
+    { route: 'about', label: 'O nas' },
+    { route: 'prices', label: 'Cenik' },
+    { route: 'contact', label: 'Kontakt' },
+    { route: 'prijava', label: 'Prijava na akcije' },
+];
 </script>
 
 <template>
@@ -14,17 +21,8 @@ const year = computed(() => new Date().getFullYear());
                 Vse pravice pridržane.
             </span>
             <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-neutral-light sm:mt-0">
-                <li>
-                    <Link :href="route('about')" class="hover:underline me-4 md:me-6">O nas</Link>
-                </li>
-                <li>
-                    <Link :href="route('prices')" class="hover:underline me-4 md:me-6">Cenik</Link>
-                </li>
-                <li>
-                    <Link :href="route('contact')" class="hover:underline me-4 md:me-6">Kontakt</Link>
-                </li>
-                <li>
-                    <Link :href="route('prijava')" class="hover:underline">Prijava na akcije</Link>
+                <li v-for="link in links" :key="link.route" class="me-4 md:me-6">
+                    <Link :href="route(link.route)" class="hover:underline">{{ link.label }}</Link>
                 </li>
             </ul>
         </div>
