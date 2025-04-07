@@ -7,7 +7,7 @@ import { ref } from 'vue'
 <template>
     <SiteLayout title="Dobrodošli">
         <template #header>
-            <h2 class="font-semibold text-xl text-neutral-light leading-tight">
+            <h2 class="font-semibold text-xl text-primary-light leading-tight">
                 Prijava na promocije in akcije
             </h2>
         </template>
