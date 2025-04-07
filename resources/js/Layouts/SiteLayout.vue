@@ -1,10 +1,9 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import CookieConsentPopup from '@/Components/CookieConsentPopup.vue';
 import ScrollToTop from '@/Components/ScrollToTop.vue';
-
 import Footer from './Footer.vue';
 import Navigation from './Navigation.vue';
 
@@ -12,11 +11,9 @@ defineProps({
     title: String,
 });
 
-const showingNavigationDropdown = ref(false);
-
-const logout = () => {
+/* const logout = () => {
     router.post(route('logout'));
-};
+}; */
 
 const year = computed(() => new Date().getFullYear());
 
@@ -88,11 +85,11 @@ onBeforeUnmount(() => {
             <Navigation />
 
             <!-- Page Heading -->
-            <!--             <header v-if="$slots.header" class="bg-primary-light dark:bg-primary-dark text-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <header v-if="$slots.header" class="bg-primary text-white z-40 bg-opacity-70 backdrop-blur-md">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 font-heading">
                     <slot name="header" />
                 </div>
-            </header> -->
+            </header>
 
             <!-- Page Content -->
             <main
