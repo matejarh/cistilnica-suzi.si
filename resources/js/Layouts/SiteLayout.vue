@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import CookieConsentPopup from '@/Components/CookieConsentPopup.vue';
@@ -20,9 +20,26 @@ const logout = () => {
 
 const year = computed(() => new Date().getFullYear());
 
-const createBubbles = (containerId, bubbleCount = 20) => {
+const getBubbleCount = () => {
+    const width = window.innerWidth;
+    // Adjust bubble count based on screen width
+    if (width >= 1600) return 30; // Extra large screens
+    if (width >= 1200) return 20; // Large screens
+    if (width >= 768) return 10; // Medium screens
+    return 5; // Small screens
+};
+
+const createBubbles = (containerId) => {
     const container = document.getElementById(containerId);
     if (!container) return;
+
+    // Clear all existing bubbles
+    const existingBubbles = container.getElementsByClassName("bubble");
+    while (existingBubbles.length > 0) {
+        existingBubbles[0].remove();
+    }
+
+    const bubbleCount = getBubbleCount(); // Get bubble count based on screen width
 
     for (let i = 0; i < bubbleCount; i++) {
         const bubble = document.createElement("div");
@@ -46,9 +63,17 @@ const handleScroll = (e) => {
   scrollPosition.value = e.target.scrollTop;
   // emit("scrollTop", e.target.scrollTop);
 };
+const handleResize = () => {
+    createBubbles("container"); // Recreate bubbles on screen resize
+};
 
 onMounted(() => {
-    createBubbles("container");
+    createBubbles("container"); // Initial bubble creation
+    window.addEventListener("resize", handleResize); // Listen for resize events
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("resize", handleResize); // Clean up event listener
 });
 </script>
 
