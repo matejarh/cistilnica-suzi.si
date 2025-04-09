@@ -1,5 +1,5 @@
 <script setup>
-import LaundryImage from "../../images/banner-pralnica-perila.png";
+import LaundryImage from "@images/banner-pralnica-perila.png";
 </script>
 
 <template>

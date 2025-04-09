@@ -1,5 +1,5 @@
 <script setup>
-import Hero from "../../images/banner-o-nas.png";
+import Hero from "@images/banner-o-nas.png";
 </script>
 
 <template>

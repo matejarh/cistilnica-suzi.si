@@ -1,5 +1,5 @@
 <script setup>
-import DryCleaningImage from "../../images/banner-kemicna-cistilnica.png";
+import DryCleaningImage from "@images/banner-kemicna-cistilnica.png";
 </script>
 
 <template>

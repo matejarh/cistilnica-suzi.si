@@ -1,5 +1,5 @@
 <script setup>
-import IroningImage from "../../images/banner-likalnica.png";
+import IroningImage from "@images/banner-likalnica.png";
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup>
 import ArrowRightIcon from "@/Icons/ArrowRightIcon.vue";
-import Hero from "../../images/banner-hero.png";
+import Hero from "@images/banner-hero.png";
 import ButtonPrimary from "./ButtonPrimary.vue";
 import ButtonSecondary from "./ButtonSecondary.vue";
 </script>
