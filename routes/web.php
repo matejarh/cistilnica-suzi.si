@@ -17,9 +17,9 @@ Route::get('/o-nas', function () {
     return Inertia::render('About');
 })->name('about');
 
-Route::get('/cenik', function () {
-    return Inertia::render('Prices');
-})->name('prices');
+Route::get('/ponudba', function () {
+    return Inertia::render('Offers');
+})->name('offers');
 
 Route::get('/kontakt', function () {
     return Inertia::render('Contact');
