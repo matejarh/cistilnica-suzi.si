@@ -1,5 +1,7 @@
 <script setup>
+import Features from '@/Components/Features.vue';
 import ONasHeroSection from '@/Components/ONasHeroSection.vue';
+import Slogan from '@/Components/Slogan.vue';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import { ref } from 'vue'
 
@@ -16,9 +18,11 @@ import { ref } from 'vue'
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
-                    <div class="p-6 lg:p-8 space-y-4 lg:space-y-6">
+                    <div class="">
 
                         <ONasHeroSection />
+                        <Features />
+                        <Slogan />
                     </div>
                 </div>
             </div>
