@@ -6,7 +6,7 @@ import ButtonSecondary from "./ButtonSecondary.vue";
 </script>
 
 <template>
-    <section class="bg-primary-100 dark:bg-primary-900 pt-20 sm:pt-10">
+    <section class=" pt-20 sm:pt-10">
         <div class="grid max-w-screen-xl px-4 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 md:grid-cols-12">
             <div class="order-2 lg:order-1 lg:mr-auto place-self-center text-center md:col-span-7">
                 <h1
