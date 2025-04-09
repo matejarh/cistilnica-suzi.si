@@ -107,7 +107,7 @@ onBeforeUnmount(() => {
             <main
             id="main"
             @scroll="handleScroll"
-            class="overflow-y-auto h-full custom-scrollbar scroll-smooth">
+            class="overflow-y-auto h-full custom-scrollbar scroll-smooth pb-24">
                 <slot />
             </main>
 
