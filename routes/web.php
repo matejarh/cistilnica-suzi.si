@@ -29,6 +29,16 @@ Route::get('/prijava-na-promocije', function () {
     return Inertia::render('Prijava');
 })->name('prijava');
 
+Route::get('/potrditev-prijave-na-promocije', [
+    \App\Http\Controllers\SubscribersController::class,
+    'store'
+])->name('subscribers.store');
+
+Route::post('/prijava-na-promocije/potrditev', [
+    \App\Http\Controllers\SubscribersController::class,
+    'confirm'
+])->name('subscribers.confirm');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

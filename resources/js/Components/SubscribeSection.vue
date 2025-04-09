@@ -1,0 +1,74 @@
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+
+
+const form = useForm({
+    email: '',
+});
+
+const submit = () => {
+    form.post(route('subscribers.confirm'), {
+        preserveScroll: true,
+        onFinish: () => {
+            form.reset();
+        },
+        onError: (errors) => {
+            console.error(errors);
+        },
+    });
+};
+
+</script>
+
+<template>
+    <section class="bg-primary-dark text-neutral-light bg-opacity-40 backdrop-blur-sm">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            <div class="mx-auto max-w-screen-md text-center">
+                <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-primary-light sm:text-4xl">
+                    Prijavite se na naše akcije
+                </h2>
+                <p class="mx-auto mb-8 max-w-2xl font-light text-neutral-light sm:text-xl">
+                    Bodite na tekočem z našimi storitvami, posebnimi ponudbami in novostmi. Prijavite se z vašim
+                    e-poštnim naslovom.
+                </p>
+                <form @submit.prevent="submit" class="space-y-4">
+                    <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
+                        <div class="relative w-full">
+                            <label for="email" class="hidden mb-2 text-sm font-medium text-neutral-light">
+                                E-poštni naslov
+                            </label>
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-neutral-light" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z">
+                                    </path>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                </svg>
+                            </div>
+                            <input v-model="form.email" :class="{
+                                'border-red focus:ring-red focus:border-red': form.errors.email,
+                            }"
+                                class="block p-3 pl-10 w-full text-sm text-neutral-dark bg-neutral-light rounded-lg border border-neutral-light sm:rounded-none sm:rounded-l-lg focus:ring-primary-light focus:border-primary-light"
+                                placeholder="Vnesite vaš e-poštni naslov" type="email" id="email" required>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="whitespace-nowrap py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary hover:bg-primary-light   sm:rounded-none sm:rounded-r-lg">
+                                Prijavi se
+                            </button>
+                        </div>
+                    </div>
+                        <span v-if="form.errors.email" class="text-sm text-red-500">
+                            {{ form.errors.email }}
+                        </span>
+                    <!-- <div class="mx-auto max-w-screen-sm text-sm text-left text-neutral-light">
+                        Skrbimo za varnost vaših podatkov. <a href="#" class="font-medium text-primary-light hover:underline">
+                            Preberite našo politiko zasebnosti
+                        </a>.
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </section>
+</template>

@@ -4,6 +4,7 @@ import HeroSection from '@/Components/HeroSection.vue';
 import DryCleaning from '@/Components/DryCleaning.vue';
 import LaundryService from '@/Components/LaundryService.vue';
 import IroningService from '@/Components/IroningService.vue';
+import SubscribeSection from '@/Components/SubscribeSection.vue';
 
 const appName = import.meta.env.VITE_APP_NAME;
 </script>
@@ -29,6 +30,7 @@ const appName = import.meta.env.VITE_APP_NAME;
                     <DryCleaning />
                     <LaundryService />
                     <IroningService />
+                    <SubscribeSection />
                 </div>
             </div>
         </div>

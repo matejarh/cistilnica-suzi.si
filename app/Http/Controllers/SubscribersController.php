@@ -1,0 +1,126 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Subscriber;
+use Illuminate\Http\Request;
+
+class SubscribersController extends Controller
+{
+    /**
+     * Handle subscription confirmation request.
+     * Validates the email, generates a confirmation token, and sends a confirmation email.
+     */
+    public function confirm(Request $request)
+    {
+        // Validate the email input
+        $request->validate([
+            'email' => 'required|email|unique:subscribers,email',
+        ]);
+
+        // Generate a unique confirmation token
+        $token = sha1(uniqid($request->input('email'), true));
+
+        // Store the email and token in the session
+        session(['subscriber_confirmation' => [
+            'email' => $request->input('email'),
+            'token' => $token,
+        ]]);
+
+        // Send confirmation email
+        \Mail::send('emails.confirm-subscription', ['token' => $token, 'email' => $request->input('email')], function ($message) use ($request) {
+            $message->to($request->input('email'))
+                ->subject('Potrdite prijavo na akcije');
+        });
+
+        // Flash success message and redirect back
+        session()->flash('flash.banner', 'Potrditveno e-poštno sporočilo je bilo poslano na vaš e-poštni naslov. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.');
+        session()->flash('flash.bannerStyle', 'success');
+        return redirect()->back()->with('success', 'Potrditveno e-poštno sporočilo je bilo poslano na vaš e-poštni naslov. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.');
+    }
+
+    /**
+     * Store a new subscriber after confirmation.
+     * Validates the token and email, then saves the subscriber to the database.
+     */
+    public function store(Request $request)
+    {
+        // Validate the token from the request against the session
+        if ($request->input('token') !== session('subscriber_confirmation.token')) {
+            session()->flash('flash.banner', 'Neveljaven ali potekel potrditveni žeton.');
+            session()->flash('flash.bannerStyle', 'error');
+            return redirect()->back()->withErrors(['token' => 'Neveljaven ali potekel potrditveni žeton.']);
+        }
+
+        // Validate the email from the request against the session
+        if ($request->input('email') !== session('subscriber_confirmation.email')) {
+            session()->flash('flash.banner', 'E-poštni naslov se ne ujema z naslovom v seji.');
+            session()->flash('flash.bannerStyle', 'error');
+            return redirect()->back()->withErrors(['email' => 'E-poštni naslov se ne ujema z naslovom v seji.']);
+        }
+
+        // dd(session('subscriber_confirmation'));
+        // Save the subscriber to the database
+        $subscriber = new Subscriber();
+        $subscriber->email = $request->input('email');
+        $subscriber->is_subscribed = true;
+        $subscriber->ip_address = $request->ip();
+        $subscriber->user_agent = $request->header('User-Agent');
+        $subscriber->save();
+
+        // Clear the session data after successful confirmation
+        session()->forget('subscriber_confirmation');
+
+        // Flash success message and redirect back
+        session()->flash('flash.banner', 'Uspešno ste se prijavili na naše akcije.');
+        session()->flash('flash.bannerStyle', 'success');
+        return redirect()->back()->with('success', 'Uspešno ste se prijavili na naše akcije.');
+    }
+
+    /**
+     * Unsubscribe a user.
+     * Validates the email and updates the subscription status in the database.
+     */
+    public function unsubscribe(Request $request)
+    {
+        // Validate the email input
+        $request->validate([
+            'email' => 'required|email|exists:subscribers,email',
+        ]);
+
+        // Find the subscriber and update their subscription status
+        $subscriber = Subscriber::where('email', $request->input('email'))->first();
+        if ($subscriber) {
+            $subscriber->is_subscribed = false;
+            $subscriber->save();
+        }
+
+        // Flash success message and redirect back
+        session()->flash('flash.banner', 'Uspešno ste se odjavili od naših akcij.');
+        session()->flash('flash.bannerStyle', 'success');
+        return redirect()->back()->with('success', 'Uspešno ste se odjavili od naših akcij.');
+    }
+
+    /**
+     * Delete a subscriber.
+     * Validates the email and removes the subscriber from the database.
+     */
+    public function destroy(Request $request)
+    {
+        // Validate the email input
+        $request->validate([
+            'email' => 'required|email|exists:subscribers,email',
+        ]);
+
+        // Find and delete the subscriber
+        $subscriber = Subscriber::where('email', $request->input('email'))->first();
+        if ($subscriber) {
+            $subscriber->delete();
+        }
+
+        // Flash success message and redirect back
+        session()->flash('flash.banner', 'Uspešno ste izbrisali svojo naročnino.');
+        session()->flash('flash.bannerStyle', 'success');
+        return redirect()->back()->with('success', 'Uspešno ste izbrisali svojo naročnino.');
+    }
+}
