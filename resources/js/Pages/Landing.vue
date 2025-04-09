@@ -9,12 +9,14 @@ const appName = import.meta.env.VITE_APP_NAME;
 </script>
 
 <template>
-    <SiteLayout title="Dobrodošli">
-        <template #header>
+    <SiteLayout title="Dobrodošli"
+                description="Čistilnica Suzi - brezhibna čistoča za vaše perilo"
+                keywords="čistilnica, suzi, brezhibna, čistoča, perilo, pranje, kemično čiščenje">
+        <!-- <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-primary-light leading-tight">
                 Dobrodošli
             </h2>
-        </template>
+        </template> -->
 
         <div class="py-6 md:py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

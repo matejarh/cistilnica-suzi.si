@@ -9,6 +9,14 @@ import Navigation from './Navigation.vue';
 
 defineProps({
     title: String,
+    description: {
+        type: String,
+        default: 'Čistilnica Suzi - brezhibna čistoča za vaše perilo',
+    },
+    keywords: {
+        type: String,
+        default: 'čistilnica, suzi, brezhibna, čistoča, perilo, pranje, kemično čiščenje',
+    },
 });
 
 /* const logout = () => {
@@ -77,7 +85,11 @@ onBeforeUnmount(() => {
 <template>
     <div class="relative">
 
-        <Head :title="title" />
+        <Head :title="title" >
+            <meta name="description" :content="description" />
+            <meta name="keywords" :content="keywords" />
+            <meta name="author" content="Web3 Solutions" />
+        </Head>
         <Banner />
 
         <div id="container"

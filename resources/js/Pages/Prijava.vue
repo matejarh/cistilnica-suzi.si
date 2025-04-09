@@ -6,11 +6,11 @@ import { ref } from 'vue'
 
 <template>
     <SiteLayout title="Dobrodošli">
-        <template #header>
+        <!-- <template #header>
             <h2 class="font-semibold text-xl text-primary-light leading-tight">
                 Prijava na promocije in akcije
             </h2>
-        </template>
+        </template> -->
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
