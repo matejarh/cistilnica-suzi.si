@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 const navigationLinks = [
     { name: 'Domov', route: 'home' },
     { name: 'O nas', route: 'about' },
-    { name: 'Cenik', route: 'prices' },
+    { name: 'Ponudba', route: 'offers' },
     { name: 'Kontakt', route: 'contact' },
 ];
 
