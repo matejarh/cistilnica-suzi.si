@@ -7,7 +7,7 @@ const appName = import.meta.env.VITE_APP_NAME;
 
 const links = [
     { route: 'about', label: 'O nas' },
-    { route: 'prices', label: 'Cenik' },
+    { route: 'offers', label: 'Ponudba' },
     { route: 'contact', label: 'Kontakt' },
     { route: 'prijava', label: 'Prijava na akcije' },
 ];
