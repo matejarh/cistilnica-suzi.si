@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Logo from '../images/favicon.png';
+import Logo from '@images/favicon.png';
 
 window.axios = axios;
 
