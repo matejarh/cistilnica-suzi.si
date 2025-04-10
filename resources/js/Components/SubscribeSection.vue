@@ -2,8 +2,9 @@
 import EnvelopeSolidIcon from '@/Icons/EnvelopeSolidIcon.vue';
 import ExclamationIcon from '@/Icons/ExclamationIcon.vue';
 import { useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
+const emailInput = ref(null);
 
 const form = useForm({
     email: '',
@@ -20,19 +21,20 @@ const submit = () => {
             // form.reset();
         },
         onSuccess: (response) => {
-
-                form.reset();
-
+            form.reset();
         },
         onError: (errors) => {
             console.error(errors);
+            if (errors.email) {
+                emailInput.value.select();
+            }
         },
     });
 };
 
 const inputClasses = computed(() => {
     return [
-        form.errors.email ? 'bg-red-100': '',
+        form.errors.email ? 'bg-red-100' : '',
 
     ];
 
@@ -58,12 +60,13 @@ const inputClasses = computed(() => {
                                 E-poštni naslov
                             </label>
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <EnvelopeSolidIcon class="w-5 h-5 " :class="form.errors.email ? 'text-red-500' : 'text-primary'" />
+                                <EnvelopeSolidIcon class="w-5 h-5 "
+                                    :class="form.errors.email ? 'text-red-500' : 'text-primary'" />
                             </div>
-                            <input v-model="form.email"
-                                    class="block p-3 pl-10 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light sm:rounded-none sm:rounded-l-lg"
-                                    :class="inputClasses"
-                                    placeholder="Vnesite vaš e-poštni naslov" type="email" id="email" required>
+                            <input ref="emailInput" v-model="form.email"
+                                class="block p-3 pl-10 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light sm:rounded-none sm:rounded-l-lg"
+                                :class="inputClasses" placeholder="Vnesite vaš e-poštni naslov" type="email" id="email"
+                                required>
                         </div>
 
                         <div>
