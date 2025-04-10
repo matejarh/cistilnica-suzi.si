@@ -23,15 +23,17 @@ Route::name('public.')->group(function () {
         return Inertia::render('Contact');
     })->name('contact');
 
-    Route::get('/prijava-na-promocije', function () {
+    Route::get('/promocije', function () {
         return Inertia::render('Prijava');
     })->name('prijava');
 });
 
 // Subscriber Routes
-Route::prefix('prijava-na-promocije')->name('subscribers.')->middleware('throttle:4,1')->group(function () {
-    Route::get('/potrditev', [SubscribersController::class, 'store'])->name('store');
-    Route::post('/potrditev', [SubscribersController::class, 'confirm'])->name('confirm');
+Route::prefix('promocije')->name('subscribers.')->middleware('throttle:4,1')->group(function () {
+    Route::post('/prijava', [SubscribersController::class, 'confirm'])->name('confirm');
+    Route::get('/prijava', [SubscribersController::class, 'store'])->name('store');
+    Route::post('/odjava', [SubscribersController::class, 'unsubscribeConfirm'])->name('unsubscribe.confirm');
+    Route::get('/odjava', [SubscribersController::class, 'unsubscribeStore'])->name('unsubscribe.store');
     Route::delete('/', [SubscribersController::class, 'destroy'])->name('destroy');
 });
 
@@ -40,7 +42,7 @@ Route::get('/test-email', function () {
     $token = 'example-token';
     $email = 'example@example.com';
 
-    return view('emails.confirm-subscription', compact('token', 'email'));
+    return view('emails.unsubscribe-confirmation', compact('token', 'email'));
 })->name('test.email');
 
 // Authenticated Routes
