@@ -38,6 +38,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             color: #334155;
+            z-index: 1;
         }
         .header {
             text-align: center;
@@ -86,7 +87,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: -1;
+            z-index: 0;
         }
         .bubble {
             position: absolute;
@@ -98,17 +99,17 @@
 </head>
 <body>
     <!-- Static Bubbles -->
-{{--     <div class="bubbles">
-        @for ($i = 0; $i < 10; $i++)
-            <div class="bubble" style="
-                width: {{ rand(20, 80) }}px;
-                height: {{ rand(20, 80) }}px;
-                left: {{ rand(0, 100) }}%;
-                top: {{ rand(0, 100) }}%;
-            "></div>
-        @endfor
-    </div> --}}
     <div class="wrapper">
+        <div class="bubbles">
+            @for ($i = 0; $i < 10; $i++)
+                <div class="bubble" style="
+                    width: {{ rand(20, 80) }}px;
+                    height: {{ rand(20, 80) }}px;
+                    left: {{ rand(0, 100) }}%;
+                    top: {{ rand(0, 100) }}%;
+                "></div>
+            @endfor
+        </div>
         <div class="container">
             <div class="header">
                 <img src="{{ asset('images/logoSuzi150.png') }}" alt="Čistilnica Suzi Logo" onerror="this.style.display='none';">
