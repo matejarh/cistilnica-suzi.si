@@ -41,8 +41,8 @@ watchEffect(async () => {
                                 </svg>
                             </span>
 
-                            <p class="ms-3 font-medium text-sm text-white truncate">
-                                {{ message }}
+                            <p class="ms-3 font-medium text-sm text-white truncate" v-html="message">
+
                             </p>
                         </div>
 
