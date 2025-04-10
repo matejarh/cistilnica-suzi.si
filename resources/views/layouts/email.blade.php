@@ -101,14 +101,11 @@
     <!-- Static Bubbles -->
     <div class="wrapper">
         <div class="bubbles">
-            @for ($i = 0; $i < 10; $i++)
-                <div class="bubble" style="
-                    width: {{ rand(20, 80) }}px;
-                    height: {{ rand(20, 80) }}px;
-                    left: {{ rand(0, 100) }}%;
-                    top: {{ rand(0, 100) }}%;
-                "></div>
-            @endfor
+            <div class="bubble" style="width: 40px; height: 40px; left: 10%; top: 20%;"></div>
+            <div class="bubble" style="width: 60px; height: 60px; left: 30%; top: 50%;"></div>
+            <div class="bubble" style="width: 50px; height: 50px; left: 70%; top: 10%;"></div>
+            <div class="bubble" style="width: 30px; height: 30px; left: 50%; top: 80%;"></div>
+            <div class="bubble" style="width: 70px; height: 70px; left: 90%; top: 40%;"></div>
         </div>
         <div class="container">
             <div class="header">
