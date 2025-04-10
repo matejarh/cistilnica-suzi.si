@@ -58,14 +58,14 @@ class SubscribersController extends Controller
         // Validate the token from the request against the session
         if ($request->input('token') !== session('subscriber_confirmation.token')) {
             session()->flash('flash.banner', 'Neveljaven ali potekel potrditveni žeton.');
-            session()->flash('flash.bannerStyle', 'error');
+            session()->flash('flash.bannerStyle', 'danger');
             return redirect()->back()->withErrors(['token' => 'Neveljaven ali potekel potrditveni žeton.']);
         }
 
         // Validate the email from the request against the session
         if ($request->input('email') !== session('subscriber_confirmation.email')) {
             session()->flash('flash.banner', 'Elektronski naslov se ne ujema z naslovom v seji.');
-            session()->flash('flash.bannerStyle', 'error');
+            session()->flash('flash.bannerStyle', 'danger');
             return redirect()->back()->withErrors(['email' => 'Elektronski naslov se ne ujema z naslovom v seji.']);
         }
 
