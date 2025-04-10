@@ -14,33 +14,39 @@ class SubscribersController extends Controller
     public function confirm(Request $request)
     {
         // Validate the email input
-        $request->validate([
+        $validated = $request->validate([
             'email' => 'required|email|unique:subscribers,email',
         ],[
-            'email.required' => 'E-poštno sporočilo je obvezno.',
-            'email.email' => 'Vnesite veljavno e-poštno sporočilo.',
+            'email.required' => 'Vnos elektronskega naslova je obvezen.',
+            'email.email' => 'Vnesite veljaven elektronski naslov.',
             'email.unique' => 'Naslov ' . $request->input('email') . ' je že naročen na akcije.',
         ]);
 
+        $email = $validated['email'];
+
         // Generate a unique confirmation token
-        $token = sha1(uniqid($request->input('email'), true));
+        $token = sha1(uniqid($email, true));
+
+        // Encrypt the email and token
+        $encryptedEmail = encrypt($email);
+        $encryptedToken = encrypt($token);
 
         // Store the email and token in the session
         session(['subscriber_confirmation' => [
-            'email' => $request->input('email'),
-            'token' => $token,
+            'email' => $encryptedEmail,
+            'token' => $encryptedToken,
         ]]);
 
         // Send confirmation email
-        \Mail::send('emails.confirm-subscription', ['token' => $token, 'email' => $request->input('email')], function ($message) use ($request) {
-            $message->to($request->input('email'))
+        \Mail::send('emails.confirm-subscription', ['token' => $encryptedToken, 'email' => $encryptedEmail], function ($message) use ($email) {
+            $message->to($email)
                 ->subject('Potrdite prijavo na akcije');
         });
 
         // Flash success message and redirect back
-        session()->flash('flash.banner', 'Potrditveno e-poštno sporočilo je bilo poslano na vaš e-poštni naslov. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.');
+        session()->flash('flash.banner', 'Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>'.$email.'</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.');
         session()->flash('flash.bannerStyle', 'success');
-        return redirect()->back()->with('success', 'Potrditveno e-poštno sporočilo je bilo poslano na vaš e-poštni naslov. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.');
+        return redirect()->back()->with('success', 'Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>'.$email.'</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.');
     }
 
     /**
@@ -58,15 +64,19 @@ class SubscribersController extends Controller
 
         // Validate the email from the request against the session
         if ($request->input('email') !== session('subscriber_confirmation.email')) {
-            session()->flash('flash.banner', 'E-poštni naslov se ne ujema z naslovom v seji.');
+            session()->flash('flash.banner', 'Elektronski naslov se ne ujema z naslovom v seji.');
             session()->flash('flash.bannerStyle', 'error');
-            return redirect()->back()->withErrors(['email' => 'E-poštni naslov se ne ujema z naslovom v seji.']);
+            return redirect()->back()->withErrors(['email' => 'Elektronski naslov se ne ujema z naslovom v seji.']);
         }
+
+        // Decrypt the token and email from the request
+        $decryptedToken = decrypt(session('subscriber_confirmation.token'));
+        $decryptedEmail = decrypt(session('subscriber_confirmation.email'));
 
         // dd(session('subscriber_confirmation'));
         // Save the subscriber to the database
         $subscriber = new Subscriber();
-        $subscriber->email = $request->input('email');
+        $subscriber->email = $decryptedEmail;
         $subscriber->is_subscribed = true;
         $subscriber->ip_address = $request->ip();
         $subscriber->user_agent = $request->header('User-Agent');
@@ -91,8 +101,8 @@ class SubscribersController extends Controller
         $request->validate([
             'email' => 'required|email|exists:subscribers,email',
         ],[
-            'email.required' => 'E-poštno sporočilo je obvezno.',
-            'email.email' => 'Vnesite veljavno e-poštno sporočilo.',
+            'email.required' => 'Vnos elektronskega naslova je obvezen.',
+            'email.email' => 'Vnesite veljaven elektronski naslov.',
             'email.exists' => 'Naslov ' . $request->input('email') . ' ni naročen na akcije.',
         ]);
 
@@ -119,8 +129,8 @@ class SubscribersController extends Controller
         $request->validate([
             'email' => 'required|email|exists:subscribers,email',
         ],[
-            'email.required' => 'E-poštno sporočilo je obvezno.',
-            'email.email' => 'Vnesite veljavno e-poštno sporočilo.',
+            'email.required' => 'Vnos elektronskega naslova je obvezen.',
+            'email.email' => 'Vnesite veljaven elektronski naslov.',
             'email.exists' => 'Naslov ' . $request->input('email') . ' ni naročen na akcije.',
         ]);
 
