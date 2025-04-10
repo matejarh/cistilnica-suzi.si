@@ -1,4 +1,6 @@
 <script setup>
+import EnvelopeSolidIcon from '@/Icons/EnvelopeSolidIcon.vue';
+import ExclamationIcon from '@/Icons/ExclamationIcon.vue';
 import { useForm } from '@inertiajs/vue3';
 
 
@@ -38,17 +40,11 @@ const submit = () => {
                                 E-poštni naslov
                             </label>
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg class="w-5 h-5 text-neutral-light" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z">
-                                    </path>
-                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                                </svg>
+                                <EnvelopeSolidIcon class="w-5 h-5 text-primary" />
                             </div>
                             <input v-model="form.email" :class="{
                                 'border-red focus:ring-red focus:border-red': form.errors.email,
-                            }"
-                                class="block p-3 pl-10 w-full text-sm text-neutral-dark bg-neutral-light rounded-lg border border-neutral-light sm:rounded-none sm:rounded-l-lg focus:ring-primary-light focus:border-primary-light"
+                            }" class="block p-3 pl-10 w-full text-sm text-neutral-dark bg-neutral-light rounded-lg border border-neutral-light sm:rounded-none sm:rounded-l-lg focus:ring-primary-light focus:border-primary-light"
                                 placeholder="Vnesite vaš e-poštni naslov" type="email" id="email" required>
                         </div>
 
@@ -59,12 +55,12 @@ const submit = () => {
                             </button>
                         </div>
                     </div>
-                        <span v-if="form.errors.email" class="text-sm text-red-500 bg-white rounded-lg px-2 py-1 flex items-center">
-                            <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M18 16a2 2 0 01-1.732 1H3.732A2 2 0 012 16L9 3a2 2 0 013.732 0l7 13zM9 8a1 1 0 112 0v3a1 1 0 11-2 0V8zm1 7a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
-                            </svg>
-                            {{ form.errors.email }}
-                        </span>
+                    <span v-if="form.errors.email"
+                        class="text-sm text-red-500 bg-white rounded-lg px-2 py-1 flex items-center">
+                        <ExclamationIcon class="w-5 h-5 text-red-500 mr-2" />
+
+                        {{ form.errors.email }}
+                    </span>
                     <!-- <div class="mx-auto max-w-screen-sm text-sm text-left text-neutral-light">
                         Skrbimo za varnost vaših podatkov. <a href="#" class="font-medium text-primary-light hover:underline">
                             Preberite našo politiko zasebnosti
