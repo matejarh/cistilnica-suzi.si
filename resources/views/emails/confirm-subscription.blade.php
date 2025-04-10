@@ -80,7 +80,7 @@
 </head>
 <body>
     <!-- Static Bubbles -->
-    <div class="bubbles">
+{{--     <div class="bubbles">
         @for ($i = 0; $i < 10; $i++)
             <div class="bubble" style="
                 width: {{ rand(20, 80) }}px;
@@ -89,7 +89,7 @@
                 top: {{ rand(0, 100) }}%;
             "></div>
         @endfor
-    </div>
+    </div> --}}
 
     <div class="container">
         <div class="header">
