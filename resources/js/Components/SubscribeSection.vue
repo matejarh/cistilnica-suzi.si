@@ -12,8 +12,17 @@ const form = useForm({
 const submit = () => {
     form.post(route('subscribers.confirm'), {
         preserveScroll: true,
+        preserveState: true,
+        onStart: () => {
+            form.clearErrors();
+        },
         onFinish: () => {
-            form.reset();
+            // form.reset();
+        },
+        onSuccess: (response) => {
+
+                form.reset();
+
         },
         onError: (errors) => {
             console.error(errors);
@@ -49,7 +58,7 @@ const inputClasses = computed(() => {
                                 E-poštni naslov
                             </label>
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <EnvelopeSolidIcon class="w-5 h-5 text-primary" />
+                                <EnvelopeSolidIcon class="w-5 h-5 " :class="form.errors.email ? 'text-red-500' : 'text-primary'" />
                             </div>
                             <input v-model="form.email"
                                     class="block p-3 pl-10 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light sm:rounded-none sm:rounded-l-lg"
