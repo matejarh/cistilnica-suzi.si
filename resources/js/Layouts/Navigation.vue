@@ -9,10 +9,10 @@ import EnvelopeIcon from '@/Icons/EnvelopeIcon.vue';
 const showingNavigationDropdown = ref(false);
 
 const navigationLinks = [
-    { name: 'Domov', route: 'home' },
-    { name: 'O nas', route: 'about' },
-    { name: 'Ponudba', route: 'offers' },
-    { name: 'Kontakt', route: 'contact' },
+    { name: 'Domov', route: 'public.home' },
+    { name: 'O nas', route: 'public.about' },
+    { name: 'Ponudba', route: 'public.offers' },
+    { name: 'Kontakt', route: 'public.contact' },
 ];
 
 // Close the dropdown when clicking outside
@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
                 <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
-                        <Link :href="route('home')">
+                        <Link :href="route('public.home')">
                             <ApplicationMark class="block h-14 w-auto" />
                         </Link>
                     </div>
@@ -69,10 +69,10 @@ onBeforeUnmount(() => {
                     <div class="ms-3 relative">
                         <Link
                             class="text-center flex justify-center items-center flex-col active:font-bold"
-                            :href="route('prijava')"
-                            :active="route().current('prijava')"
+                            :href="route('public.prijava')"
+                            :active="route().current('public.prijava')"
                         >
-                            <EnvelopeIcon :is-opened="route().current('prijava')" class="w-6 h-6 text-neutral-light" />
+                            <EnvelopeIcon :is-opened="route().current('public.prijava')" class="w-6 h-6 text-neutral-light" />
                             <span class="text-neutral-light text-sm font-medium">Prijava na akcije</span>
                         </Link>
                     </div>
@@ -130,11 +130,11 @@ onBeforeUnmount(() => {
                     <hr class="border-neutral-light mb-4" />
                     <ResponsiveNavLink
                         :href="route('prijava')"
-                        :active="route().current('prijava')"
+                        :active="route().current('public.prijava')"
                         class=""
                     >
                         <div class="flex items-center">
-                            <EnvelopeIcon :is-opened="route().current('prijava')" class="w-6 h-6 me-2 text-neutral-light" />
+                            <EnvelopeIcon :is-opened="route().current('public.prijava')" class="w-6 h-6 me-2 text-neutral-light" />
                             <span class="text-neutral-light font-medium">Prijava na akcije</span>
                         </div>
                     </ResponsiveNavLink>

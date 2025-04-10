@@ -22,12 +22,12 @@ import Logo from "@images/logoSuzi150.png";
                 </p>
                 <div class="space-y-4 md:space-y-0">
 
-                    <ButtonPrimary as="link" :href="route('offers')">
+                    <ButtonPrimary as="link" :href="route('public.offers')">
                         Oglej si ponudbo
                         <ArrowRightIcon class="w-5 h-5 ml-2 -mr-1" />
                     </ButtonPrimary>
 
-                    <ButtonSecondary as="link" :href="route('contact')">
+                    <ButtonSecondary as="link" :href="route('public.contact')">
                         Kje nas najdete
                     </ButtonSecondary>
                 </div>
