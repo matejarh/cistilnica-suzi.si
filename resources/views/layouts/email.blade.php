@@ -18,6 +18,7 @@
             align-items: center;
             height: auto;
             position: relative;
+            background: linear-gradient(to bottom, #0ea5e9, #7dd3fc);
             padding: 20px;
         }
         .wrapper::before {
@@ -27,7 +28,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, #0ea5e9, #7dd3fc);
             z-index: -1;
         }
         .container {
