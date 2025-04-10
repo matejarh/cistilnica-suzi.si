@@ -2,6 +2,7 @@
 import EnvelopeSolidIcon from '@/Icons/EnvelopeSolidIcon.vue';
 import ExclamationIcon from '@/Icons/ExclamationIcon.vue';
 import { useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 
 const form = useForm({
@@ -19,6 +20,14 @@ const submit = () => {
         },
     });
 };
+
+const inputClasses = computed(() => {
+    return [
+        form.errors.email ? 'bg-red-100': '',
+
+    ];
+
+});
 
 </script>
 
@@ -42,10 +51,10 @@ const submit = () => {
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <EnvelopeSolidIcon class="w-5 h-5 text-primary" />
                             </div>
-                            <input v-model="form.email" :class="{
-                                'border-red focus:ring-red focus:border-red': form.errors.email,
-                            }" class="block p-3 pl-10 w-full text-sm text-neutral-dark bg-neutral-light rounded-lg border border-neutral-light sm:rounded-none sm:rounded-l-lg focus:ring-primary-light focus:border-primary-light"
-                                placeholder="Vnesite vaš e-poštni naslov" type="email" id="email" required>
+                            <input v-model="form.email"
+                                    class="block p-3 pl-10 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light sm:rounded-none sm:rounded-l-lg"
+                                    :class="inputClasses"
+                                    placeholder="Vnesite vaš e-poštni naslov" type="email" id="email" required>
                         </div>
 
                         <div>
