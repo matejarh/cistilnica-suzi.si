@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
                     </ResponsiveNavLink>
                     <hr class="border-neutral-light mb-4" />
                     <ResponsiveNavLink
-                        :href="route('prijava')"
+                        :href="route('public.prijava')"
                         :active="route().current('public.prijava')"
                         class=""
                     >
