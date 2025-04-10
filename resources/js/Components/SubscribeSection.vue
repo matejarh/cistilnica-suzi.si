@@ -59,7 +59,10 @@ const submit = () => {
                             </button>
                         </div>
                     </div>
-                        <span v-if="form.errors.email" class="text-sm text-red-500">
+                        <span v-if="form.errors.email" class="text-sm text-red-500 bg-white rounded-lg px-2 py-1 flex items-center">
+                            <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M18 16a2 2 0 01-1.732 1H3.732A2 2 0 012 16L9 3a2 2 0 013.732 0l7 13zM9 8a1 1 0 112 0v3a1 1 0 11-2 0V8zm1 7a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                            </svg>
                             {{ form.errors.email }}
                         </span>
                     <!-- <div class="mx-auto max-w-screen-sm text-sm text-left text-neutral-light">
