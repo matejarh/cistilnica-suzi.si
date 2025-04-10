@@ -32,12 +32,23 @@ Route::get('/prijava-na-promocije', function () {
 Route::get('/potrditev-prijave-na-promocije', [
     \App\Http\Controllers\SubscribersController::class,
     'store'
-])->name('subscribers.store');
+])->middleware('throttle:4,1')->name('subscribers.store');
 
 Route::post('/prijava-na-promocije/potrditev', [
     \App\Http\Controllers\SubscribersController::class,
     'confirm'
-])->name('subscribers.confirm');
+])->middleware('throttle:4,1')->name('subscribers.confirm');
+
+Route::delete('/prijava-na-promocije', [
+    \App\Http\Controllers\SubscribersController::class,
+    'destroy'
+])->middleware('throttle:4,1')->name('subscribers.destroy');
+
+/* Route::get('/test-email', function () {
+    $token = 'example-token';
+    $email = 'example@example.com';
+    return view('emails.confirm-subscription', compact('token', 'email'));
+}); */
 
 Route::middleware([
     'auth:sanctum',
