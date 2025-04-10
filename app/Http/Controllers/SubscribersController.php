@@ -16,6 +16,10 @@ class SubscribersController extends Controller
         // Validate the email input
         $request->validate([
             'email' => 'required|email|unique:subscribers,email',
+        ],[
+            'email.required' => 'E-poštno sporočilo je obvezno.',
+            'email.email' => 'Vnesite veljavno e-poštno sporočilo.',
+            'email.unique' => 'Naslov ' . $request->input('email') . ' je že naročen na akcije.',
         ]);
 
         // Generate a unique confirmation token
@@ -86,6 +90,10 @@ class SubscribersController extends Controller
         // Validate the email input
         $request->validate([
             'email' => 'required|email|exists:subscribers,email',
+        ],[
+            'email.required' => 'E-poštno sporočilo je obvezno.',
+            'email.email' => 'Vnesite veljavno e-poštno sporočilo.',
+            'email.exists' => 'Naslov ' . $request->input('email') . ' ni naročen na akcije.',
         ]);
 
         // Find the subscriber and update their subscription status
@@ -110,6 +118,10 @@ class SubscribersController extends Controller
         // Validate the email input
         $request->validate([
             'email' => 'required|email|exists:subscribers,email',
+        ],[
+            'email.required' => 'E-poštno sporočilo je obvezno.',
+            'email.email' => 'Vnesite veljavno e-poštno sporočilo.',
+            'email.exists' => 'Naslov ' . $request->input('email') . ' ni naročen na akcije.',
         ]);
 
         // Find and delete the subscriber
