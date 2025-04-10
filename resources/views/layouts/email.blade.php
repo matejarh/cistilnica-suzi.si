@@ -7,10 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #0ea5e9, #7dd3fc);
+            /* background: linear-gradient(to bottom, #0ea5e9, #7dd3fc); */
             color: #ffffff;
             margin: 0;
             padding: 0;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            position: relative;
+            padding: 20px;
+        }
+        .wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #0ea5e9, #7dd3fc);
+            z-index: -1;
         }
         .container {
             max-width: 600px;
@@ -90,18 +108,21 @@
             "></div>
         @endfor
     </div> --}}
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <img src="{{ asset('images/logoSuzi150.png') }}" alt="Čistilnica Suzi Logo" onerror="this.style.display='none';">
+                <h1>@yield('header-title', 'Čistilnica Suzi')</h1>
+            </div>
+            <div class="content">
+                @yield('content')
+            </div>
+            <div class="footer">
+                <p>@yield('footer-text', 'Čistilnica Suzi - brezhibna čistoča za vaše perilo.')</p>
+            </div>
+        </div>
 
-    <div class="container">
-        <div class="header">
-            <img src="{{ asset('images/logoSuzi150.png') }}" alt="Čistilnica Suzi Logo" onerror="this.style.display='none';">
-            <h1>@yield('header-title', 'Čistilnica Suzi')</h1>
-        </div>
-        <div class="content">
-            @yield('content')
-        </div>
-        <div class="footer">
-            <p>@yield('footer-text', 'Čistilnica Suzi - brezhibna čistoča za vaše perilo.')</p>
-        </div>
     </div>
+
 </body>
 </html>
