@@ -38,7 +38,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Two-factor Confirmation" />
+    <Head title="Potrditev z dvostopenjsko prijavo" />
 
     <AuthenticationCard>
         <template #logo>
@@ -47,17 +47,17 @@ const submit = () => {
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
             <template v-if="! recovery">
-                Please confirm access to your account by entering the authentication code provided by your authenticator application.
+                Prosimo, potrdite dostop do svojega računa z vnosom avtentikacijske kode, ki jo zagotavlja vaša avtentikacijska aplikacija.
             </template>
 
             <template v-else>
-                Please confirm access to your account by entering one of your emergency recovery codes.
+                Prosimo, potrdite dostop do svojega računa z vnosom ene od svojih rezervnih kod za obnovitev.
             </template>
         </div>
 
         <form @submit.prevent="submit">
             <div v-if="! recovery">
-                <InputLabel for="code" value="Code" />
+                <InputLabel for="code" value="Koda" />
                 <TextInput
                     id="code"
                     ref="codeInput"
@@ -72,7 +72,7 @@ const submit = () => {
             </div>
 
             <div v-else>
-                <InputLabel for="recovery_code" value="Recovery Code" />
+                <InputLabel for="recovery_code" value="Rezervna koda" />
                 <TextInput
                     id="recovery_code"
                     ref="recoveryCodeInput"
@@ -87,16 +87,16 @@ const submit = () => {
             <div class="flex items-center justify-end mt-4">
                 <button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer" @click.prevent="toggleRecovery">
                     <template v-if="! recovery">
-                        Use a recovery code
+                        Uporabite rezervno kodo
                     </template>
 
                     <template v-else>
-                        Use an authentication code
+                        Uporabite avtentikacijsko kodo
                     </template>
                 </button>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                    Prijava
                 </PrimaryButton>
             </div>
         </form>

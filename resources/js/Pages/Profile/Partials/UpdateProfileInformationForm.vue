@@ -78,17 +78,17 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Informacije o profilu
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Posodobite podatke o profilu in e-poštnem naslovu vašega računa.
         </template>
 
         <template #form>
-            <!-- Profile Photo -->
+            <!-- Profilna fotografija -->
             <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
+                <!-- Vnos datoteke za profilno fotografijo -->
                 <input
                     id="photo"
                     ref="photoInput"
@@ -97,14 +97,14 @@ const clearPhotoFileInput = () => {
                     @change="updatePhotoPreview"
                 >
 
-                <InputLabel for="photo" value="Photo" />
+                <InputLabel for="photo" value="Fotografija" />
 
-                <!-- Current Profile Photo -->
+                <!-- Trenutna profilna fotografija -->
                 <div v-show="! photoPreview" class="mt-2">
                     <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full size-20 object-cover">
                 </div>
 
-                <!-- New Profile Photo Preview -->
+                <!-- Predogled nove profilne fotografije -->
                 <div v-show="photoPreview" class="mt-2">
                     <span
                         class="block rounded-full size-20 bg-cover bg-no-repeat bg-center"
@@ -113,7 +113,7 @@ const clearPhotoFileInput = () => {
                 </div>
 
                 <SecondaryButton class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
+                    Izberite novo fotografijo
                 </SecondaryButton>
 
                 <SecondaryButton
@@ -122,15 +122,15 @@ const clearPhotoFileInput = () => {
                     class="mt-2"
                     @click.prevent="deletePhoto"
                 >
-                    Remove Photo
+                    Odstranite fotografijo
                 </SecondaryButton>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
             </div>
 
-            <!-- Name -->
+            <!-- Ime -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Ime" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -142,9 +142,9 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
 
-            <!-- Email -->
+            <!-- E-pošta -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="E-pošta" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -157,7 +157,7 @@ const clearPhotoFileInput = () => {
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2 dark:text-white">
-                        Your email address is unverified.
+                        Vaš e-poštni naslov ni preverjen.
 
                         <Link
                             :href="route('verification.send')"
@@ -166,12 +166,12 @@ const clearPhotoFileInput = () => {
                             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             @click.prevent="sendEmailVerification"
                         >
-                            Click here to re-send the verification email.
+                            Kliknite tukaj za ponovno pošiljanje potrditvenega e-poštnega sporočila.
                         </Link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                        A new verification link has been sent to your email address.
+                        Nova potrditvena povezava je bila poslana na vaš e-poštni naslov.
                     </div>
                 </div>
             </div>
@@ -179,11 +179,11 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
+                Shranjeno.
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Shrani
             </PrimaryButton>
         </template>
     </FormSection>

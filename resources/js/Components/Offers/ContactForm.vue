@@ -11,6 +11,7 @@ import AtSymbolIcon from '@/Icons/AtSymbolIcon.vue';
 import PhoneIcon from '@/Icons/PhoneIcon.vue';
 import MapPinIcon from '@/Icons/MapPinIcon.vue';
 import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
+import MegaphoneIcon from '@/Icons/MegaphoneIcon.vue';
 
 const form = useForm({
     name: '',
@@ -18,11 +19,12 @@ const form = useForm({
     phone: '',
     address: '',
     email: '',
+    subject: '',
     message: '',
 });
 
 const submitForm = () => {
-    form.post(route('inquiries.store'), {
+    form.post(route('inquiries.confirm'), {
         onSuccess: () => {
             form.reset();
         },
@@ -114,6 +116,19 @@ const submitForm = () => {
                 </div>
 
 
+                <!-- Zadeva -->
+                <div >
+                    <InputLabel for="subject" value="Zadeva" />
+                    <div class="relative w-full">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <MegaphoneIcon class="w-5 h-5 "
+                                :class="form.errors.subject ? 'text-red-500' : 'text-primary'" />
+                        </div>
+                        <TextInput id="subject" v-model="form.subject" type="text" class="mt-1 block w-full"
+                            placeholder="Vnesite zadevo" :has-error="!!form.errors.subject" />
+                    </div>
+                    <InputError :message="form.errors.subject" class="mt-2" />
+                </div>
                 <!-- Besedilo povpraševanja -->
                 <div>
                     <InputLabel for="message" value="Besedilo povpraševanja" />

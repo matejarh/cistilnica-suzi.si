@@ -107,29 +107,29 @@ const disableTwoFactorAuthentication = () => {
 <template>
     <ActionSection>
         <template #title>
-            Two Factor Authentication
+            Dvofaktorska avtentikacija
         </template>
 
         <template #description>
-            Add additional security to your account using two factor authentication.
+            Dodajte dodatno varnost svojemu računu z uporabo dvofaktorske avtentikacije.
         </template>
 
         <template #content>
             <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                You have enabled two factor authentication.
+                Omogočili ste dvofaktorsko avtentikacijo.
             </h3>
 
             <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Finish enabling two factor authentication.
+                Dokončajte omogočanje dvofaktorske avtentikacije.
             </h3>
 
             <h3 v-else class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                You have not enabled two factor authentication.
+                Niste omogočili dvofaktorske avtentikacije.
             </h3>
 
             <div class="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                 <p>
-                    When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.
+                    Ko je dvofaktorska avtentikacija omogočena, boste med prijavo pozvani k vnosu varne, naključne kode. To kodo lahko pridobite iz aplikacije Google Authenticator na svojem telefonu.
                 </p>
             </div>
 
@@ -137,11 +137,11 @@ const disableTwoFactorAuthentication = () => {
                 <div v-if="qrCode">
                     <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                         <p v-if="confirming" class="font-semibold">
-                            To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.
+                            Za dokončanje omogočanja dvofaktorske avtentikacije skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ in zagotovite generirano OTP kodo.
                         </p>
 
                         <p v-else>
-                            Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application or enter the setup key.
+                            Dvofaktorska avtentikacija je zdaj omogočena. Skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ.
                         </p>
                     </div>
 
@@ -149,12 +149,12 @@ const disableTwoFactorAuthentication = () => {
 
                     <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                         <p class="font-semibold">
-                            Setup Key: <span v-html="setupKey"></span>
+                            Nastavitveni ključ: <span v-html="setupKey"></span>
                         </p>
                     </div>
 
                     <div v-if="confirming" class="mt-4">
-                        <InputLabel for="code" value="Code" />
+                        <InputLabel for="code" value="Koda" />
 
                         <TextInput
                             id="code"
@@ -175,7 +175,7 @@ const disableTwoFactorAuthentication = () => {
                 <div v-if="recoveryCodes.length > 0 && ! confirming">
                     <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                         <p class="font-semibold">
-                            Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
+                            Shranite te obnovitvene kode v varen upravitelj gesel. Uporabite jih lahko za obnovitev dostopa do svojega računa, če izgubite napravo za dvofaktorsko avtentikacijo.
                         </p>
                     </div>
 
@@ -191,7 +191,7 @@ const disableTwoFactorAuthentication = () => {
                 <div v-if="! twoFactorEnabled">
                     <ConfirmsPassword @confirmed="enableTwoFactorAuthentication">
                         <PrimaryButton type="button" :class="{ 'opacity-25': enabling }" :disabled="enabling">
-                            Enable
+                            Omogoči
                         </PrimaryButton>
                     </ConfirmsPassword>
                 </div>
@@ -205,7 +205,7 @@ const disableTwoFactorAuthentication = () => {
                             :class="{ 'opacity-25': enabling }"
                             :disabled="enabling"
                         >
-                            Confirm
+                            Potrdi
                         </PrimaryButton>
                     </ConfirmsPassword>
 
@@ -214,7 +214,7 @@ const disableTwoFactorAuthentication = () => {
                             v-if="recoveryCodes.length > 0 && ! confirming"
                             class="me-3"
                         >
-                            Regenerate Recovery Codes
+                            Ustvari obnovitvene kode znova
                         </SecondaryButton>
                     </ConfirmsPassword>
 
@@ -223,7 +223,7 @@ const disableTwoFactorAuthentication = () => {
                             v-if="recoveryCodes.length === 0 && ! confirming"
                             class="me-3"
                         >
-                            Show Recovery Codes
+                            Prikaži obnovitvene kode
                         </SecondaryButton>
                     </ConfirmsPassword>
 
@@ -233,7 +233,7 @@ const disableTwoFactorAuthentication = () => {
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >
-                            Cancel
+                            Prekliči
                         </SecondaryButton>
                     </ConfirmsPassword>
 
@@ -243,7 +243,7 @@ const disableTwoFactorAuthentication = () => {
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >
-                            Disable
+                            Onemogoči
                         </DangerButton>
                     </ConfirmsPassword>
                 </div>

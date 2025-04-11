@@ -45,19 +45,19 @@ const closeModal = () => {
 <template>
     <ActionSection>
         <template #title>
-            Browser Sessions
+            Seje brskalnika
         </template>
 
         <template #description>
-            Manage and log out your active sessions on other browsers and devices.
+            Upravljajte in odjavite svoje aktivne seje v drugih brskalnikih in napravah.
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.
+                Če je potrebno, se lahko odjavite iz vseh svojih drugih sej brskalnika na vseh svojih napravah. Nekatere vaše nedavne seje so navedene spodaj; vendar ta seznam morda ni izčrpen. Če menite, da je bil vaš račun ogrožen, morate tudi posodobiti svoje geslo.
             </div>
 
-            <!-- Other Browser Sessions -->
+            <!-- Druge seje brskalnika -->
             <div v-if="sessions.length > 0" class="mt-5 space-y-6">
                 <div v-for="(session, i) in sessions" :key="i" class="flex items-center">
                     <div>
@@ -72,15 +72,15 @@ const closeModal = () => {
 
                     <div class="ms-3">
                         <div class="text-sm text-gray-600 dark:text-gray-400">
-                            {{ session.agent.platform ? session.agent.platform : 'Unknown' }} - {{ session.agent.browser ? session.agent.browser : 'Unknown' }}
+                            {{ session.agent.platform ? session.agent.platform : 'Neznano' }} - {{ session.agent.browser ? session.agent.browser : 'Neznano' }}
                         </div>
 
                         <div>
                             <div class="text-xs text-gray-500">
                                 {{ session.ip_address }},
 
-                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">This device</span>
-                                <span v-else>Last active {{ session.last_active }}</span>
+                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">Ta naprava</span>
+                                <span v-else>Zadnja aktivnost {{ session.last_active }}</span>
                             </div>
                         </div>
                     </div>
@@ -89,22 +89,22 @@ const closeModal = () => {
 
             <div class="flex items-center mt-5">
                 <PrimaryButton @click="confirmLogout">
-                    Log Out Other Browser Sessions
+                    Odjava iz drugih sej brskalnika
                 </PrimaryButton>
 
                 <ActionMessage :on="form.recentlySuccessful" class="ms-3">
-                    Done.
+                    Končano.
                 </ActionMessage>
             </div>
 
-            <!-- Log Out Other Devices Confirmation Modal -->
+            <!-- Potrditev odjave iz drugih naprav -->
             <DialogModal :show="confirmingLogout" @close="closeModal">
                 <template #title>
-                    Log Out Other Browser Sessions
+                    Odjava iz drugih sej brskalnika
                 </template>
 
                 <template #content>
-                    Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
+                    Prosimo, vnesite svoje geslo, da potrdite, da se želite odjaviti iz svojih drugih sej brskalnika na vseh svojih napravah.
 
                     <div class="mt-4">
                         <TextInput
@@ -112,7 +112,7 @@ const closeModal = () => {
                             v-model="form.password"
                             type="password"
                             class="mt-1 block w-3/4"
-                            placeholder="Password"
+                            placeholder="Geslo"
                             autocomplete="current-password"
                             @keyup.enter="logoutOtherBrowserSessions"
                         />
@@ -123,7 +123,7 @@ const closeModal = () => {
 
                 <template #footer>
                     <SecondaryButton @click="closeModal">
-                        Cancel
+                        Prekliči
                     </SecondaryButton>
 
                     <PrimaryButton
@@ -132,7 +132,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="logoutOtherBrowserSessions"
                     >
-                        Log Out Other Browser Sessions
+                        Odjava iz drugih sej brskalnika
                     </PrimaryButton>
                 </template>
             </DialogModal>
