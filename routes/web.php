@@ -9,26 +9,17 @@ use App\Http\Controllers\SubscribersController;
 
 // Public Routes
 Route::name('public.')->middleware('throttle:60,1')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Landing');
-    })->name('home');
+    Route::get('/', fn() => Inertia::render('Landing'))->name('home');
 
-    Route::get('/o-nas', function () {
-        return Inertia::render('About');
-    })->name('about');
+    Route::get('/o-nas', fn() => Inertia::render('About'))->name('about');
 
-    Route::get('/ponudba', function () {
-        return Inertia::render('Offers');
-    })->name('offers');
+    Route::get('/ponudba', fn() => Inertia::render('Offers'))->name('offers');
 
-    Route::get('/kontakt', function () {
-        return Inertia::render('Contact');
-    })->name('contact');
+    Route::get('/kontakt', fn() => Inertia::render('Contact'))->name('contact');
 
-    Route::get('/promocije', function () {
-        return Inertia::render('Prijava');
-    })->name('prijava');
+    Route::get('/promocije', fn() => Inertia::render('Akcije'))->name('prijava');
 });
+
 
 // Inquiries Public Routes
 Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:10,1')->group(function () {
