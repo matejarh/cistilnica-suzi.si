@@ -88,10 +88,17 @@ class SubscribersController extends Controller
             'email' => 'required|email|exists:subscribers,email',
         ], $this->validationMessages());
 
+        // Check if the email is already unsubscribed
+        if (!Subscriber::where('email', $validated['email'])->where('is_subscribed', true)->exists()) {
+            return redirect()->back()->withErrors([
+            'email' => 'Ta elektronski naslov je že odjavljen.',
+            ]);
+        }
+
         $email = $validated['email'];
 
         // Generate a unique confirmation token
-        $token = Hash::make(uniqid($email, true));
+        $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
 
         // Store the hashed token and email in the session
         session(['subscriber_unsubscribe_confirmation' => [
@@ -124,7 +131,7 @@ class SubscribersController extends Controller
         $email = session('subscriber_unsubscribe_confirmation.email');
 
         // Update the subscriber's status
-        Subscriber::where('email', $email)->update(['is_subscribed' => false]);
+        Subscriber::where('email', $email)->delete();
 
         // Clear the session data
         session()->forget('subscriber_unsubscribe_confirmation');
