@@ -83,20 +83,21 @@ const submitUnsubscribe = () => {
                                     Odjava od akcij
                                 </button>
                             </li>
-                        </ul>
-                    </div>
-
-                    <!-- Manage Promotions Links (Visible to Logged-in Users) -->
-                    <div v-if="user">
-                        <h3 class="font-sans text-lg text-neutral-light font-semibold">Upravljanje z akcijami</h3>
-                        <ul class="list-disc list-inside text-neutral-light">
-                            <li v-for="promotion in promotions" :key="promotion.id">
-                                <a :href="route('promotions.edit', promotion.id)" class="text-white hover:underline">
-                                    Uredi akcijo: {{ promotion.title }}
+                            <li v-if="user">
+                                <a :href="route('promotions.index')" class="text-white hover:underline">
+                                    Uredi akcije
                                 </a>
                             </li>
                         </ul>
                     </div>
+
+                    <!-- Manage Promotions Links (Visible to Logged-in Users) -->
+<!--                     <div v-if="user">
+                        <h3 class="font-sans text-lg text-neutral-light font-semibold">Upravljanje z akcijami</h3>
+                        <ul class="list-disc list-inside text-neutral-light">
+
+                        </ul>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -112,12 +113,6 @@ const submitUnsubscribe = () => {
             <template #content>
                 <form @submit.prevent="submitUnsubscribe" class="space-y-4">
                     <div>
-
-
-
-                        <!-- <TextInput v-model="unsubscribeForm.email" id="email" type="email" required
-                            class="mt-1 block w-full" placeholder="Vnesite elektronski naslov" /> -->
-
                         <div class="relative w-full">
                             <label for="email" class="hidden mb-2 text-sm font-medium text-neutral-light">
                                 E-poštni naslov
@@ -133,9 +128,7 @@ const submitUnsubscribe = () => {
                         </div>
 
                         <InputError :message="unsubscribeForm.errors.email" class="mt-2" />
-                        <!-- <span v-if="unsubscribeForm.errors.email" class="text-sm text-red-500">
-                            {{ unsubscribeForm.errors.email }}
-                        </span> -->
+
                     </div>
                 </form>
             </template>
