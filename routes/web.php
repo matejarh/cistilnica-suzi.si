@@ -31,7 +31,7 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
 });
 
 // Inquiries Public Routes
-Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:4,1')->group(function () {
+Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:10,1')->group(function () {
     Route::get('/potrditev', [InquiriesController::class, 'store'])->name('store');
     Route::post('/potrditev', [InquiriesController::class, 'sendConfirmationEmail'])->name('confirm');
 });
@@ -49,22 +49,26 @@ Route::prefix('promocije')->name('subscribers.')->middleware('throttle:4,1')->gr
 });
 
 // Test Routes
-Route::get('/test-email', function () {
-    $token = 'example-token';
-    $email = 'example@example.com';
-    $data = [
-        'name' => 'Test test',
-        'email' => 'Test test',
-        'phone' => 'Test test',
-        'company' => 'Test test',
-        'address' => 'Test test',
-        'subject' => 'Test test',
-        'message' => 'Test test',
-    ];
-    $inquiry = Inquiry::first();
+if (app()->environment('local')) {
+    Route::get('/test-email/{template}', function () {
+        $template = request('template');
 
-    return view('emails.new-inquiry', compact('token', 'email', 'data', 'inquiry'));
-})->name('test.email');
+        $token = 'example-token';
+        $email = 'example@example.com';
+        $data = [
+            'name' => 'Test test',
+            'email' => 'Test test',
+            'phone' => 'Test test',
+            'company' => 'Test test',
+            'address' => 'Test test',
+            'subject' => 'Test test',
+            'message' => 'Test test',
+        ];
+        $inquiry = Inquiry::first();
+
+        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry'));
+    })->name('test.email');
+}
 
 // Authenticated Routes
 Route::middleware([
