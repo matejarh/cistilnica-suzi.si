@@ -1,8 +1,9 @@
 <script setup>
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import ContactIllustration from '@images/kontakt.png';
-import { computed, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
+// Working hours
 const workingHours = ref([
     { day: 'Ponedeljek', hours: '08:00 – 12:00, 15:00 – 18:00' },
     { day: 'Torek', hours: '08:00 – 12:00, 15:00 – 18:00' },
@@ -13,32 +14,47 @@ const workingHours = ref([
     { day: 'Nedelja', hours: 'Zaprta' }
 ]);
 
-const isDuringWorkingHours = computed(() => {
-    const now = new Date();
-    const currentDay = now.toLocaleDateString('sl-SI', { weekday: 'long' }).charAt(0).toUpperCase() + now.toLocaleDateString('sl-SI', { weekday: 'long' }).slice(1);
-    const currentTime = now.getHours() * 60 + now.getMinutes();
+// Contact details
+const contactDetails = ref({
+    company: 'Čistilnica Suzi, Suzana Simonetič s.p.',
+    address: 'Železniška cesta 5, 4248 Lesce',
+    phone: '041 277 643',
+    landline: '04 531 50 51'
+});
+
+// Current time and working hours status
+const now = ref(new Date());
+const isDuringWorkingHours = ref(false);
+
+// Update the current time and check if it's within working hours
+const updateNow = () => {
+    now.value = new Date();
+
+    const currentDay = now.value.toLocaleDateString('sl-SI', { weekday: 'long' })
+        .charAt(0).toUpperCase() + now.value.toLocaleDateString('sl-SI', { weekday: 'long' }).slice(1);
+    const currentTime = now.value.getHours() * 60 + now.value.getMinutes();
 
     const todayHours = workingHours.value.find(day => day.day === currentDay)?.hours;
 
     if (!todayHours || todayHours === 'Zaprta') {
-        return false;
+        isDuringWorkingHours.value = false;
+        return;
     }
 
     const timeRanges = todayHours.split(',').map(range => range.trim());
-    return timeRanges.some(range => {
+    isDuringWorkingHours.value = timeRanges.some(range => {
         const [start, end] = range.split('–').map(time => {
             const [hours, minutes] = time.trim().split(':').map(Number);
             return hours * 60 + minutes;
         });
         return currentTime >= start && currentTime <= end;
     });
-});
+};
 
-const contactDetails = ref({
-    company: 'Čistilnica Suzi, Suzana Simonetič s.p.',
-    address: 'Železniška cesta 5, 4248 Lesce',
-    phone: '041 277 643',
-    landline: '04 531 50 51'
+// Initialize the time updater
+onMounted(() => {
+    updateNow();
+    setInterval(updateNow, 60000); // Update every minute
 });
 </script>
 
@@ -55,7 +71,6 @@ const contactDetails = ref({
                         <p class="font-sans text-lg text-neutral-light text-center">
                             Stopite v stik z nami za vsa vprašanja ali dodatne informacije.
                         </p>
-                        <p class="font-sans text-lg text-center" :class="isDuringWorkingHours ? 'text-green-300': 'text-red-300'">Čistilnica Suzi je trenutno {{ isDuringWorkingHours ? 'odprta' : 'zaprta' }}</p>
 
                         <!-- Contact Details -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -63,9 +78,9 @@ const contactDetails = ref({
                             <div class="order-2 md:order-1 space-y-4 text-neutral-light">
                                 <h2 class="text-2xl font-bold text-primary-light">Kontaktni podatki</h2>
                                 <ul class="space-y-2">
-                                    <li><strong>Podjetje: </strong>{{ contactDetails.company }}</li>
+                                    <li><strong>Podjetje:</strong> {{ contactDetails.company }}</li>
                                     <li>
-                                        <strong>Naslov: </strong>
+                                        <strong>Naslov:</strong>
                                         <a href="https://www.google.com/maps/dir/?api=1&destination=Železniška+cesta+5,+4248+Lesce"
                                            target="_blank"
                                            rel="noopener noreferrer"
@@ -74,13 +89,13 @@ const contactDetails = ref({
                                         </a>
                                     </li>
                                     <li>
-                                        <strong>GSM: </strong>
+                                        <strong>GSM:</strong>
                                         <a href="tel:{{ contactDetails.phone }}" class="text-white hover:underline">
                                             {{ contactDetails.phone }}
                                         </a>
                                     </li>
                                     <li>
-                                        <strong>Telefon: </strong>
+                                        <strong>Telefon:</strong>
                                         <a href="tel:{{ contactDetails.landline }}" class="text-white hover:underline">
                                             {{ contactDetails.landline }}
                                         </a>
@@ -88,7 +103,12 @@ const contactDetails = ref({
                                 </ul>
 
                                 <!-- Working Hours -->
-                                <h2 class="text-2xl font-bold text-primary-light">Delovni čas</h2>
+                                <div class="flex items-baseline space-x-4">
+                                    <h2 class="text-2xl font-bold text-primary-light">Delovni čas</h2>
+                                    <p :class="isDuringWorkingHours ? 'text-green-300' : 'text-red-300'">
+                                        Trenutno smo {{ isDuringWorkingHours ? 'odprti' : 'zaprti' }}
+                                    </p>
+                                </div>
                                 <ul class="space-y-2">
                                     <li v-for="(hour, index) in workingHours" :key="index">
                                         <strong>{{ hour.day }}:</strong> {{ hour.hours }}
