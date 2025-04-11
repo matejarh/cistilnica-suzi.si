@@ -1,4 +1,5 @@
 <script setup>
+import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 import EnvelopeSolidIcon from '@/Icons/EnvelopeSolidIcon.vue';
 import ExclamationIcon from '@/Icons/ExclamationIcon.vue';
 import { useForm } from '@inertiajs/vue3';
@@ -71,8 +72,10 @@ const inputClasses = computed(() => {
 
                         <div>
                             <button type="submit"
-                                class="whitespace-nowrap py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary hover:bg-primary-light   sm:rounded-none sm:rounded-r-lg">
-                                Prijavi se
+                                :disabled="form.processing || !form.isDirty"
+                                class="flex items-center whitespace-nowrap py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary hover:bg-primary-light   sm:rounded-none sm:rounded-r-lg disabled:opacity-50 transition ease-in-out duration-150">
+                                <Cog8ToothIcon class="w-4 h-4 mr-2 animate-spin" v-show="form.processing" />
+                                {{ form.processing ? 'Prijavljam...' : 'Prijavi se' }}
                             </button>
                         </div>
                     </div>
