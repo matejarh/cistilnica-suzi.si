@@ -5,6 +5,7 @@
 @section('header-title', 'Potrdite svoje povpraševanje')
 
 @section('content')
+<div style="overflow-wrap: break-word;">
     <p>Hvala, ker ste nam poslali povpraševanje! Za dokončanje postopka prosimo, da potrdite svoje povpraševanje s klikom na spodnji gumb.</p>
 
     <h3>Podrobnosti povpraševanja:</h3>
@@ -30,6 +31,7 @@
     <p style="line-height: 12pt; font-size: small;">
         <small>{!! route('inquiries.store', ['token' => $token, 'email' => $email]) !!}</small>
     </p>
+</div>
 @endsection
 
 @section('footer-text', 'Čistilnica Suzi - vaša prva izbira za čistočo.')

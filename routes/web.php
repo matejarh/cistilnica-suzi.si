@@ -53,16 +53,16 @@ if (app()->environment('local')) {
     Route::get('/test-email/{template}', function () {
         $template = request('template');
 
-        $token = 'example-token';
-        $email = 'example@example.com';
+        $token = hash_hmac('sha256', 'test-email', config('app.key'));
+        $email = encrypt('example@example.com');
         $data = [
-            'name' => 'Test test',
-            'email' => 'Test test',
-            'phone' => 'Test test',
-            'company' => 'Test test',
-            'address' => 'Test test',
-            'subject' => 'Test test',
-            'message' => 'Test test',
+            'name' => fake()->name(),
+            'email' => fake()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'company' => fake()->company(),
+            'address' => fake()->address(),
+            'subject' => fake()->sentence(),
+            'message' => fake()->paragraph(),
         ];
         $inquiry = Inquiry::first();
 
