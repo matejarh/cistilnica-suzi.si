@@ -65,8 +65,8 @@ const createBubbles = (containerId) => {
 const scrollPosition = ref(0);
 
 const handleScroll = (e) => {
-  scrollPosition.value = e.target.scrollTop;
-  // emit("scrollTop", e.target.scrollTop);
+    scrollPosition.value = e.target.scrollTop;
+    // emit("scrollTop", e.target.scrollTop);
 };
 const handleResize = () => {
     createBubbles("container"); // Recreate bubbles on screen resize
@@ -83,9 +83,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="relative">
+    <div class="relative overflow-hidden">
 
-        <Head :title="title" >
+        <Head :title="title">
             <meta name="description" :content="description" />
             <meta name="keywords" :content="keywords" />
             <meta name="author" content="Web3 Solutions" />
@@ -94,7 +94,7 @@ onBeforeUnmount(() => {
 
         <div id="container"
             class="relative h-screen text-white overflow-hidden bg-gradient-to-b from-primary to-primary-light bg-opacity-70 backdrop-blur-md">
-            <Navigation />
+            <Navigation class=""/>
 
             <!-- Page Heading -->
             <!-- <header v-if="$slots.header" class="bg-primary text-white z-40 bg-opacity-70 backdrop-blur-md">
@@ -104,19 +104,16 @@ onBeforeUnmount(() => {
             </header> -->
 
             <!-- Page Content -->
-            <main
-            id="main"
-            @scroll="handleScroll"
-            class="overflow-y-auto h-full custom-scrollbar scroll-smooth pb-24">
+            <main id="main" @scroll="handleScroll" class="overflow-y-auto h-full custom-scrollbar scroll-smooth pb-24">
                 <slot />
             </main>
 
-            <!-- Page Footer -->
-            <Footer />
-
-            <ScrollToTop :scrollTop="scrollPosition" />
-            <CookieConsentPopup />
         </div>
+        <!-- Page Footer -->
+        <Footer />
+
+        <ScrollToTop :scrollTop="scrollPosition" class="text-white" />
+        <CookieConsentPopup />
     </div>
 </template>
 
@@ -148,6 +145,7 @@ onBeforeUnmount(() => {
 .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .bubble {
     position: absolute;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));

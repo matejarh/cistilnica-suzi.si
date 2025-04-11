@@ -5,6 +5,18 @@ import DryCleaning from '@/Components/Offers/DryCleaning.vue';
 import LinenRental from '@/Components/Offers/LinenRental.vue';
 import SpecialCleaning from '@/Components/Offers/SpecialCleaning.vue';
 import HeroSection from '@/Components/Offers/HeroSection.vue';
+import ContactForm from '@/Components/Offers/ContactForm.vue';
+
+const scrollToContactForm = (targetId) => {
+    const mainElement = document.getElementById('main');
+    const targetElement = document.getElementById(targetId);
+    if (mainElement && targetElement) {
+        mainElement.scrollTo({
+            top: targetElement.offsetTop - mainElement.offsetTop,
+            behavior: 'smooth'
+        });
+    }
+};
 </script>
 
 <template>
@@ -17,11 +29,12 @@ import HeroSection from '@/Components/Offers/HeroSection.vue';
                 <div
                     class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
                     <div class="">
-                        <HeroSection />
+                        <HeroSection @scroll-to-contact="scrollToContactForm"/>
                         <LaundryAndIroning />
                         <DryCleaning />
                         <LinenRental />
                         <SpecialCleaning />
+                        <ContactForm />
                     </div>
                 </div>
             </div>
