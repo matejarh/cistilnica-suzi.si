@@ -33,7 +33,7 @@ Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:10,1')-
 
 
 // Subscriber Routes
-Route::prefix('promocije')->name('subscribers.')->middleware('throttle:4,1')->group(function () {
+Route::prefix('promocije')->name('subscribers.')->middleware('throttle:10,1')->group(function () {
     Route::post('/prijava', [SubscribersController::class, 'confirm'])->name('confirm');
     Route::get('/prijava', [SubscribersController::class, 'store'])->name('store');
     Route::post('/odjava', [SubscribersController::class, 'unsubscribeConfirm'])->name('unsubscribe.confirm');
@@ -84,7 +84,7 @@ Route::middleware([
     Route::prefix('subscribers')->name('subscribers.')->group(function () {
         Route::get('/', [SubscribersController::class, 'index'])->name('index');
         Route::get('/{subscriber}', [SubscribersController::class, 'show'])->name('show');
-        Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy');
+        /* Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy'); */
         Route::get('/{subscriber}/edit', [SubscribersController::class, 'edit'])->name('edit');
         Route::put('/{subscriber}', [SubscribersController::class, 'update'])->name('update');
     });
