@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { Link } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -47,9 +46,9 @@ onBeforeUnmount(() => {
                     <div class="flex">
                         <!-- Logo -->
                         <div class="shrink-0 flex items-center">
-                            <Link :href="route('public.home')">
+                            <inertia-link :href="route('public.home')">
                                 <ApplicationMark class="block h-14 w-auto" />
-                            </Link>
+                            </inertia-link>
                         </div>
 
                         <!-- Navigation Links -->
@@ -64,9 +63,21 @@ onBeforeUnmount(() => {
                             </NavLink>
                         </div>
                     </div>
+                    <div class="flex">
+
+                        <!-- Navigation Links -->
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <NavLink
+                                :href="route('public.prijava')"
+                                :active="route().current('public.prijava')"
+                            >
+                                Akcije
+                            </NavLink>
+                        </div>
+                    </div>
 
                     <!-- Additional Actions -->
-                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <!-- <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <div class="ms-3 relative">
                             <Link
                                 class="text-center flex justify-center items-center flex-col active:font-bold"
@@ -77,7 +88,7 @@ onBeforeUnmount(() => {
                                 <span class="text-neutral-light text-sm font-medium">Akcije</span>
                             </Link>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Hamburger Menu -->
                     <div class="-me-2 flex items-center sm:hidden">

@@ -9,7 +9,8 @@ const links = [
     { route: 'public.about', label: 'O nas' },
     { route: 'public.offers', label: 'Ponudba' },
     { route: 'public.contact', label: 'Kontakt' },
-    { route: 'public.prijava', label: 'Prijava na akcije' },
+    { route: 'public.prijava', label: 'Akcije' },
+    { route: 'login', label: 'Prijava ' },
 ];
 </script>
 
@@ -24,7 +25,7 @@ const links = [
             </span>
             <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-neutral-light sm:mt-0">
                 <li v-for="link in links" :key="link.route" class="me-4 md:me-6">
-                    <inertia-link :href="route(link.route)" class="hover:underline">{{ link.label }}</inertia-link>
+                    <inertia-link :href="route(link.route)" class="hover:underline" :class="{'font-bold underline' : route().current(link.route)}">{{ link.label }}</inertia-link>
                 </li>
             </ul>
         </div>
