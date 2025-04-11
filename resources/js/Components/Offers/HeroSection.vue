@@ -1,6 +1,10 @@
 <script setup>
+import ArrowRightIcon from "@/Icons/ArrowRightIcon.vue";
 import Hero from "@images/banner-hero.png";
 import Logo from "@images/logoSuzi150.png";
+import ButtonPrimary from "../ButtonPrimary.vue";
+
+defineEmits(['scrollToContact']);
 </script>
 
 <template>
@@ -19,6 +23,12 @@ import Logo from "@images/logoSuzi150.png";
                     oblačil. Naša ponudba zajema širok spekter storitev, namenjenih tako posameznikom
                     kot tudi podjetjem – s poudarkom na kakovosti, natančnosti ter zanesljivosti.
                 </p>
+                <div class="space-y-4 md:space-y-0">
+                    <ButtonPrimary as="button" @click="$emit('scrollToContact', 'povpraševanje')">
+                        Pošljite povpraševanje
+                        <ArrowRightIcon class="w-5 h-5 ml-2 -mr-1 rotate-90" />
+                    </ButtonPrimary>
+                </div>
 
             </div>
             <div class="order-1 lg:order-1 mb-6 lg:mb-0 lg:mt-0 md:col-span-5 md:flex md:items-center">
