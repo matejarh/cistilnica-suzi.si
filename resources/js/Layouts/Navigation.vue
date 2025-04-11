@@ -68,8 +68,8 @@ onBeforeUnmount(() => {
                         <!-- Navigation Links -->
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink
-                                :href="route('public.prijava')"
-                                :active="route().current('public.prijava')"
+                                :href="route('public.akcije')"
+                                :active="route().current('public.akcije')"
                             >
                                 Akcije
                             </NavLink>
@@ -81,10 +81,10 @@ onBeforeUnmount(() => {
                         <div class="ms-3 relative">
                             <Link
                                 class="text-center flex justify-center items-center flex-col active:font-bold"
-                                :href="route('public.prijava')"
-                                :active="route().current('public.prijava')"
+                                :href="route('public.akcije')"
+                                :active="route().current('public.akcije')"
                             >
-                                <EnvelopeIcon :is-opened="route().current('public.prijava')" class="w-6 h-6 text-neutral-light" />
+                                <EnvelopeIcon :is-opened="route().current('public.akcije')" class="w-6 h-6 text-neutral-light" />
                                 <span class="text-neutral-light text-sm font-medium">Akcije</span>
                             </Link>
                         </div>
@@ -141,12 +141,12 @@ onBeforeUnmount(() => {
                         </ResponsiveNavLink>
                         <hr class="border-neutral-light mb-4" />
                         <ResponsiveNavLink
-                            :href="route('public.prijava')"
-                            :active="route().current('public.prijava')"
+                            :href="route('public.akcije')"
+                            :active="route().current('public.akcije')"
                             class=""
                         >
                             <div class="flex items-center">
-                                <EnvelopeIcon :is-opened="route().current('public.prijava')" class="w-6 h-6 me-2 text-neutral-light" />
+                                <EnvelopeIcon :is-opened="route().current('public.akcije')" class="w-6 h-6 me-2 text-neutral-light" />
                                 <span class="text-neutral-light font-medium">Akcije</span>
                             </div>
                         </ResponsiveNavLink>

@@ -9,7 +9,7 @@ const links = [
     { route: 'public.about', label: 'O nas' },
     { route: 'public.offers', label: 'Ponudba' },
     { route: 'public.contact', label: 'Kontakt' },
-    { route: 'public.prijava', label: 'Akcije' },
+    { route: 'public.akcije', label: 'Akcije' },
     { route: 'login', label: 'Prijava ' },
 ];
 </script>
