@@ -118,7 +118,7 @@ onMounted(() => {
 
                             <!-- Illustration -->
                             <div class="order-1 md:order-2 flex justify-center">
-                                <img :src="ContactIllustration" alt="Kontakt ilustracija" class="w-full max-w-md rounded-lg shadow-lg">
+                                <img :src="ContactIllustration" alt="Kontakt ilustracija" class="w-full max-w-md ">
                             </div>
                         </div>
                     </div>
