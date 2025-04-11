@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\InquiriesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SubscribersController;
 
 // Public Routes
-Route::name('public.')->group(function () {
+Route::name('public.')->middleware('throttle:60,1')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Landing');
     })->name('home');
@@ -27,6 +28,14 @@ Route::name('public.')->group(function () {
         return Inertia::render('Prijava');
     })->name('prijava');
 });
+
+// Offeres Routes
+Route::prefix('povpraševanja')->name('inquiries.')->middleware('throttle:60,1')->group(function () {
+    Route::post('/', [InquiriesController::class, 'store'])->name('store');
+});
+
+// Contact Routes
+
 
 // Subscriber Routes
 Route::prefix('promocije')->name('subscribers.')->middleware('throttle:4,1')->group(function () {
