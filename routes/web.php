@@ -43,9 +43,9 @@ Route::prefix('promocije')->name('subscribers.')->middleware('throttle:4,1')->gr
 if (app()->environment('local')) {
     Route::get('/test-email/{template}', function () {
         $template = request('template');
-
-        $token = hash_hmac('sha256', 'test-email', config('app.key'));
-        $email = encrypt('example@example.com');
+        $email = fake()->safeEmail();
+        $token = hash_hmac('sha256', $email, config('app.key'));
+        $email = encrypt($email);
         $data = [
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
