@@ -6,7 +6,7 @@ use App\Models\Promotion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PromotionController extends Controller
+class PromotionsController extends Controller
 {
 
     /**

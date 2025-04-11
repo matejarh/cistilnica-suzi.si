@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\InquiriesController;
-use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\PromotionsController;
 use App\Models\Inquiry;
 use App\Models\Promotion;
 use Illuminate\Foundation\Application;
@@ -89,11 +89,11 @@ Route::middleware([
         Route::put('/{subscriber}', [SubscribersController::class, 'update'])->name('update');
     });
     Route::prefix('promocije')->name('promotions.')->group(function () {
-        Route::get('/', [PromotionController::class, 'index'])->name('index');
-        Route::get('/{promotion}', [PromotionController::class, 'show'])->name('show');
-        Route::delete('/{promotion}', [PromotionController::class, 'destroy'])->name('destroy');
-        Route::get('/{promotion}/edit', [PromotionController::class, 'edit'])->name('edit');
-        Route::put('/{promotion}', [PromotionController::class, 'update'])->name('update');
+        Route::get('/', [PromotionsController::class, 'index'])->name('index');
+        Route::get('/{promotion}', [PromotionsController::class, 'show'])->name('show');
+        Route::delete('/{promotion}', [PromotionsController::class, 'destroy'])->name('destroy');
+        Route::get('/{promotion}/edit', [PromotionsController::class, 'edit'])->name('edit');
+        Route::put('/{promotion}', [PromotionsController::class, 'update'])->name('update');
     });
 });
 
