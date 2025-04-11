@@ -12,6 +12,10 @@
             margin: 0;
             padding: 0;
         }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
         .wrapper {
             display: flex;
             justify-content: center;

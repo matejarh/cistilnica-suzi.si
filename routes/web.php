@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InquiriesController;
+use App\Models\Inquiry;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,9 +30,10 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
     })->name('prijava');
 });
 
-// Offeres Routes
-Route::prefix('povpraševanja')->name('inquiries.')->middleware('throttle:60,1')->group(function () {
-    Route::post('/', [InquiriesController::class, 'store'])->name('store');
+// Inquiries Public Routes
+Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:4,1')->group(function () {
+    Route::get('/potrditev', [InquiriesController::class, 'store'])->name('store');
+    Route::post('/potrditev', [InquiriesController::class, 'sendConfirmationEmail'])->name('confirm');
 });
 
 // Contact Routes
@@ -50,8 +52,18 @@ Route::prefix('promocije')->name('subscribers.')->middleware('throttle:4,1')->gr
 Route::get('/test-email', function () {
     $token = 'example-token';
     $email = 'example@example.com';
+    $data = [
+        'name' => 'Test test',
+        'email' => 'Test test',
+        'phone' => 'Test test',
+        'company' => 'Test test',
+        'address' => 'Test test',
+        'subject' => 'Test test',
+        'message' => 'Test test',
+    ];
+    $inquiry = Inquiry::first();
 
-    return view('emails.unsubscribe-confirmation', compact('token', 'email'));
+    return view('emails.new-inquiry', compact('token', 'email', 'data', 'inquiry'));
 })->name('test.email');
 
 // Authenticated Routes
@@ -60,7 +72,16 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+
+    Route::prefix('povprasevanja')->name('inquiries.')->group(function () {
+        Route::get('/', [InquiriesController::class, 'index'])->name('index');
+        Route::get('/{inquiry}', [InquiriesController::class, 'show'])->name('show');
+        Route::delete('/{inquiry}', [InquiriesController::class, 'destroy'])->name('destroy');
+        Route::get('/{inquiry}/edit', [InquiriesController::class, 'edit'])->name('edit');
+        Route::put('/{inquiry}', [InquiriesController::class, 'update'])->name('update');
+        Route::get('/{inquiry}/restore', [InquiriesController::class, 'restore'])->name('restore');
+        Route::get('/{inquiry}/delete', [InquiriesController::class, 'delete'])->name('delete');
+    });
 });
+
