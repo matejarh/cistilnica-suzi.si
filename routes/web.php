@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InquiriesController;
+use App\Http\Controllers\PromotionController;
 use App\Models\Inquiry;
 use App\Models\Promotion;
 use Illuminate\Foundation\Application;
@@ -18,7 +19,7 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
 
     Route::get('/kontakt', fn() => Inertia::render('Contact'))->name('contact');
 
-    Route::get('/promocije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::latest()->take(10)]))->name('prijava');
+    Route::get('/akcije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::latest()->take(10)]))->name('akcije');
 });
 
 
@@ -78,6 +79,21 @@ Route::middleware([
         Route::put('/{inquiry}', [InquiriesController::class, 'update'])->name('update');
         Route::get('/{inquiry}/restore', [InquiriesController::class, 'restore'])->name('restore');
         Route::get('/{inquiry}/delete', [InquiriesController::class, 'delete'])->name('delete');
+    });
+
+    Route::prefix('subscribers')->name('subscribers.')->group(function () {
+        Route::get('/', [SubscribersController::class, 'index'])->name('index');
+        Route::get('/{subscriber}', [SubscribersController::class, 'show'])->name('show');
+        Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy');
+        Route::get('/{subscriber}/edit', [SubscribersController::class, 'edit'])->name('edit');
+        Route::put('/{subscriber}', [SubscribersController::class, 'update'])->name('update');
+    });
+    Route::prefix('promocije')->name('promotions.')->group(function () {
+        Route::get('/', [PromotionController::class, 'index'])->name('index');
+        Route::get('/{promotion}', [PromotionController::class, 'show'])->name('show');
+        Route::delete('/{promotion}', [PromotionController::class, 'destroy'])->name('destroy');
+        Route::get('/{promotion}/edit', [PromotionController::class, 'edit'])->name('edit');
+        Route::put('/{promotion}', [PromotionController::class, 'update'])->name('update');
     });
 });
 
