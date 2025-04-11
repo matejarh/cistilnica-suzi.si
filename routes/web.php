@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InquiriesController;
 use App\Models\Inquiry;
+use App\Models\Promotion;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
 
     Route::get('/kontakt', fn() => Inertia::render('Contact'))->name('contact');
 
-    Route::get('/promocije', fn() => Inertia::render('Akcije'))->name('prijava');
+    Route::get('/promocije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::latest()->take(10)]))->name('prijava');
 });
 
 
