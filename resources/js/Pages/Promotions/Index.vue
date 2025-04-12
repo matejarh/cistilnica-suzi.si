@@ -1,15 +1,16 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useForm, usePage, router } from '@inertiajs/vue3';
+import { formatDateToSlovenian, formatDateToISO } from '@/utils/dateUtils';
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
-import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
-import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
-import TrashIcon from '@/Icons/TrashIcon.vue';
+import PromotionCard from '@/Components/PromotionCard.vue';
 
 // Get promotions from the page props
 const { promotions } = usePage().props;
@@ -31,6 +32,8 @@ const promotionForm = useForm({
     start_date: '',
     end_date: '',
 });
+
+const today = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
 
 // Open the modal for creating a new promotion
 const openCreateModal = () => {
@@ -58,8 +61,10 @@ const openEditModal = (promotion) => {
     currentPromotion.value = promotion;
     promotionForm.name = promotion.name;
     promotionForm.description = promotion.description;
-    promotionForm.start_date = promotion.formated_start_date;
-    promotionForm.end_date = promotion.formated_end_date;
+    // promotionForm.start_date = formatDateToSlovenian(promotion.start_date); // Convert to Slovenian format
+    // promotionForm.end_date = formatDateToSlovenian(promotion.end_date); // Convert to Slovenian format
+    promotionForm.start_date = new Date(promotion.start_date); // Convert to Date object
+    promotionForm.end_date = new Date(promotion.end_date); // Convert to Date object
     showModal.value = true;
 };
 
@@ -113,6 +118,9 @@ const confirmToSend = () => {
 
 // Handle form submission
 const handleSubmit = () => {
+    promotionForm.start_date = promotionForm.start_date.toISOString().split('T')[0]; // Convert to ISO format
+    promotionForm.end_date = promotionForm.end_date.toISOString().split('T')[0]; // Convert to ISO format
+
     if (isEditMode.value) {
         // Update promotion
         promotionForm.put(route('promotions.update', currentPromotion.value), {
@@ -135,7 +143,7 @@ const handleSubmit = () => {
 };
 
 // Watchers for validation
-/* watch(
+watch(
     () => promotionForm.start_date,
     (newStartDate) => {
         const now = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
@@ -167,7 +175,7 @@ watch(
             promotionForm.errors.end_date = null;
         }
     }
-); */
+);
 </script>
 
 <template>
@@ -194,36 +202,14 @@ watch(
                     <h2 class="text-xl font-bold text-primary-dark">Seznam akcij</h2>
                     <div v-if="$page.props.promotions.total > 0" class="mt-4 space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div v-for="promotion in $page.props.promotions.data" :key="promotion.id"
-                                class="border-b pb-4 bg-neutral-light/60 rounded-lg shadow-lg p-4">
-
-                                <div class="mb-2 flex justify-between border-b border-neutral-dark pb-2">
-                                    <div class="flex space-x-4">
-                                        <button @click="openSendToSubscribersConfirmationModal(promotion)"
-                                            class="text-blue-500 hover:underline">
-                                            <PaperAirplaneIcon class="w-5 h-5 " />
-
-                                        </button>
-                                        <button @click="openEditModal(promotion)" class="text-blue-500 hover:underline">
-                                            <PencileSquareIcon class="w-5 h-5 " />
-
-                                        </button>
-                                    </div>
-                                    <button @click="openDeleteConfirmation(promotion)"
-                                        class="text-red-500 hover:underline">
-                                        <TrashIcon class="w-5 h-5 " />
-                                    </button>
-                                </div>
-
-                                <h3 class="text-lg font-semibold text-gray-800">{{ promotion.name }}</h3>
-                                <p class="text-gray-600" v-html="promotion.description.replace(/\n/g, '<br>')"></p>
-                                <p class="text-gray-500">
-                                    Začetni datum: {{ new Date(promotion.start_date).toLocaleDateString('sl-SI')
-                                    }}<br />
-                                    Končni datum: {{ new Date(promotion.end_date).toLocaleDateString('sl-SI') }}
-                                </p>
-                            </div>
-
+                            <PromotionCard
+                                v-for="promotion in $page.props.promotions.data"
+                                :key="promotion.id"
+                                :promotion="promotion"
+                                @edit="openEditModal(promotion)"
+                                @delete="openDeleteConfirmation(promotion)"
+                                @send="openSendToSubscribersConfirmationModal(promotion)"
+                            />
                         </div>
                     </div>
                     <div v-else class="text-gray-600">
@@ -235,7 +221,7 @@ watch(
 
         <!-- Dialog Modal -->
         <DialogModal :show="showModal" @close="showModal = false">
-            <template #header>
+            <template #title>
                 <h2 class="text-lg font-semibold text-neutral-light">
                     {{ isEditMode ? 'Uredi akcijo' : 'Dodaj novo akcijo' }}
                 </h2>
@@ -259,14 +245,29 @@ watch(
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <InputLabel for="start_date" value="Začetni datum" />
-                            <input id="start_date" v-model="promotionForm.start_date" type="date" lang="sl-SI" required
-                                class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" />
+                            <Datepicker class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
+                                        v-model="promotionForm.start_date"
+                                        :locale="'sl'"
+                                        :format="'dd.MM.yyyy'"
+                                        cancelText="prekliči"
+                                        selectText="izberi"
+                                        :min-date="today"
+                                        :max-date="promotionForm.end_date" />
+                            <!-- <input id="start_date" v-model="promotionForm.start_date" type="text" placeholder="dd.MM.yyyy" lang="sl-SI" required
+                                class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" /> -->
                             <InputError :message="promotionForm.errors.start_date" class="mt-2" />
                         </div>
                         <div>
                             <InputLabel for="end_date" value="Končni datum" />
-                            <input id="end_date" v-model="promotionForm.end_date" type="date" lang="sl-SI" required
-                                class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" />
+                            <Datepicker class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
+                                        v-model="promotionForm.end_date"
+                                        :locale="'sl'"
+                                        :format="'dd.MM.yyyy'"
+                                        cancelText="prekliči"
+                                        selectText="izberi"
+                                        :min-date="promotionForm.start_date || today" />
+                            <!-- <input id="end_date" v-model="promotionForm.end_date" type="text" placeholder="dd.MM.yyyy" lang="sl-SI" required
+                                class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" /> -->
                             <InputError :message="promotionForm.errors.end_date" class="mt-2" />
                         </div>
                     </div>
