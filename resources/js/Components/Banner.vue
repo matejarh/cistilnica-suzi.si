@@ -14,6 +14,12 @@ watchEffect(async () => {
     style.value = page.props.jetstream.flash?.bannerStyle || 'success';
     message.value = page.props.jetstream.flash?.banner || '';
     show.value = true;
+
+    if (message.value) {
+        setTimeout(() => {
+            show.value = false;
+        }, 10000);
+    }
 });
 </script>
 
