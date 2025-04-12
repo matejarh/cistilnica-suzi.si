@@ -37,6 +37,7 @@ const today = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM
 
 // Open the modal for creating a new promotion
 const openCreateModal = () => {
+    promotionForm.clearErrors(); // Clear any previous errors
     isEditMode.value = false;
     promotionForm.reset();
     showModal.value = true;
@@ -57,14 +58,15 @@ const openSendToSubscribersConfirmationModal = (promotion) => {
 
 // Open the modal for editing an existing promotion
 const openEditModal = (promotion) => {
+    promotionForm.clearErrors(); // Clear any previous errors
     isEditMode.value = true;
     currentPromotion.value = promotion;
     promotionForm.name = promotion.name;
     promotionForm.description = promotion.description;
     // promotionForm.start_date = formatDateToSlovenian(promotion.start_date); // Convert to Slovenian format
     // promotionForm.end_date = formatDateToSlovenian(promotion.end_date); // Convert to Slovenian format
-    promotionForm.start_date = new Date(promotion.start_date); // Convert to Date object
-    promotionForm.end_date = new Date(promotion.end_date); // Convert to Date object
+    promotionForm.start_date = promotion.start_date; // Convert to Date object
+    promotionForm.end_date = promotion.end_date; // Convert to Date object
     showModal.value = true;
 };
 
@@ -118,8 +120,8 @@ const confirmToSend = () => {
 
 // Handle form submission
 const handleSubmit = () => {
-    promotionForm.start_date = promotionForm.start_date.toISOString().split('T')[0]; // Convert to ISO format
-    promotionForm.end_date = promotionForm.end_date.toISOString().split('T')[0]; // Convert to ISO format
+    //promotionForm.start_date =new Date(promotionForm.start_date).toISOString().split('T')[0]; // Convert to ISO format
+    //promotionForm.end_date = new Date(promotionForm.end_date).toISOString().split('T')[0]; // Convert to ISO format
 
     if (isEditMode.value) {
         // Update promotion
@@ -142,10 +144,19 @@ const handleSubmit = () => {
     }
 };
 
+const handleCancel = () => {
+    showModal.value = false;
+    promotionForm.reset();
+};
+
 // Watchers for validation
 watch(
     () => promotionForm.start_date,
     (newStartDate) => {
+        if (!newStartDate) {
+            promotionForm.errors.start_date = 'Začetni datum je obvezen.';
+            return;
+        }
         const now = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
         if (newStartDate < now) {
             promotionForm.errors.start_date = 'Začetni datum ne sme biti pred današnjim datumom.';
@@ -220,7 +231,7 @@ watch(
         </div>
 
         <!-- Dialog Modal -->
-        <DialogModal :show="showModal" @close="showModal = false">
+        <DialogModal :show="showModal" @close="showModal = false" max-width="4xl">
             <template #title>
                 <h2 class="text-lg font-semibold text-neutral-light">
                     {{ isEditMode ? 'Uredi akcijo' : 'Dodaj novo akcijo' }}
@@ -229,14 +240,14 @@ watch(
             <template #content>
                 <form @submit.prevent="handleSubmit" class="space-y-4">
                     <div>
-                        <InputLabel for="name" value="Naslov" />
+                        <InputLabel for="name" value="Naslov" class="mb-2" />
                         <input id="name" v-model="promotionForm.name" type="text" required
                             class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
                             placeholder="Vnesite naslov akcije" />
                         <InputError :message="promotionForm.errors.name" class="mt-2" />
                     </div>
                     <div>
-                        <InputLabel for="description" value="Opis" />
+                        <InputLabel for="description" value="Opis" class="mb-2" />
                         <textarea id="description" v-model="promotionForm.description" required
                             class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
                             placeholder="Vnesite opis akcije"></textarea>
@@ -244,8 +255,8 @@ watch(
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <InputLabel for="start_date" value="Začetni datum" />
-                            <Datepicker class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
+                            <InputLabel for="start_date" value="Začetni datum" class="mb-2" />
+                            <Datepicker
                                         v-model="promotionForm.start_date"
                                         :locale="'sl'"
                                         :format="'dd.MM.yyyy'"
@@ -258,8 +269,8 @@ watch(
                             <InputError :message="promotionForm.errors.start_date" class="mt-2" />
                         </div>
                         <div>
-                            <InputLabel for="end_date" value="Končni datum" />
-                            <Datepicker class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
+                            <InputLabel for="end_date" value="Končni datum" class="mb-2" />
+                            <Datepicker
                                         v-model="promotionForm.end_date"
                                         :locale="'sl'"
                                         :format="'dd.MM.yyyy'"
@@ -275,7 +286,7 @@ watch(
             </template>
             <template #footer>
                 <div class="flex items-center space-x-4">
-                    <button @click="showModal = false"
+                    <button @click="handleCancel" :disabled="promotionForm.processing"
                         class="px-4 py-2 text-sm font-medium text-gray-700 bg-neutral rounded-lg hover:bg-gray-300">
                         Prekliči
                     </button>
@@ -336,3 +347,45 @@ watch(
         </ConfirmationModal>
     </SiteLayout>
 </template>
+
+<style>
+
+:root {
+    /*General*/
+    --dp-font-family: "Latto", "Segoe UI", "Roboto", "Helvetica", "Arial", "Noto Sans", sans-serif; /*Font family*/
+    --dp-border-radius: 0.5rem; /*Configurable border-radius*/
+    --dp-cell-border-radius: 0.2rem; /*Specific border radius for the calendar cell*/
+    --dp-common-transition: all 0.1s ease-in; /*Generic transition applied on buttons and calendar cells*/
+
+    /*Sizing*/
+    --dp-button-height: 35px; /*Size for buttons in overlays*/
+    --dp-month-year-row-height: 35px; /*Height of the month-year select row*/
+    --dp-month-year-row-button-size: 35px; /*Specific height for the next/previous buttons*/
+    --dp-button-icon-height: 20px; /*Icon sizing in buttons*/
+    --dp-cell-size: 35px; /*Width and height of calendar cell*/
+    --dp-cell-padding: 5px; /*Padding in the cell*/
+    --dp-common-padding: 10px; /*Common padding used*/
+    --dp-input-icon-padding: 35px; /*Padding on the left side of the input if icon is present*/
+    --dp-input-padding: 6px 30px 6px 12px; /*Padding in the input*/
+    --dp-input-padding: calc(var(--spacing) * 3); /*Padding in the input*/
+    --dp-menu-min-width: 260px; /*Adjust the min width of the menu*/
+    --dp-action-buttons-padding: 2px 5px; /*Adjust padding for the action buttons in action row*/
+    --dp-row-margin:  5px 0; /*Adjust the spacing between rows in the calendar*/
+    --dp-calendar-header-cell-padding:  0.5rem; /*Adjust padding in calendar header cells*/
+    --dp-two-calendars-spacing:  10px; /*Space between multiple calendars*/
+    --dp-overlay-col-padding:  3px; /*Padding in the overlay column*/
+    --dp-time-inc-dec-button-size:  32px; /*Sizing for arrow buttons in the time picker*/
+    --dp-menu-padding: 6px 8px; /*Menu padding*/
+
+    /*Font sizes*/
+    --dp-font-size: 1rem; /*Default font-size*/
+    --dp-preview-font-size: 0.8rem; /*Font size of the date preview in the action row*/
+    --dp-time-font-size: 0.8rem; /*Font size in the time picker*/
+
+    /*Transitions*/
+    --dp-animation-duration: 0.1s; /*Transition duration*/
+    --dp-menu-appear-transition-timing: cubic-bezier(.4, 0, 1, 1); /*Timing on menu appear animation*/
+    --dp-transition-timing: ease-out; /*Timing on slide animations*/
+}
+
+</style>
