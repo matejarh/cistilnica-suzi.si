@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\SendPromotionToSubscriberJob;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -43,6 +44,63 @@ class Promotion extends Model
     public function getImageUrlAttribute()
     {
         return $this->image_path ? asset('storage/' . $this->image_path) : null;
+    }
+
+    /**Filter
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $search
+     * @param bool|null $trashed
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $search = null, $trashed = null)
+    {
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        }
+        if ($trashed) {
+            $query->onlyTrashed();
+        } else {
+            $query->whereNull('deleted_at');
+        }
+        return $query;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+    public function scopeInactive($query)
+    {
+        return $query->where('is_active', false);
+    }
+    public function scopeExpired($query)
+    {
+        return $query->where('end_date', '<', now());
+    }
+    public function scopeUpcoming($query)
+    {
+        return $query->where('start_date', '>', now());
+    }
+    public function scopeOngoing($query)
+    {
+        return $query->where('start_date', '<=', now())
+            ->where('end_date', '>=', now());
+    }
+
+    /*
+     * Send the promotion to all active subscribers
+     */
+    public function sendToSubscribers()
+    {
+        // Assuming you have a method to send the promotion to subscribers
+        // This is just a placeholder for the actual implementation
+        $subscribers = Subscriber::active()->get();
+        foreach ($subscribers as $subscriber) {
+            // Send the promotion to the subscriber
+            // You can use a notification or a mailer here
+            SendPromotionToSubscriberJob::dispatch($this, $subscriber);
+        }
     }
 
 
