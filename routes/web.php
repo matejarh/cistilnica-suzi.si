@@ -29,9 +29,6 @@ Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:10,1')-
     Route::post('/potrditev', [InquiriesController::class, 'sendConfirmationEmail'])->name('confirm');
 });
 
-// Contact Routes
-
-
 // Subscriber Routes
 Route::prefix('promocije')->name('subscribers.')->middleware('throttle:10,1')->group(function () {
     Route::post('/prijava', [SubscribersController::class, 'confirm'])->name('confirm');
@@ -81,19 +78,21 @@ Route::middleware([
         Route::get('/{inquiry}/delete', [InquiriesController::class, 'delete'])->name('delete');
     });
 
-    Route::prefix('subscribers')->name('subscribers.')->group(function () {
+    Route::prefix('narocniki')->name('subscribers.')->group(function () {
         Route::get('/', [SubscribersController::class, 'index'])->name('index');
         Route::get('/{subscriber}', [SubscribersController::class, 'show'])->name('show');
-        /* Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy'); */
+        Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy');
         Route::get('/{subscriber}/edit', [SubscribersController::class, 'edit'])->name('edit');
         Route::put('/{subscriber}', [SubscribersController::class, 'update'])->name('update');
     });
     Route::prefix('promocije')->name('promotions.')->group(function () {
         Route::get('/', [PromotionsController::class, 'index'])->name('index');
+        Route::post('/', [PromotionsController::class, 'store'])->name('store');
         Route::get('/{promotion}', [PromotionsController::class, 'show'])->name('show');
         Route::delete('/{promotion}', [PromotionsController::class, 'destroy'])->name('destroy');
         Route::get('/{promotion}/edit', [PromotionsController::class, 'edit'])->name('edit');
         Route::put('/{promotion}', [PromotionsController::class, 'update'])->name('update');
+        Route::post('/{promotion}/send', [PromotionsController::class, 'send'])->name('send');
     });
 });
 
