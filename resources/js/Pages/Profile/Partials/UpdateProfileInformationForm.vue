@@ -8,6 +8,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import UserIcon from '@/Icons/UserIcon.vue';
+import AtSymbolIcon from '@/Icons/AtSymbolIcon.vue';
 
 const props = defineProps({
     user: Object,
@@ -131,28 +133,38 @@ const clearPhotoFileInput = () => {
             <!-- Ime -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Ime" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="name"
-                />
+                <div class="relative w-full">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <UserIcon class="w-5 h-5 " :class="form.errors.name ? 'text-red-500' : 'text-primary'" />
+                    </div>
+                    <TextInput
+                        id="name"
+                        v-model="form.name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="name"
+                    />
+                </div>
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
 
             <!-- E-pošta -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="email" value="E-pošta" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="username"
-                />
+                <div class="relative w-full">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <AtSymbolIcon class="w-5 h-5 " :class="form.errors.name ? 'text-red-500' : 'text-primary'" />
+                    </div>
+                    <TextInput
+                        id="email"
+                        v-model="form.email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="username"
+                    />
+                </div>
                 <InputError :message="form.errors.email" class="mt-2" />
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">

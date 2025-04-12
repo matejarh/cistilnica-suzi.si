@@ -6,6 +6,7 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import SiteLayout from '@/Layouts/SiteLayout.vue';
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -14,9 +15,9 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profil">
+    <SiteLayout title="Profil">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-neutral-light leading-tight">
                 Profil
             </h2>
         </template>
@@ -53,5 +54,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </SiteLayout>
 </template>

@@ -8,6 +8,10 @@ defineProps({
     navigationLinks: {
         type: Array,
         required: true
+    },
+    showingNavigationDropdown: {
+        type: Boolean,
+        required: true
     }
 });
 </script>

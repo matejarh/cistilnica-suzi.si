@@ -7,6 +7,7 @@ import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import KeyIcon from '@/Icons/KeyIcon.vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -48,8 +49,9 @@ const closeModal = () => {
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                Ko je vaš račun izbrisan, bodo vsi njegovi viri in podatki trajno izbrisani. Preden izbrišete svoj račun, prenesite vse podatke ali informacije, ki jih želite obdržati.
+            <div class="max-w-xl text-sm text-neutral-light">
+                Ko je vaš račun izbrisan, bodo vsi njegovi viri in podatki trajno izbrisani. Preden izbrišete svoj
+                račun, prenesite vse podatke ali informacije, ki jih želite obdržati.
             </div>
 
             <div class="mt-5">
@@ -65,19 +67,19 @@ const closeModal = () => {
                 </template>
 
                 <template #content>
-                    Ali ste prepričani, da želite izbrisati svoj račun? Ko je vaš račun izbrisan, bodo vsi njegovi viri in podatki trajno izbrisani. Prosimo, vnesite svoje geslo, da potrdite, da želite trajno izbrisati svoj račun.
+                    Ali ste prepričani, da želite izbrisati svoj račun? Ko je vaš račun izbrisan, bodo vsi njegovi viri
+                    in podatki trajno izbrisani. Prosimo, vnesite svoje geslo, da potrdite, da želite trajno izbrisati
+                    svoj račun.
 
                     <div class="mt-4">
-                        <TextInput
-                            ref="passwordInput"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-1 block w-3/4"
-                            placeholder="Geslo"
-                            autocomplete="current-password"
-                            @keyup.enter="deleteUser"
-                        />
-
+                        <div class="relative w-full">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <KeyIcon class="w-5 h-5 " :class="form.errors.password ? 'text-red-500' : 'text-primary'" />
+                            </div>
+                            <TextInput ref="passwordInput" v-model="form.password" type="password"
+                                class="mt-1 block w-3/4" placeholder="Geslo" autocomplete="current-password"
+                                @keyup.enter="deleteUser" />
+                        </div>
                         <InputError :message="form.errors.password" class="mt-2" />
                     </div>
                 </template>
@@ -87,12 +89,8 @@ const closeModal = () => {
                         Prekliči
                     </SecondaryButton>
 
-                    <DangerButton
-                        class="ms-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="deleteUser"
-                    >
+                    <DangerButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                        @click="deleteUser">
                         Izbriši račun
                     </DangerButton>
                 </template>

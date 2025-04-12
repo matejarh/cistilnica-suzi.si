@@ -9,6 +9,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import QrCodeIcon from '@/Icons/QrCodeIcon.vue';
 
 const props = defineProps({
     requiresConfirmation: Boolean,
@@ -107,47 +108,47 @@ const disableTwoFactorAuthentication = () => {
 <template>
     <ActionSection>
         <template #title>
-            Dvofaktorska avtentikacija
+            Dvostopenjska avtentikacija
         </template>
 
         <template #description>
-            Dodajte dodatno varnost svojemu računu z uporabo dvofaktorske avtentikacije.
+            Dodajte dodatno varnost svojemu računu z uporabo dvostopenjske avtentikacije.
         </template>
 
         <template #content>
-            <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Omogočili ste dvofaktorsko avtentikacijo.
+            <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-neutral-light">
+                Omogočili ste dvostopenjsko avtentikacijo.
             </h3>
 
-            <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Dokončajte omogočanje dvofaktorske avtentikacije.
+            <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-neutral-light">
+                Dokončajte omogočanje dvostopenjske avtentikacije.
             </h3>
 
-            <h3 v-else class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Niste omogočili dvofaktorske avtentikacije.
+            <h3 v-else class="text-lg font-medium text-neutral-light">
+                Dvostopenjska avtentikacija ni omogočena.
             </h3>
 
-            <div class="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+            <div class="mt-3 max-w-xl text-sm text-neutral-light">
                 <p>
-                    Ko je dvofaktorska avtentikacija omogočena, boste med prijavo pozvani k vnosu varne, naključne kode. To kodo lahko pridobite iz aplikacije Google Authenticator na svojem telefonu.
+                    Ko je Dvostopenjska avtentikacija omogočena, boste med prijavo pozvani k vnosu varne, naključne kode. To kodo lahko pridobite iz aplikacije Google Authenticator na svojem telefonu.
                 </p>
             </div>
 
             <div v-if="twoFactorEnabled">
                 <div v-if="qrCode">
-                    <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+                    <div class="mt-4 max-w-xl text-sm text-neutral-light">
                         <p v-if="confirming" class="font-semibold">
-                            Za dokončanje omogočanja dvofaktorske avtentikacije skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ in zagotovite generirano OTP kodo.
+                            Za dokončanje omogočanja dvostopenjske avtentikacije skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ in zagotovite generirano OTP (one-time-password) kodo.
                         </p>
 
                         <p v-else>
-                            Dvofaktorska avtentikacija je zdaj omogočena. Skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ.
+                            Dvostopenjska avtentikacija je zdaj omogočena. Skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ.
                         </p>
                     </div>
 
                     <div class="mt-4 p-2 inline-block bg-white" v-html="qrCode" />
 
-                    <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+                    <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-neutral-light">
                         <p class="font-semibold">
                             Nastavitveni ključ: <span v-html="setupKey"></span>
                         </p>
@@ -155,27 +156,31 @@ const disableTwoFactorAuthentication = () => {
 
                     <div v-if="confirming" class="mt-4">
                         <InputLabel for="code" value="Koda" />
-
-                        <TextInput
-                            id="code"
-                            v-model="confirmationForm.code"
-                            type="text"
-                            name="code"
-                            class="block mt-1 w-1/2"
-                            inputmode="numeric"
-                            autofocus
-                            autocomplete="one-time-code"
-                            @keyup.enter="confirmTwoFactorAuthentication"
-                        />
+                        <div class="relative w-full">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <QrCodeIcon class="w-5 h-5 " :class="confirmationForm.errors.code ? 'text-red-500' : 'text-primary'" />
+                            </div>
+                            <TextInput
+                                id="code"
+                                v-model="confirmationForm.code"
+                                type="text"
+                                name="code"
+                                class="block mt-1 w-1/2"
+                                inputmode="numeric"
+                                autofocus
+                                autocomplete="one-time-code"
+                                @keyup.enter="confirmTwoFactorAuthentication"
+                            />
+                        </div>
 
                         <InputError :message="confirmationForm.errors.code" class="mt-2" />
                     </div>
                 </div>
 
                 <div v-if="recoveryCodes.length > 0 && ! confirming">
-                    <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+                    <div class="mt-4 max-w-xl text-sm text-neutral-light">
                         <p class="font-semibold">
-                            Shranite te obnovitvene kode v varen upravitelj gesel. Uporabite jih lahko za obnovitev dostopa do svojega računa, če izgubite napravo za dvofaktorsko avtentikacijo.
+                            Shranite te obnovitvene kode v varen upravitelj gesel. Uporabite jih lahko za obnovitev dostopa do svojega računa, če izgubite napravo za dvostopenjsko avtentikacijo.
                         </p>
                     </div>
 
@@ -214,7 +219,7 @@ const disableTwoFactorAuthentication = () => {
                             v-if="recoveryCodes.length > 0 && ! confirming"
                             class="me-3"
                         >
-                            Ustvari obnovitvene kode znova
+                            Znova ustvari obnovitvene kode
                         </SecondaryButton>
                     </ConfirmsPassword>
 

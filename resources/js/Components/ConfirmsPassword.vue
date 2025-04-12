@@ -5,6 +5,7 @@ import InputError from './InputError.vue';
 import PrimaryButton from './PrimaryButton.vue';
 import SecondaryButton from './SecondaryButton.vue';
 import TextInput from './TextInput.vue';
+import KeyIcon from '@/Icons/KeyIcon.vue';
 
 const emit = defineEmits(['confirmed']);
 
@@ -85,16 +86,13 @@ const closeModal = () => {
                 {{ content }}
 
                 <div class="mt-4">
-                    <TextInput
-                        ref="passwordInput"
-                        v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                        @keyup.enter="confirmPassword"
-                    />
-
+                    <div class="relative w-full">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <KeyIcon class="w-5 h-5 " :class="form.errors.name ? 'text-red-500' : 'text-primary'" />
+                        </div>
+                        <TextInput ref="passwordInput" v-model="form.password" type="password" class="mt-1 block w-3/4"
+                            placeholder="Password" autocomplete="current-password" @keyup.enter="confirmPassword" />
+                    </div>
                     <InputError :message="form.error" class="mt-2" />
                 </div>
             </template>
@@ -104,12 +102,8 @@ const closeModal = () => {
                     Cancel
                 </SecondaryButton>
 
-                <PrimaryButton
-                    class="ms-3"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="confirmPassword"
-                >
+                <PrimaryButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                    @click="confirmPassword">
                     {{ button }}
                 </PrimaryButton>
             </template>
