@@ -29,10 +29,12 @@ class SubscribersController extends Controller
         $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
 
         // Store the hashed token and email in the session
-        session(['subscriber_confirmation' => [
-            'email' => $email,
-            'token' => $token,
-        ]]);
+        session([
+            "subscriber_confirmation_$token" => [
+                'email' => $email,
+                'token' => $token,
+            ]
+        ]);
 
         // Send confirmation email
         Mail::send('emails.confirm-subscription', ['token' => $token, 'email' => encrypt($email)], function ($message) use ($email) {
@@ -54,9 +56,9 @@ class SubscribersController extends Controller
     public function store(Request $request)
     {
         // Validate session data
-        $this->validateSession('subscriber_confirmation', $request);
+        $this->validateSession('subscriber_confirmation_' . $request->input('token'), $request);
 
-        $email = session('subscriber_confirmation.email');
+        $email = session('subscriber_confirmation_' . $request->input('token') . '.email');
 
         // Save the subscriber to the database
         Subscriber::create([
@@ -67,10 +69,14 @@ class SubscribersController extends Controller
         ]);
 
         // Clear the session data
-        session()->forget('subscriber_confirmation');
+        session()->forget('subscriber_confirmation_' . $request->input('token'));
 
         // Flash success message and redirect back
-        return $this->flashAndRedirect('Uspešno ste se prijavili na naše akcije.');
+        //return $this->flashAndRedirect('Uspešno ste se prijavili na naše akcije.');
+        session()->flash('flash.banner', 'Uspešno ste se prijavili na naše akcije.');
+        session()->flash('flash.bannerStyle', 'success');
+        // Flash success message and redirect to public.home
+        return redirect()->route('public.home')->with('success', 'Uspešno ste se prijavili na naše akcije.');
     }
 
     /**
@@ -91,7 +97,7 @@ class SubscribersController extends Controller
         // Check if the email is already unsubscribed
         if (!Subscriber::where('email', $validated['email'])->where('is_subscribed', true)->exists()) {
             return redirect()->back()->withErrors([
-            'email' => 'Ta elektronski naslov je že odjavljen.',
+                'email' => 'Ta elektronski naslov je že odjavljen.',
             ]);
         }
 
@@ -101,10 +107,12 @@ class SubscribersController extends Controller
         $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
 
         // Store the hashed token and email in the session
-        session(['subscriber_unsubscribe_confirmation' => [
-            'email' => $email,
-            'token' => $token,
-        ]]);
+        session([
+            "subscriber_unsubscribe_confirmation_{$token}" => [
+                'email' => $email,
+                'token' => $token,
+            ]
+        ]);
 
         // Send confirmation email
         Mail::send('emails.unsubscribe-confirmation', ['token' => $token, 'email' => encrypt($email)], function ($message) use ($email) {
@@ -126,16 +134,18 @@ class SubscribersController extends Controller
     public function unsubscribeStore(Request $request)
     {
         // Validate session data
-        $this->validateSession('subscriber_unsubscribe_confirmation', $request);
+        $this->validateSession('subscriber_unsubscribe_confirmation_' . $request->input('token'), $request);
 
-        $email = session('subscriber_unsubscribe_confirmation.email');
+        $email = session('subscriber_unsubscribe_confirmation_' . $request->input('token') . '.email');
 
         // Update the subscriber's status
         Subscriber::where('email', $email)->delete();
 
         // Clear the session data
-        session()->forget('subscriber_unsubscribe_confirmation');
+        session()->forget('subscriber_unsubscribe_confirmation_' . $request->input('token'));
 
+        session()->flash('flash.banner', 'Uspešno ste se odjavili od naših akcij.');
+        session()->flash('flash.bannerStyle', 'success');
         // Flash success message and redirect back
         return $this->flashAndRedirect('Uspešno ste se odjavili od naših akcij.');
     }
