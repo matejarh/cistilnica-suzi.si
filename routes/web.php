@@ -81,7 +81,7 @@ Route::middleware([
     Route::prefix('narocniki')->name('subscribers.')->group(function () {
         Route::get('/', [SubscribersController::class, 'index'])->name('index');
         Route::get('/{subscriber}', [SubscribersController::class, 'show'])->name('show');
-        Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy');
+        /* Route::delete('/{subscriber}', [SubscribersController::class, 'destroy'])->name('destroy'); */
         Route::get('/{subscriber}/edit', [SubscribersController::class, 'edit'])->name('edit');
         Route::put('/{subscriber}', [SubscribersController::class, 'update'])->name('update');
     });
