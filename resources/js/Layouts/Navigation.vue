@@ -5,6 +5,7 @@ import MobileNavigation from '@/Components/Navigation/MobileNavigation.vue';
 import DesktopNavigation from '@/Components/Navigation/DesktopNavigation.vue';
 
 const showingNavigationDropdown = ref(false);
+const showingMobileNavigationDropdown = ref(false);
 
 const navigationLinks = [
     { name: 'Domov', route: 'public.home' },
@@ -23,14 +24,10 @@ const handleClickOutside = (event) => {
         hamburger &&
         !hamburger.contains(event.target)
     ) {
-        showingNavigationDropdown.value = false;
+        showingMobileNavigationDropdown.value = false;
     }
 };
 
-const logout = () => {
-    console.log('Logging out...');
-    router.post(route('logout'));
-};
 
 onMounted(() => {
     document.addEventListener('click', handleClickOutside);
@@ -46,12 +43,14 @@ onBeforeUnmount(() => {
         <nav class="bg-primary/70 border-b border-primary-light z-50 backdrop-blur-md relative w-full top-0">
             <DesktopNavigation
                 :navigation-links="navigationLinks"
-                :showing-navigation-dropdown="showingNavigationDropdown" />
+                :showing-navigation-dropdown="showingMobileNavigationDropdown"
+                @toggle-mobile-navigation-dropdown="showingMobileNavigationDropdown = !showingMobileNavigationDropdown"
+                 />
 
             <MobileNavigation
-                v-if="showingNavigationDropdown"
+                v-if="showingMobileNavigationDropdown"
                 :navigation-links="navigationLinks"
-                :showing-navigation-dropdown="showingNavigationDropdown" />
+                :showing-navigation-dropdown="showingMobileNavigationDropdown" />
         </nav>
     </div>
 </template>

@@ -14,6 +14,14 @@ defineProps({
         required: true
     }
 });
+
+defineEmits(['toggleMobileNavigationDropdown']);
+
+
+const logout = () => {
+    console.log('Logging out...');
+    router.post(route('logout'));
+};
 </script>
 
 <template>
@@ -103,7 +111,7 @@ defineProps({
                     <div class="-me-2 flex items-center sm:hidden">
                         <button
                             class="hamburger-button inline-flex items-center justify-center p-2 rounded-md text-neutral-light hover:text-white hover:bg-primary-light focus:outline-hidden focus:bg-primary-light focus:text-white transition duration-150 ease-in-out"
-                            @click.stop="showingNavigationDropdown = !showingNavigationDropdown">
+                            @click.stop="$emit('toggleMobileNavigationDropdown')">
                             <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path
                                     :class="{ hidden: showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }"
