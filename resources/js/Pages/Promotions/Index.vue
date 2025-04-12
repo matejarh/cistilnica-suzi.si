@@ -176,7 +176,7 @@ watch(
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <!-- Page Header -->
-                <div class="bg-primary overflow-hidden shadow-xl sm:rounded-lg bg-opacity-60 backdrop-blur-sm p-6">
+                <div class="bg-primary/60 overflow-hidden shadow-xl sm:rounded-lgbackdrop-blur-xs p-6">
                     <h1 class="text-3xl font-bold text-neutral-light">Upravljanje akcij</h1>
                     <p class="text-neutral-light mt-2">
                         Tukaj lahko pregledate, urejate ali izbrišete obstoječe akcije.
@@ -190,12 +190,12 @@ watch(
                 </div>
 
                 <!-- Promotions List -->
-                <div class="bg-neutral-light bg-opacity-65 backdrop-blur-sm shadow sm:rounded-lg p-6">
+                <div class="bg-neutral-light/65  backdrop-blur-xs shadow-xs sm:rounded-lg p-6">
                     <h2 class="text-xl font-bold text-primary-dark">Seznam akcij</h2>
                     <div v-if="$page.props.promotions.total > 0" class="mt-4 space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div v-for="promotion in $page.props.promotions.data" :key="promotion.id"
-                                class="border-b pb-4 bg-neutral-light bg-opacity-60 rounded-lg shadow-lg p-4">
+                                class="border-b pb-4 bg-neutral-light/60 rounded-lg shadow-lg p-4">
 
                                 <div class="mb-2 flex justify-between border-b border-neutral-dark pb-2">
                                     <div class="flex space-x-4">

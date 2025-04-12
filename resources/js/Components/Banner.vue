@@ -29,8 +29,8 @@ watchEffect(async () => {
             enter-to-class="opacity-100 translate-y-0" leave-active-class="ease-in duration-200"
             leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-4">
             <div v-if="show && message" :class="{ 'bg-green-700': style == 'success', 'bg-red-700': style == 'danger' }"
-                class="absolute top-0 z-[1000] w-full">
-                <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
+                class="absolute top-0 z-1000 w-full">
+                <div class="max-w-(--breakpoint-xl) mx-auto py-2 px-3 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between flex-wrap">
                         <div class="w-0 flex-1 flex items-center min-w-0">
                             <span class="flex p-2 rounded-lg"
@@ -44,7 +44,7 @@ watchEffect(async () => {
 
                         <div class="shrink-0 sm:ms-3">
                             <button type="button"
-                                class="-me-1 flex p-2 rounded-md focus:outline-none sm:-me-2 transition"
+                                class="-me-1 flex p-2 rounded-md focus:outline-hidden sm:-me-2 transition"
                                 :class="{ 'hover:bg-green-600 focus:bg-green-600': style == 'success', 'hover:bg-red-600 focus:bg-red-600': style == 'danger' }"
                                 aria-label="Dismiss" @click.prevent="show = false">
                                 <CloseIcon class="size-5 text-white" />

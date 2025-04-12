@@ -3,7 +3,7 @@ import LaundryIcon from "@/Icons/LaundryIcon.vue";
 </script>
 
 <template>
-    <section class="py-12 bg-primary-dark bg-opacity-30 backdrop-blur-sm">
+    <section class="py-12 bg-primary-dark/30 backdrop-blur-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
             <div class="order-2 md:order-1">
                 <h2 class="text-3xl font-extrabold text-primary-light">

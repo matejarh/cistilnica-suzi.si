@@ -33,7 +33,7 @@ const submitForm = () => {
 </script>
 
 <template>
-    <section id="povpraševanje" class="py-12 bg-neutral-dark bg-opacity-40 backdrop-blur-sm">
+    <section id="povpraševanje" class="py-12 bg-neutral-dark/40 backdrop-blur-xs">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-extrabold text-primary-dark dark:text-primary-light text-center">
                 Pošljite nam povpraševanje
@@ -133,7 +133,7 @@ const submitForm = () => {
                 <div>
                     <InputLabel for="message" value="Besedilo povpraševanja" />
                     <textarea id="message" v-model="form.message" rows="4"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:ring-primary focus:border-primary sm:text-sm"
                         :class="form.errors.message ? 'bg-red-100 border-red-500 text-red-900 placeholder-red-500 focus:ring-red-500 focus:border-red-500' : 'bg-neutral-light border-neutral-light text-neutral-dark placeholder-neutral-dark'"
                         placeholder="Vaše povpraševanje"></textarea>
                     <InputError :message="form.errors.message" class="mt-2" />

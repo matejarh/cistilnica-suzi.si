@@ -1,6 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/laravel/jetstream/**/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+  --font-sans: Lato, sans-serif;
+  --font-heading: Poppins, sans-serif;
+
+  --color-primary-light: #7dd3fc;
+  --color-primary: #0ea5e9;
+  --color-primary-dark: #0369a1;
+
+  --color-secondary: #14b8a6;
+  --color-secondary-light: #6ee7b7;
+
+  --color-neutral-light: #f8fafc;
+  --color-neutral: #e5e7eb;
+  --color-neutral-dark: #334155;
+
+  --color-accent: #06b6d4;
+  --color-accent-dark: #0891b2;
+
+  --height-max-content: max-content;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 [x-cloak] {
     display: none;

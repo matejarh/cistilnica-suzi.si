@@ -44,9 +44,9 @@ const inputClasses = computed(() => {
 </script>
 
 <template>
-    <section class="bg-primary-dark text-neutral-light bg-opacity-40 backdrop-blur-sm">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-md text-center">
+    <section class="bg-primary-dark/40 text-neutral-light backdrop-blur-xs">
+        <div class="py-8 px-4 mx-auto max-w-(--breakpoint-xl) lg:py-16 lg:px-6">
+            <div class="mx-auto max-w-(--breakpoint-md) text-center">
                 <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-primary-light sm:text-4xl">
                     Prijavite se na naše akcije
                 </h2>
@@ -55,7 +55,7 @@ const inputClasses = computed(() => {
                     e-poštnim naslovom.
                 </p>
                 <form @submit.prevent="submit" class="space-y-4">
-                    <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
+                    <div class="items-center mx-auto mb-3 space-y-4 max-w-(--breakpoint-sm) sm:flex sm:space-y-0">
                         <div class="relative w-full">
                             <label for="email" class="hidden mb-2 text-sm font-medium text-neutral-light">
                                 E-poštni naslov
@@ -85,7 +85,7 @@ const inputClasses = computed(() => {
 
                         {{ form.errors.email }}
                     </span>
-                    <!-- <div class="mx-auto max-w-screen-sm text-sm text-left text-neutral-light">
+                    <!-- <div class="mx-auto max-w-(--breakpoint-sm) text-sm text-left text-neutral-light">
                         Skrbimo za varnost vaših podatkov. <a href="#" class="font-medium text-primary-light hover:underline">
                             Preberite našo politiko zasebnosti
                         </a>.

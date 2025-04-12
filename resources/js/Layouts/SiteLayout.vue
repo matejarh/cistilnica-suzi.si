@@ -93,7 +93,7 @@ onBeforeUnmount(() => {
         <Banner />
 
         <div id="container"
-            class="relative h-screen text-white overflow-hidden bg-gradient-to-b from-primary to-primary-light bg-opacity-70 backdrop-blur-md">
+            class="relative h-screen text-white overflow-hidden bg-linear-to-b from-primary to-primary-light backdrop-blur-md">
             <Navigation class=""/>
 
             <!-- Page Heading -->

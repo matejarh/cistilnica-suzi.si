@@ -64,7 +64,7 @@ onMounted(() => {
                 keywords="čistilnica, suzi, kontakt, perilo, pranje, kemično čiščenje">
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
+                <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg  backdrop-blur-xs">
                     <div class="p-6 lg:p-8 space-y-8 lg:space-y-12">
                         <!-- Title -->
                         <h1 class="font-heading text-4xl font-bold text-neutral-light text-center">Kontakt</h1>

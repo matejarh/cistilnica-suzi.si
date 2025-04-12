@@ -51,7 +51,7 @@ const submitUnsubscribe = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
                 <!-- Banner Section -->
-                <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
+                <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <div class="p-6 lg:p-8 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
                         <div class="flex-1">
                             <h1 class="font-heading text-4xl font-bold text-neutral-light">
@@ -75,7 +75,7 @@ const submitUnsubscribe = () => {
                 <SubscribeSection class="rounded-lg" />
 
                 <!-- Links Section -->
-                <div class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm p-6 lg:p-8 space-y-4">
+                <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs p-6 lg:p-8 space-y-4">
                     <h2 class="font-heading text-2xl font-bold text-neutral-light">Upravljanje z akcijami</h2>
                     <ul class="text-neutral-light">
                         <li>

@@ -23,9 +23,9 @@ const scrollToTop = () => {
       <div class="absolute bottom-1 right-6 z-50" v-show="scrollTop > 200">
           <button
             @click="scrollToTop"
-            class="inline-flex bg-opacity-20 hover:bg-opacity-70 justify-center p-0 text-primary-400 rounded cursor-pointer hover:text-primary-900 bg-primary-300  transition ease-in-out duration-300 hover:-translate-y-1"
+            class="inline-flex justify-center p-0 text-primary-400 rounded-sm cursor-pointer hover:text-primary-900 bg-primary/40 hover:bg-primary/70 shadow-xs  transition ease-in-out duration-300 hover:-translate-y-1"
           >
-            <ArrowUpIcon class="w-12 h-12 lg:w-18 lg:h-18" />
+            <ArrowUpIcon class="w-12 h-12 lg:w-12 lg:h-12" />
           </button>
       </div>
     </Transition>

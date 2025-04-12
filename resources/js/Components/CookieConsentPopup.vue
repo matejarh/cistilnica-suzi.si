@@ -35,7 +35,7 @@ onMounted(() => {
 <template>
     <Transition enter-active-class="animate__bounceInLeft" leave-active-class="animate__bounceOutRight">
         <div v-if="showConsent" class="fixed bottom-0 left-0 right-0 bg-primary-dark text-white p-4 z-50">
-            <div class="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <div class="max-w-(--breakpoint-xl) mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <div class="text-sm mb-4 sm:mb-0 flex items-center">
                     <CookieIcon class="h-24 w-24 md:h-12 md:w-12 mr-2" />
                     <p>
@@ -59,7 +59,7 @@ onMounted(() => {
                         </label>
                     </div>
                     <button @click="savePreferences"
-                        class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded">
+                        class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded-sm">
                         Shrani nastavitve
                     </button>
                 </div>

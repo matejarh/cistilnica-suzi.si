@@ -2,9 +2,9 @@
 </script>
 
 <template>
-    <section class="bg-primary-dark text-neutral-light bg-opacity-30 backdrop-blur-sm">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-            <div class="max-w-screen-md mx-auto mb-8 lg:mb-16 text-center">
+    <section class="bg-primary-dark/30 text-neutral-light backdrop-blur-xs">
+        <div class="py-8 px-4 mx-auto max-w-(--breakpoint-xl) sm:py-16 lg:px-6">
+            <div class="max-w-(--breakpoint-md) mx-auto mb-8 lg:mb-16 text-center">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-primary-light">Zakaj izbrati Čistilnico
                     Suzi?</h2>
                 <p class="sm:text-xl">

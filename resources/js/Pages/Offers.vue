@@ -27,7 +27,7 @@ const scrollToContactForm = (targetId) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
-                    class="bg-primary overflow-hidden shadow-xl shadow-primary sm:rounded-lg bg-opacity-60 backdrop-blur-sm">
+                    class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <div class="">
                         <HeroSection @scroll-to-contact="scrollToContactForm"/>
                         <LaundryAndIroning />

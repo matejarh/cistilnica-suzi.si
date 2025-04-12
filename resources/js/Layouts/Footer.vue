@@ -15,8 +15,8 @@ const links = [
 </script>
 
 <template>
-    <footer class="bg-primary shadow-sm mt-4 absolute bottom-0 w-full bg-opacity-60 backdrop-blur-sm z-10">
-        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+    <footer class="bg-primary/60 shadow-xs mt-4 absolute bottom-0 w-full backdrop-blur-xs z-10">
+        <div class="w-full mx-auto max-w-(--breakpoint-xl) p-4 md:flex md:items-center md:justify-between">
             <span class="text-sm text-neutral-light sm:text-center items-center flex">
                 © {{ year }}
                 <img src="@images/favicon.png" alt="Logo" class="inline-block h-5 w-5 ms-2 me-1" />

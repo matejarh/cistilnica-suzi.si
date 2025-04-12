@@ -8,7 +8,7 @@ import Logo from "@images/logoSuzi150.png";
 
 <template>
     <section class=" pt-20 sm:pt-10">
-        <div class="grid max-w-screen-xl px-4 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 md:grid-cols-12">
+        <div class="grid max-w-(--breakpoint-xl) px-4 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 md:grid-cols-12">
             <div class="order-2 lg:order-1 lg:mr-auto place-self-center text-center md:col-span-7">
                 <h1
                     class="font-heading max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none md:text-4xl xl:text-5xl text-center text-primary-800 ">

@@ -43,7 +43,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                 <div>
                     <Link
                         :href="route('profile.show')"
-                        class="underline text-sm text-primary-light hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-dark"
+                        class="underline text-sm text-primary-light hover:text-white rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-dark"
                     >
                         Uredi profil</Link>
 
@@ -51,7 +51,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                         :href="route('logout')"
                         method="post"
                         as="button"
-                        class="underline text-sm text-primary-light hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-dark ms-2"
+                        class="underline text-sm text-primary-light hover:text-white rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-dark ms-2"
                     >
                         Odjava
                     </Link>

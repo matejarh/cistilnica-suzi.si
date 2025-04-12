@@ -1,5 +1,5 @@
 <template>
-    <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-b from-primary to-primary-light text-white overflow-hidden">
+    <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-linear-to-b from-primary to-primary-light text-white overflow-hidden">
         <!-- Bubbles -->
         <div id="bubble-container" class="absolute inset-0 overflow-hidden z-10"></div>
 
@@ -9,7 +9,7 @@
         </div>
 
         <!-- Card Content -->
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-primary bg-opacity-75 backdrop-blur-sm  shadow-md overflow-hidden sm:rounded-lg z-20">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-primary/75 backdrop-blur-xs  shadow-md overflow-hidden sm:rounded-lg z-20">
             <slot />
         </div>
     </div>

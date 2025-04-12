@@ -39,7 +39,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="">
-        <nav class="bg-primary border-b border-primary-light z-50 bg-opacity-70 backdrop-blur-md relative w-full top-0">
+        <nav class="bg-primary/70 border-b border-primary-light z-50 backdrop-blur-md relative w-full top-0">
             <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
@@ -93,7 +93,7 @@ onBeforeUnmount(() => {
                     <!-- Hamburger Menu -->
                     <div class="-me-2 flex items-center sm:hidden">
                         <button
-                            class="hamburger-button inline-flex items-center justify-center p-2 rounded-md text-neutral-light hover:text-white hover:bg-primary-light focus:outline-none focus:bg-primary-light focus:text-white transition duration-150 ease-in-out"
+                            class="hamburger-button inline-flex items-center justify-center p-2 rounded-md text-neutral-light hover:text-white hover:bg-primary-light focus:outline-hidden focus:bg-primary-light focus:text-white transition duration-150 ease-in-out"
                             @click.stop="showingNavigationDropdown = !showingNavigationDropdown"
                         >
                             <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
