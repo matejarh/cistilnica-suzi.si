@@ -88,7 +88,7 @@ const closeModal = () => {
                 <div class="mt-4">
                     <div class="relative w-full">
                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                            <KeyIcon class="w-5 h-5 " :class="form.errors.name ? 'text-red-500' : 'text-primary'" />
+                            <KeyIcon class="w-5 h-5 " :class="form.error ? 'text-red-500' : 'text-primary'" />
                         </div>
                         <TextInput ref="passwordInput" v-model="form.password" type="password" class="mt-1 block w-3/4"
                             placeholder="Password" autocomplete="current-password" @keyup.enter="confirmPassword" />
