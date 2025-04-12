@@ -12,15 +12,15 @@ const emit = defineEmits(['confirmed']);
 defineProps({
     title: {
         type: String,
-        default: 'Confirm Password',
+        default: 'Potrdite geslo',
     },
     content: {
         type: String,
-        default: 'For your security, please confirm your password to continue.',
+        default: 'Zaradi varnostvenih razlogov morate potrditi geslo, preden nadaljujete.',
     },
     button: {
         type: String,
-        default: 'Confirm',
+        default: 'Potrdi',
     },
 });
 
@@ -99,7 +99,7 @@ const closeModal = () => {
 
             <template #footer>
                 <SecondaryButton @click="closeModal">
-                    Cancel
+                    Prekliči
                 </SecondaryButton>
 
                 <PrimaryButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
