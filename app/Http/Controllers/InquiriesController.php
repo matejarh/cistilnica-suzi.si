@@ -130,7 +130,10 @@ class InquiriesController extends Controller
                 ->subject('Novo povpraševanje');
         });
 
-        return $this->flashAndRedirect('Uspešno ste poslali poizvedbo. Oglasili se vam bomo v najkrajšem času');
+        session()->flash('flash.banner', 'Uspešno ste oddali poizvedbo. Oglasili se vam bomo v najkrajšem času');
+        session()->flash('flash.bannerStyle', 'success');
+        return redirect()->route('public.home')->with('success', 'Uspešno ste oddali poizvedbo. Oglasili se vam bomo v najkrajšem času');
+        //return $this->flashAndRedirect('Uspešno ste poslali poizvedbo. Oglasili se vam bomo v najkrajšem času');
     }
 
 
