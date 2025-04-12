@@ -80,7 +80,6 @@ class PromotionsController extends Controller
      */
     public function send(Promotion $promotion)
     {
-        // Assuming you have a method to send the promotion to subscribers
         $promotion->sendToSubscribers();
 
         return $this->redirectWithMessage('promotions.index', __('Akcija se uspešno pošilja vsem aktivnim naročnikom'));

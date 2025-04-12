@@ -4,6 +4,7 @@ use App\Http\Controllers\InquiriesController;
 use App\Http\Controllers\PromotionsController;
 use App\Models\Inquiry;
 use App\Models\Promotion;
+use App\Models\Subscriber;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -55,8 +56,10 @@ if (app()->environment('local')) {
             'message' => fake()->paragraph(),
         ];
         $inquiry = Inquiry::first();
+        $promotion = Promotion::first();
+        $subscriber = Subscriber::first();
 
-        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry'));
+        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber'));
     })->name('test.email');
 }
 
@@ -66,7 +69,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+    Route::get('/nadzorna-plosca', fn() => Inertia::render('Dashboard'))->name('dashboard');
 
     Route::prefix('povprasevanja')->name('inquiries.')->group(function () {
         Route::get('/', [InquiriesController::class, 'index'])->name('index');
