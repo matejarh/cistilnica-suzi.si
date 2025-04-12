@@ -64,6 +64,10 @@ const maxWidthClass = computed(() => {
         'lg': 'sm:max-w-lg',
         'xl': 'sm:max-w-xl',
         '2xl': 'sm:max-w-2xl',
+        '3xl': 'sm:max-w-3xl',
+        '4xl': 'sm:max-w-4xl',
+        '5xl': 'sm:max-w-5xl',
+        '6xl': 'sm:max-w-6xl',
     }[props.maxWidth];
 });
 </script>
@@ -92,7 +96,7 @@ const maxWidthClass = computed(() => {
                 leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                 leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-                <div v-show="show" class="mb-6 bg-primary-dark rounded-lg overflow-visible shadow-xl transform transition-all sm:w-full sm:mx-auto" :class="maxWidthClass">
+                <div v-show="show" class="mb-6 bg-primary-dark/90 rounded-lg overflow-visible shadow-xl transform transition-all sm:w-full sm:mx-auto" :class="maxWidthClass">
                     <slot v-if="showSlot"/>
                 </div>
             </transition>
