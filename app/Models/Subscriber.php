@@ -45,6 +45,27 @@ class Subscriber extends Model
     }
 
     /**
+     * Scope active subscribers.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_subscribed', true);
+    }
+    /**
+     * Scope inactive subscribers.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInactive($query)
+    {
+        return $query->where('is_subscribed', false);
+    }
+
+    /**
      * Scope a query to only include subscribed users.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
