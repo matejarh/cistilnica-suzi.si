@@ -91,7 +91,7 @@ const closeModal = () => {
                             <KeyIcon class="w-5 h-5 " :class="form.error ? 'text-red-500' : 'text-primary'" />
                         </div>
                         <TextInput ref="passwordInput" v-model="form.password" type="password" class="mt-1 block w-3/4"
-                            placeholder="Password" autocomplete="current-password" @keyup.enter="confirmPassword" />
+                            placeholder="Vaše geslo" autocomplete="current-password" @keyup.enter="confirmPassword" />
                     </div>
                     <InputError :message="form.error" class="mt-2" />
                 </div>
