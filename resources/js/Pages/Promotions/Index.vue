@@ -97,17 +97,16 @@ const confirmToSend = () => {
     if (promotionToSend.value) {
         confirmSendBusy.value = true; // Set busy state
         // Perform the sending using Inertia
-        router.post(route('promotions.send', promotionToSend.value), {
-            preserveScroll: true,
-            preserveState: true,
-            onSuccess: (page) => {
-                if (page.props.flash.success) { // Check if success flash message exists
-                    showSendConfirmationModal.value = false;
-                    promotionToSend.value = null;
-                }
+        router.post(route('promotions.send', promotionToSend.value), {}, {
+            preserveState: false,
+            onSuccess: () => {
+                console.error('success');
+                showSendConfirmationModal.value = false;
+                promotionToSend.value = null;
                 confirmSendBusy.value = false; // Reset busy state
             },
             onFinish: () => {
+                console.error('finish');
                 confirmSendBusy.value = false; // Reset busy state
             },
             onError: (errors) => {
