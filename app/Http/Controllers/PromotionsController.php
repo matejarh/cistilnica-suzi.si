@@ -49,7 +49,7 @@ class PromotionsController extends Controller
 
         Promotion::create($request->all());
 
-        return $this->redirectWithMessage('promotions.index', __('Akcija uspešno ustvarjena'));
+        return $this->flashAndRedirect( __('Akcija uspešno ustvarjena'), 'promotions.index');
     }
 
     /**
@@ -61,7 +61,7 @@ class PromotionsController extends Controller
 
         $promotion->update($request->all());
 
-        return $this->redirectWithMessage('promotions.index', __('Akcija uspešno posodobljena'));
+        return $this->flashAndRedirect( __('Akcija uspešno posodobljena'));
     }
 
     /**
@@ -71,7 +71,7 @@ class PromotionsController extends Controller
     {
         $promotion->delete();
 
-        return $this->redirectWithMessage('promotions.index', __('Akcija uspešno izbrisana'));
+        return $this->flashAndRedirect( __('Akcija uspešno izbrisana'));
     }
 
     /** Send given promotion to all active subscribers
@@ -82,7 +82,7 @@ class PromotionsController extends Controller
     {
         $promotion->sendToSubscribers();
 
-        return $this->redirectWithMessage('promotions.index', __('Akcija se uspešno pošilja vsem aktivnim naročnikom'));
+        return $this->flashAndRedirect(__('Akcija se uspešno pošilja vsem aktivnim naročnikom'));
     }
 
     /**
@@ -120,13 +120,19 @@ class PromotionsController extends Controller
     }
 
     /**
-     * Flash a success message and redirect to a route.
+     * Flash a success message and redirect back.
+     *
+     * @param string $message
+     * @param string|null $route
+     * @return \Illuminate\Http\RedirectResponse
      */
-    private function redirectWithMessage($route, $message)
+    private function flashAndRedirect(string $message, ?string $route = null)
     {
         session()->flash('flash.banner', $message);
         session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route($route)->with('success', $message);
+        return $route
+            ? redirect()->route($route)->with('success', $message)
+            : redirect()->back()->with('success', $message);
     }
 }
