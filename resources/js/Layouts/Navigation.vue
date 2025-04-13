@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { router } from '@inertiajs/vue3';
 import MobileNavigation from '@/Components/Navigation/MobileNavigation.vue';
 import DesktopNavigation from '@/Components/Navigation/DesktopNavigation.vue';
 

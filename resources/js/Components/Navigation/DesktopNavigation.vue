@@ -3,6 +3,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import DropdownLink from '../DropdownLink.vue';
 import Dropdown from '../Dropdown.vue';
+import { router } from '@inertiajs/vue3';
 
 defineProps({
     navigationLinks: {
@@ -17,11 +18,11 @@ defineProps({
 
 defineEmits(['toggleMobileNavigationDropdown']);
 
-
 const logout = () => {
     console.log('Logging out...');
     router.post(route('logout'));
 };
+
 </script>
 
 <template>
