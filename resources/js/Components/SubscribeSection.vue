@@ -44,7 +44,7 @@ const inputClasses = computed(() => {
 </script>
 
 <template>
-    <section class="bg-primary-dark/40 text-neutral-light backdrop-blur-xs">
+    <section class="bg-primary-dark/30 text-neutral-light backdrop-blur-xs">
         <div class="py-8 px-4 mx-auto max-w-(--breakpoint-xl) lg:py-16 lg:px-6">
             <div class="mx-auto max-w-(--breakpoint-md) text-center">
                 <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-primary-light sm:text-4xl">

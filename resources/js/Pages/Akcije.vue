@@ -72,10 +72,12 @@ const submitUnsubscribe = () => {
                 </div>
 
                 <!-- Subscribe Section -->
-                <SubscribeSection class="rounded-lg" />
+                <div class="overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
+                    <SubscribeSection class="rounded-lg" />
+                </div>
 
                 <!-- Links Section -->
-                <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs p-6 lg:p-8 space-y-4">
+                <div class="bg-primary-dark/40 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs p-6 lg:p-8 space-y-4">
                     <h2 class="font-heading text-2xl font-bold text-neutral-light">Upravljanje z akcijami</h2>
                     <ul class="text-neutral-light">
                         <li>
