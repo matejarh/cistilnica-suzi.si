@@ -1,6 +1,6 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import CookieConsentPopup from '@/Components/CookieConsentPopup.vue';
 import ScrollToTop from '@/Components/ScrollToTop.vue';
@@ -18,12 +18,6 @@ defineProps({
         default: 'čistilnica, suzi, brezhibna, čistoča, perilo, pranje, kemično čiščenje',
     },
 });
-
-/* const logout = () => {
-    router.post(route('logout'));
-}; */
-
-const year = computed(() => new Date().getFullYear());
 
 const getBubbleCount = () => {
     const width = window.innerWidth;
@@ -50,7 +44,7 @@ const createBubbles = (containerId) => {
         const bubble = document.createElement("div");
         bubble.className = "bubble";
 
-        const size = Math.random() * 80 + 20; // Random size between 20px and 80px
+        const size = Math.random() * 80 + 10; // Random size between 20px and 80px
         bubble.style.width = `${size}px`;
         bubble.style.height = `${size}px`;
         bubble.style.left = `${Math.random() * 100}%`; // Random horizontal position
