@@ -20,16 +20,16 @@ import Logo from "@images/logoSuzi150.png";
                     class="font-sans max-w-2xl mb-6 font-light text-neutral-light lg:mb-8 md:text-lg lg:text-xl text-center ">
                     Kemično čiščenje, pranje in likanje z vrhunsko skrbnostjo.<br> Zaupajte nam svoje perilo in uživajte v popolni svežini!
                 </p>
-                <div class="space-y-4 md:space-y-0">
+                <div class="space-y-4 space-x-0 md:space-y-0 md:space-x-4">
+
+                    <ButtonSecondary as="link" :href="route('public.contact')">
+                        Kje nas najdete
+                    </ButtonSecondary>
 
                     <ButtonPrimary as="link" :href="route('public.offers')">
                         Oglej si ponudbo
                         <ArrowRightIcon class="w-5 h-5 ml-2 -mr-1" />
                     </ButtonPrimary>
-
-                    <ButtonSecondary as="link" :href="route('public.contact')">
-                        Kje nas najdete
-                    </ButtonSecondary>
                 </div>
             </div>
             <div class="order-1 lg:order-2 mb-6 lg:mb-0 lg:mt-0 md:col-span-5 md:flex md:items-center">
