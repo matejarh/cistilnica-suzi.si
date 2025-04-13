@@ -78,9 +78,11 @@ onMounted(() => {
                             <div class="order-2 md:order-1 space-y-4 text-neutral-light">
                                 <h2 class="text-2xl font-bold text-primary-light">Kontaktni podatki</h2>
                                 <ul class="space-y-2">
-                                    <li><strong>Podjetje:</strong> {{ contactDetails.company }}</li>
+                                    <li><strong>Podjetje: </strong>
+                                        {{ contactDetails.company }}
+                                    </li>
                                     <li>
-                                        <strong>Naslov:</strong>
+                                        <strong>Naslov: </strong>
                                         <a href="https://www.google.com/maps/dir/?api=1&destination=Železniška+cesta+5,+4248+Lesce"
                                            target="_blank"
                                            rel="noopener noreferrer"
@@ -89,14 +91,14 @@ onMounted(() => {
                                         </a>
                                     </li>
                                     <li>
-                                        <strong>GSM:</strong>
-                                        <a href="tel:{{ contactDetails.phone }}" class="text-white hover:underline">
+                                        <strong>GSM: </strong>
+                                        <a :href="`tel: ${contactDetails.phone.split(' ').join('')}`" class="text-white hover:underline">
                                             {{ contactDetails.phone }}
                                         </a>
                                     </li>
                                     <li>
-                                        <strong>Telefon:</strong>
-                                        <a href="tel:{{ contactDetails.landline }}" class="text-white hover:underline">
+                                        <strong>Telefon: </strong>
+                                        <a :href="`tel: ${contactDetails.landline.split(' ').join('')}`" class="text-white hover:underline">
                                             {{ contactDetails.landline }}
                                         </a>
                                     </li>
