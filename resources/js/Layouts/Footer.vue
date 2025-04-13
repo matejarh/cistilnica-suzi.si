@@ -1,6 +1,8 @@
 <script setup>
+import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+const page = usePage();
 const year = computed(() => new Date().getFullYear());
 
 const appName = import.meta.env.VITE_APP_NAME;
@@ -10,7 +12,7 @@ const links = [
     { route: 'public.offers', label: 'Ponudba' },
     { route: 'public.contact', label: 'Kontakt' },
     { route: 'public.akcije', label: 'Akcije' },
-    { route: 'login', label: 'Prijava ' },
+    { route: page.props.auth.user ? 'dashboard' : 'login', label: page.props.auth.user ? 'Administracija' : 'Prijava ' },
 ];
 </script>
 
