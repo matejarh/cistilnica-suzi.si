@@ -46,7 +46,103 @@ class InquiriesController extends Controller
     public function sendConfirmationEmail(Request $request)
     {
         // Validate the request data
-        $validated = $request->validate([
+        $validated = $this->validateInquiry($request);
+
+        $email = $validated['email'];
+
+        // Generate a unique confirmation token
+        $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
+
+        // Store the hashed token and email in the session
+        session([
+            "inquiry_confirmation_$token" => [
+                'data' => $validated,
+                'token' => $token,
+            ]
+        ]);
+
+        // Send confirmation email
+        \Mail::send('emails.confirm-inquiry', ['token' => $token, 'email' => encrypt($validated['email']), 'data' => $validated], function ($message) use ($email) {
+            $message->to($email)
+                ->subject('Potrdite povpraševanje');
+        });
+
+        // Flash success message and redirect back
+        return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svoje povpraševanje.");
+
+    }
+
+
+    /**
+     * Store a newly created and confirmed inquiry in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $token = $request->input('token');
+        $sessionKey = "inquiry_confirmation_$token";
+
+        $this->validateSession($sessionKey, $request);
+
+        $email = session("inquiry_confirmation_$token.email");
+        $data = session("inquiry_confirmation_$token.data");
+
+
+        // Create a new inquiry
+        $inquiry = Inquiry::create($data + [
+            'ip' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+        ]);
+
+        // Clear the session data
+        session()->forget($sessionKey);
+
+        $adminEmail = "matej.arh@gmail.com";
+        // Send email to the admin
+        \Mail::send('emails.new-inquiry', ['inquiry' => $inquiry], function ($message) use ($adminEmail) {
+            $message->to($adminEmail)
+                ->subject('Novo povpraševanje');
+        });
+
+        return $this->flashAndRedirect('Uspešno ste poslali poizvedbo. Oglasili se vam bomo v najkrajšem času', 'public.home');
+    }
+
+
+    /**
+     * Show given inquiry details.
+     *
+     * @param \App\Models\Inquiry $inquiry
+     * @return \Inertia\Response|\Inertia\ResponseFactory
+     */
+    public function show(Inquiry $inquiry)
+    {
+        // Return the view with the specific inquiry data
+        return inertia('Inquiries/Show', [
+            'inquiry' => $inquiry,
+        ]);
+    }
+    public function destroy(Inquiry $inquiry)
+    {
+        // Soft delete the inquiry
+        $inquiry->delete();
+
+        // Redirect back with a success message
+        return $this->flashAndRedirect('Povpraševanje uspešno izbrisano.', 'inquiries.index');
+        // return redirect()->route('inquiries.index')->with('success', 'Inquiry deleted successfully.');
+    }
+
+    /**
+     * Validate the request data for creating or updating an inquiry.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function validateInquiry(Request $request)
+    {
+        return $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
@@ -72,91 +168,6 @@ class InquiriesController extends Controller
             'message.required' => 'Sporočilo je obvezno.',
             'message.string' => 'Sporočilo mora biti veljaven niz.',
         ]);
-
-        $email = $validated['email'];
-
-        // Generate a unique confirmation token
-        $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
-
-        // Store the hashed token and email in the session
-        session([
-            'inquiry_confirmation' => [
-                'data' => $validated,
-                'token' => $token,
-            ]
-        ]);
-
-        // Send confirmation email
-        \Mail::send('emails.confirm-inquiry', ['token' => $token, 'email' => encrypt($validated['email']), 'data' => $validated], function ($message) use ($email) {
-            $message->to($email)
-                ->subject('Potrdite povpraševanje');
-        });
-        session()->flash('flash.banner', "Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svoje povpraševanje.");
-        session()->flash('flash.bannerStyle', 'success');
-        // Flash success message and redirect back
-        return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svoje povpraševanje.");
-
-    }
-
-
-    /**
-     * Store a newly created and confirmed inquiry in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
-
-        $this->validateSession('inquiry_confirmation', $request);
-
-        $email = session('inquiry_confirmation.email');
-        $data = session('inquiry_confirmation.data');
-
-
-        // Create a new inquiry
-        $inquiry = Inquiry::create($data + [
-            'ip' => $request->ip(),
-            'user_agent' => $request->header('User-Agent'),
-        ]);
-
-        // Clear the session data
-        session()->forget('inquiry_confirmation');
-
-        $adminEmail = "matej.arh@gmail.com";
-        // Send email to the admin
-        \Mail::send('emails.new-inquiry', ['inquiry' => $inquiry], function ($message) use ($adminEmail) {
-            $message->to($adminEmail)
-                ->subject('Novo povpraševanje');
-        });
-
-        session()->flash('flash.banner', 'Uspešno ste oddali poizvedbo. Oglasili se vam bomo v najkrajšem času');
-        session()->flash('flash.bannerStyle', 'success');
-        return redirect()->route('public.home')->with('success', 'Uspešno ste oddali poizvedbo. Oglasili se vam bomo v najkrajšem času');
-        //return $this->flashAndRedirect('Uspešno ste poslali poizvedbo. Oglasili se vam bomo v najkrajšem času');
-    }
-
-
-    /**
-     * Show given inquiry details.
-     *
-     * @param \App\Models\Inquiry $inquiry
-     * @return \Inertia\Response|\Inertia\ResponseFactory
-     */
-    public function show(Inquiry $inquiry)
-    {
-        // Return the view with the specific inquiry data
-        return inertia('Inquiries/Show', [
-            'inquiry' => $inquiry,
-        ]);
-    }
-    public function destroy(Inquiry $inquiry)
-    {
-        // Soft delete the inquiry
-        $inquiry->delete();
-
-        // Redirect back with a success message
-        return redirect()->route('inquiries.index')->with('success', 'Inquiry deleted successfully.');
     }
 
     /**
@@ -193,12 +204,16 @@ class InquiriesController extends Controller
      * Flash a success message and redirect back.
      *
      * @param string $message
+     * @param string|null $route
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function flashAndRedirect($message)
+    private function flashAndRedirect(string $message, ?string $route = null)
     {
         session()->flash('flash.banner', $message);
         session()->flash('flash.bannerStyle', 'success');
-        return redirect()->back()->with('success', $message);
+
+        return $route
+            ? redirect()->route($route)->with('success', $message)
+            : redirect()->back()->with('success', $message);
     }
 }
