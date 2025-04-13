@@ -57,9 +57,12 @@
     "Encrypted environment file not found.": "Šifrirane datoteke okolja ni mogoče najti.",
     "Ensure your account is using a long, random password to stay secure.": "Poskrbite, da vaš račun uporablja dolgo in naključno geslo za večjo varnost.",
     "Forbidden": "Dostop do te strani je prepovedan.",
+    "If you did not request a password reset, no further action is required.": "Če niste zahtevali ponastavitve gesla, ni potrebna nobena dodatna akcija.",
     "Not Found": "Ta stran ne obstaja! Preverite URL naslov in poskusite znova.",
     "Page Expired": "Seja za to stran je potekla! Posodobite stran s pritiskom na F5 in poskusite znova.",
     "Payment Required": "Potrebno je plačilo!",
+    "Reset Password": "Ponastavi geslo",
+    "Reset Password Notification": "Obvestilo o ponastavitvi gesla",
     "Server Error": "Napaka na strežniku! Poskusite znova kasneje.",
     "Service Unavailable": "Stran trenutno ni na razpolago!",
     "Set a new password for your account.": "Nastavite novo geslo za svoj račun.",
@@ -70,6 +73,12 @@
     "Sign in to your account to continue.": "Prijavite se v svoj račun, da nadaljujete.",
     "Sign in to your account.": "Prijavite se v svoj račun.",
     "Sign in to your team account.": "Prijavite se v svoj račun ekipe.",
+    "This password reset link will expire in 60 minutes.": "Povezava za ponastavitev gesla bo potekla v 60 minutah.",
     "Too Many Requests": "Preveč zahtevkov! Počakajte nekaj trenutkov in poskusite znova.",
-    "Unauthorized": "Do te strani nimate dostopa!"
+    "Unauthorized": "Do te strani nimate dostopa!",
+    "You are receiving this email because we received a password reset request for your account.": "To elektronsko sporočilo ste prejeli, ker smo prejeli zahtevo za ponastavitev gesla za vaš račun.",
+    "You are receiving this email because we received a verification request for your account.": "To elektronsko sporočilo ste prejeli, ker smo prejeli zahtevo za potrditev računa.",
+    "You are receiving this email because we received an account verification request for your account.": "To elektronsko sporočilo ste prejeli, ker smo prejeli zahtevo za potrditev računa.",
+    "You are receiving this email because we received an invitation to join a team.": "To elektronsko sporočilo ste prejeli, ker smo prejeli povabilo za pridružitev ekipi.",
+    "You are receiving this email because we received an invitation to join your team.": "To elektronsko sporočilo ste prejeli, ker smo prejeli povabilo za pridružitev vaši ekipi."
 }
