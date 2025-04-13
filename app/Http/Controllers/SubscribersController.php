@@ -58,6 +58,7 @@ class SubscribersController extends Controller
     public function store(Request $request)
     {
         $token = $request->input('token');
+
         $sessionKey = "subscriber_confirmation_$token";
         $sessionData = $this->validateSession($sessionKey, $request);
 
@@ -195,7 +196,7 @@ class SubscribersController extends Controller
         if (!$sessionData || !isset($sessionData['email'], $sessionData['token'])) {
             session()->flash('flash.banner', 'Seja je potekla ali ni veljavna.');
             session()->flash('flash.bannerStyle', 'danger');
-            abort(403, 'Seja je potekla ali ni veljavna.');
+            abort(403, 'Seja je potekla ali ni veljavna. Zahtevek mora biti oddan in potrjen v istem brskalniku. Če vam povezava v potrditvenem sporočilu odpre drug brskalnik, kot pa je bil ta v katerem ste vnesli svoj email, bo seja neveljavna');
         }
 
         if (decrypt($request->input('email')) !== $sessionData['email']) {
