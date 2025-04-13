@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class SubscribersController extends Controller
 {
@@ -18,36 +20,31 @@ class SubscribersController extends Controller
      */
     public function confirm(Request $request)
     {
-        // Validate the email input
         $validated = $request->validate([
             'email' => 'required|email|unique:subscribers,email',
         ], $this->validationMessages());
 
         $email = $validated['email'];
-
-        // Generate a unique confirmation token
         $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
+        $sessionKey = "subscriber_confirmation_$token";
 
-        // Store the hashed token and email in the session
-        session([
-            "subscriber_confirmation_$token" => [
-                'email' => $email,
-                'token' => $token,
-            ]
+        Session::put($sessionKey, [
+            'email' => $email,
+            'token' => $token,
         ]);
 
-        \Log::debug('Session data for confirmation', [
-            'sessionKey' => "subscriber_confirmation_$token",
-            'sessionData' => session("subscriber_confirmation_$token"),
+        Log::debug('Subscription session stored', [
+            'key' => $sessionKey,
+            'data' => Session::get($sessionKey),
         ]);
 
-        // Send confirmation email
-        Mail::send('emails.confirm-subscription', ['token' => $token, 'email' => encrypt($email)], function ($message) use ($email) {
-            $message->to($email)
-                ->subject('Potrdite prijavo na akcije');
+        Mail::send('emails.confirm-subscription', [
+            'token' => $token,
+            'email' => encrypt($email),
+        ], function ($message) use ($email) {
+            $message->to($email)->subject('Potrdite prijavo na akcije');
         });
 
-        // Flash success message and redirect back
         return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.");
     }
 
@@ -61,28 +58,19 @@ class SubscribersController extends Controller
     public function store(Request $request)
     {
         $token = $request->input('token');
-        // Validate session data
-        $this->validateSession("subscriber_confirmation_$token", $request);
+        $sessionKey = "subscriber_confirmation_$token";
+        $sessionData = $this->validateSession($sessionKey, $request);
 
-        $email = session("subscriber_confirmation_$token.email");
-
-        // Save the subscriber to the database
         Subscriber::create([
-            'email' => $email,
+            'email' => $sessionData['email'],
             'is_subscribed' => true,
             'ip_address' => $request->ip(),
             'user_agent' => $request->header('User-Agent'),
         ]);
 
-        // Clear the session data
-        session()->forget("subscriber_confirmation_$token");
+        Session::forget($sessionKey);
 
-        // Flash success message and redirect back
-        //return $this->flashAndRedirect('Uspešno ste se prijavili na naše akcije.');
-        session()->flash('flash.banner', 'Uspešno ste se prijavili na naše akcije.');
-        session()->flash('flash.bannerStyle', 'success');
-        // Flash success message and redirect to public.home
-        return redirect()->route('public.home')->with('success', 'Uspešno ste se prijavili na naše akcije.');
+        return $this->flashAndRedirect('Uspešno ste se prijavili na naše akcije.', 'public.home');
     }
 
     /**
@@ -95,39 +83,39 @@ class SubscribersController extends Controller
      */
     public function unsubscribeConfirm(Request $request)
     {
-        // Validate the email input
         $validated = $request->validate([
             'email' => 'required|email|exists:subscribers,email',
         ], $this->validationMessages());
 
-        // Check if the email is already unsubscribed
-        if (!Subscriber::where('email', $validated['email'])->where('is_subscribed', true)->exists()) {
+        $email = $validated['email'];
+
+        if (!Subscriber::where('email', $email)->where('is_subscribed', true)->exists()) {
             return redirect()->back()->withErrors([
                 'email' => 'Ta elektronski naslov je že odjavljen.',
             ]);
         }
 
-        $email = $validated['email'];
-
-        // Generate a unique confirmation token
         $token = hash_hmac('sha256', uniqid($email, true), config('app.key'));
+        $sessionKey = "subscriber_unsubscribe_confirmation_$token";
 
-        // Store the hashed token and email in the session
-        session([
-            "subscriber_unsubscribe_confirmation_$token" => [
-                'email' => $email,
-                'token' => $token,
-            ]
+        Session::put($sessionKey, [
+            'email' => $email,
+            'token' => $token,
         ]);
 
-        // Send confirmation email
-        Mail::send('emails.unsubscribe-confirmation', ['token' => $token, 'email' => encrypt($email)], function ($message) use ($email) {
-            $message->to($email)
-                ->subject('Potrdite odjavo od akcij');
+        Log::debug('Unsubscribe session stored', [
+            'key' => $sessionKey,
+            'data' => Session::get($sessionKey),
+        ]);
+
+        Mail::send('emails.unsubscribe-confirmation', [
+            'token' => $token,
+            'email' => encrypt($email),
+        ], function ($message) use ($email) {
+            $message->to($email)->subject('Potrdite odjavo od akcij');
         });
 
-        // Flash success message and redirect back
-        return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b></b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo odjavo.");
+        return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo odjavo.");
     }
 
     /**
@@ -140,21 +128,13 @@ class SubscribersController extends Controller
     public function unsubscribeStore(Request $request)
     {
         $token = $request->input('token');
-        // Validate session data
-        $this->validateSession("subscriber_unsubscribe_confirmation_$token", $request);
+        $sessionKey = "subscriber_unsubscribe_confirmation_$token";
+        $sessionData = $this->validateSession($sessionKey, $request);
 
-        $email = session("subscriber_unsubscribe_confirmation_$token.email");
+        Subscriber::where('email', $sessionData['email'])->delete();
+        Session::forget($sessionKey);
 
-        // Update the subscriber's status
-        Subscriber::where('email', $email)->delete();
-
-        // Clear the session data
-        session()->forget("subscriber_unsubscribe_confirmation_$token");
-
-        session()->flash('flash.banner', 'Uspešno ste se odjavili od naših akcij.');
-        session()->flash('flash.bannerStyle', 'success');
-        // Flash success message and redirect back
-        return $this->flashAndRedirect('Uspešno ste se odjavili od naših akcij.');
+        return $this->flashAndRedirect('Uspešno ste se odjavili od naših akcij.', 'public.home');
     }
 
     /**
@@ -201,16 +181,18 @@ class SubscribersController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    private function validateSession($sessionKey, Request $request)
+    private function validateSession(string $sessionKey, Request $request): array
     {
-        $sessionData = session()->get($sessionKey);
-        \Log::debug('Validating session data', [
+        $sessionData = Session::get($sessionKey);
+
+        Log::debug('Validating session data', [
             'sessionKey' => $sessionKey,
             'sessionData' => $sessionData,
-            'request' => $request->all(),
+            'requestData' => $request->all(),
+            'availableSessionKeys' => array_keys(Session::all()),
         ]);
 
-        if (!$sessionData) {
+        if (!$sessionData || !isset($sessionData['email'], $sessionData['token'])) {
             session()->flash('flash.banner', 'Seja je potekla ali ni veljavna.');
             session()->flash('flash.bannerStyle', 'danger');
             abort(403, 'Seja je potekla ali ni veljavna.');
@@ -227,6 +209,8 @@ class SubscribersController extends Controller
             session()->flash('flash.bannerStyle', 'danger');
             abort(403, 'Neveljaven ali potekel potrditveni žeton.');
         }
+
+        return $sessionData;
     }
 
     /**
@@ -235,10 +219,13 @@ class SubscribersController extends Controller
      * @param string $message
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function flashAndRedirect($message)
+    private function flashAndRedirect(string $message, ?string $route = null)
     {
         session()->flash('flash.banner', $message);
         session()->flash('flash.bannerStyle', 'success');
-        return redirect()->back()->with('success', $message);
+
+        return $route
+            ? redirect()->route($route)->with('success', $message)
+            : redirect()->back()->with('success', $message);
     }
 }
