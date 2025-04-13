@@ -35,7 +35,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        <div class="mb-4 text-sm text-neutral-light">
             To je varno območje aplikacije. Prosimo, potrdite svoje geslo, preden nadaljujete.
         </div>
 

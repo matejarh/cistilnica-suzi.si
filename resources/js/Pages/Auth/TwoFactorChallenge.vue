@@ -45,7 +45,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        <div class="mb-4 text-sm text-neutral-light">
             <template v-if="! recovery">
                 Prosimo, potrdite dostop do svojega računa z vnosom avtentikacijske kode, ki jo zagotavlja vaša avtentikacijska aplikacija.
             </template>
@@ -85,7 +85,7 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer" @click.prevent="toggleRecovery">
+                <button type="button" class="text-sm text-neutral-light text-neutral underline cursor-pointer" @click.prevent="toggleRecovery">
                     <template v-if="! recovery">
                         Uporabite rezervno kodo
                     </template>
