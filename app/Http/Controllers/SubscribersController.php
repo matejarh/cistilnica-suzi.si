@@ -218,6 +218,7 @@ class SubscribersController extends Controller
      * Flash a success message and redirect back.
      *
      * @param string $message
+     * @param string|null $route
      * @return \Illuminate\Http\RedirectResponse
      */
     private function flashAndRedirect(string $message, ?string $route = null)
