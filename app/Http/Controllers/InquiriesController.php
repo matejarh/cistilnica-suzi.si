@@ -173,7 +173,7 @@ class InquiriesController extends Controller
         if (!$sessionData) {
             session()->flash('flash.banner', 'Seja je potekla ali ni veljavna.');
             session()->flash('flash.bannerStyle', 'danger');
-            abort(403, 'Seja je potekla ali ni veljavna.');
+            abort(403, 'Seja je potekla ali ni veljavna. Zahtevek mora biti oddan in potrjen v istem brskalniku. Če vam povezava v potrditvenem sporočilu odpre drug brskalnik, kot pa je bil ta v katerem ste vnesli svoj email, bo seja neveljavna!');
         }
 
         if (decrypt($request->input('email')) !== $sessionData['data']['email']) {
