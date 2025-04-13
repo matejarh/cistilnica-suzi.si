@@ -10,6 +10,9 @@ import InputError from '@/Components/InputError.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 import PromotionCard from '@/Components/PromotionCard.vue';
+import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
+import TrashIcon from '@/Icons/TrashIcon.vue';
+import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
 
 
 const showModal = ref(false);
@@ -114,6 +117,32 @@ const confirmToSend = () => {
     }
 };
 
+// Handle form submission
+const handleSubmit = () => {
+    //form.start_date =new Date(form.start_date).toISOString().split('T')[0]; // Convert to ISO format
+    //form.end_date = new Date(form.end_date).toISOString().split('T')[0]; // Convert to ISO format
+
+    if (isEditMode.value) {
+        // Update promotion
+        promotionForm.put(route('promotions.update', currentPromotion.value), {
+            onSuccess: () => {
+                showModal.value = false;
+                promotionForm.reset();
+                currentPromotion.value = null;
+            },
+        });
+    } else {
+        // Create promotion
+        promotionForm.post(route('promotions.store'), {
+            onSuccess: () => {
+                showModal.value = false;
+                promotionForm.reset();
+                currentPromotion.value = null;
+            },
+        });
+    }
+};
+
 
 
 const handleCancel = () => {
@@ -121,7 +150,9 @@ const handleCancel = () => {
     promotionForm.reset();
 };
 
-// Watchers for validation
+// Watchers for handling dates and validation
+// Automatically set end_date to 7 days from start_date if it's empty or invalid
+// Automatically set start_date to today if it's empty or invalid
 watch(
     () => promotionForm.start_date,
     (newStartDate) => {
@@ -168,10 +199,40 @@ watch(
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <!-- Page Header -->
                 <div class="bg-primary/60 overflow-hidden shadow-xl sm:rounded-lgbackdrop-blur-xs p-6">
-                    <h1 class="text-3xl font-bold text-neutral-light">Upravljanje akcij</h1>
+                    <h1 class="text-3xl font-bold text-neutral-light">Upravljanje z akcijam</h1>
                     <p class="text-neutral-light mt-2">
                         Tukaj lahko pregledate, urejate ali izbrišete obstoječe akcije.
+                        <br />
+                        Dodajte nove akcije, ki jih želite poslati svojim naročnikom.
+                        <br />
+                        Vsaka akcija ima svoj naslov, opis in datume veljavnosti.
+                        <br />
+                        Akcije lahko pošljete vsem naročnikom, da jih obvestite o posebnih ponudbah ali popustih.
+                        <br />
+                        Uporabite to funkcionalnost za učinkovito komunikacijo s svojimi strankami.
+
+
                     </p>
+                    <div class="mt-2">
+                        <div class="text-neutral-light flex items-center space-x-2">
+                            <span>
+                             Akcije pošljete vsem naročnikom s pritiskom na ikono
+                            </span>
+                             <PaperAirplaneIcon class="w-5 h-5 text-blue-500 " />
+                        </div>
+                        <div class="text-neutral-light flex items-center space-x-2">
+                            <span>
+                             Akcije lahko izbrišete s pritiskom na ikono
+                            </span>
+                             <TrashIcon class="w-5 h-5 text-red-500 " />
+                        </div>
+                        <div class="text-neutral-light flex items-center space-x-2">
+                            <span>
+                             Akcije lahko uredite s pritiskom na ikono
+                            </span>
+                             <PencileSquareIcon class="w-5 h-5 text-blue-500 " />
+                        </div>
+                    </div>
                     <div class="mt-4">
                         <button @click="openCreateModal"
                             class="px-4 py-2 bg-primary-light text-white rounded-lg hover:bg-primary">
@@ -234,6 +295,7 @@ watch(
                                         :format="'dd.MM.yyyy'"
                                         cancelText="prekliči"
                                         selectText="izberi"
+                                        placeholder="Izberi datum"
                                         :min-date="today"
                                         :max-date="promotionForm.end_date" />
                             <!-- <input id="start_date" v-model="promotionForm.start_date" type="text" placeholder="dd.MM.yyyy" lang="sl-SI" required
@@ -248,6 +310,7 @@ watch(
                                         :format="'dd.MM.yyyy'"
                                         cancelText="prekliči"
                                         selectText="izberi"
+                                        placeholder="Izberi datum"
                                         :min-date="promotionForm.start_date || today" />
                             <!-- <input id="end_date" v-model="promotionForm.end_date" type="text" placeholder="dd.MM.yyyy" lang="sl-SI" required
                                 class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" /> -->
@@ -350,7 +413,7 @@ watch(
     --dp-menu-padding: 6px 8px; /*Menu padding*/
 
     /*Font sizes*/
-    --dp-font-size: 1rem; /*Default font-size*/
+    --dp-font-size: 0.875rem; /*Default font-size*/
     --dp-preview-font-size: 0.8rem; /*Font size of the date preview in the action row*/
     --dp-time-font-size: 0.8rem; /*Font size in the time picker*/
 
