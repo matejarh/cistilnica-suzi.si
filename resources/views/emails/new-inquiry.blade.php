@@ -26,7 +26,14 @@
         <li style="margin-top: 8px"><strong>Sporočilo:</strong><br>{{ $inquiry['message'] }}</li>
     </ul>
 
-    <a href="{!! route('inquiries.show', ['inquiry' => $inquiry]) !!}" class="button">Odgovori na povpraševanje</a>
+    <a href="{!! route('inquiries.show', ['inquiry' => $inquiry]) !!}" class="button" style="display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff !important;
+            background-color: #0ea5e9;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;">Odgovori na povpraševanje</a>
     <p>Če povezava ne deluje, kopirajte in prilepite naslednji URL v svoj brskalnik:</p>
     <p style="line-height: 12pt; font-size: small;">
         <small>{!! route('inquiries.show', ['inquiry' => $inquiry]) !!}</small>
