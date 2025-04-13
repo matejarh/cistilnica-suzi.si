@@ -24,7 +24,7 @@ defineEmits(['scrollToContact']);
                     kot tudi podjetjem – s poudarkom na kakovosti, natančnosti ter zanesljivosti.
                 </p>
                 <div class="space-y-4 md:space-y-0">
-                    <ButtonPrimary as="button" @click="$emit('scrollToContact', 'povpraševanje')">
+                    <ButtonPrimary as="button" @click="$emit('scrollToContact', 'povprasevanje')">
                         Pošljite povpraševanje
                         <ArrowRightIcon class="w-5 h-5 ml-2 -mr-1 rotate-90" />
                     </ButtonPrimary>

@@ -33,12 +33,12 @@ const submitForm = () => {
 </script>
 
 <template>
-    <section id="povpraševanje" class="py-12 bg-neutral-dark/40 backdrop-blur-xs">
+    <section class="py-12 bg-neutral-dark/40 backdrop-blur-xs">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-extrabold text-primary-dark dark:text-primary-light text-center">
+            <h2 class="text-3xl font-extrabold text-primary-light text-center">
                 Pošljite nam povpraševanje
             </h2>
-            <p class="mt-4 text-lg text-neutral-dark dark:text-neutral-light text-center">
+            <p class="mt-4 text-lg text-neutral-light text-center">
                 Izpolnite spodnji obrazec in kontaktirali vas bomo v najkrajšem možnem času.
             </p>
 

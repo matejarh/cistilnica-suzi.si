@@ -3,7 +3,7 @@ import IroningImage from "@images/banner-likalnica.png";
 </script>
 
 <template>
-    <section class="py-12 bg-neutral-dark/20 backdrop-blur-md">
+    <section class=" bg-neutral-dark/20 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
             <div class="order-2 lg:order-2 lg:mr-auto ">
                 <h2 class="text-3xl font-extrabold text-primary-light">

@@ -49,7 +49,7 @@ const submitUnsubscribe = () => {
         keywords="akcije, promocije, čistilnica, suzi, prijava"
     >
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-x-8 md:space-y-12">
                 <!-- Banner Section -->
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <div class="p-6 lg:p-8 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">

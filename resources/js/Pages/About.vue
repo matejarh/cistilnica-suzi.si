@@ -16,14 +16,19 @@ import { ref } from 'vue'
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8  space-y-8 md:space-y-12">
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg  backdrop-blur-xs">
                     <div class="">
-
                         <ONasHeroSection />
-                        <Features />
-                        <Slogan />
                     </div>
+                </div>
+
+                <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg  backdrop-blur-xs">
+                    <Features />
+                </div>
+
+                <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg  backdrop-blur-xs">
+                    <Slogan />
                 </div>
             </div>
         </div>

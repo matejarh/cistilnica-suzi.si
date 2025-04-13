@@ -7,7 +7,7 @@ import Logo from "@images/logoSuzi150.png";
 </script>
 
 <template>
-    <section class=" pt-20 sm:pt-10">
+    <section class="">
         <div class="grid max-w-(--breakpoint-xl) px-4 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 md:grid-cols-12">
             <div class="order-2 lg:order-1 lg:mr-auto place-self-center text-center md:col-span-7">
                 <h1
