@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { useForm, usePage, router } from '@inertiajs/vue3';
-import { formatDateToSlovenian, formatDateToISO } from '@/utils/dateUtils';
+import { useForm, router } from '@inertiajs/vue3';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
@@ -12,8 +11,6 @@ import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 import PromotionCard from '@/Components/PromotionCard.vue';
 
-// Get promotions from the page props
-const { promotions } = usePage().props;
 
 const showModal = ref(false);
 const isEditMode = ref(false); // Determines if the modal is in edit mode
@@ -117,31 +114,7 @@ const confirmToSend = () => {
     }
 };
 
-// Handle form submission
-const handleSubmit = () => {
-    //promotionForm.start_date =new Date(promotionForm.start_date).toISOString().split('T')[0]; // Convert to ISO format
-    //promotionForm.end_date = new Date(promotionForm.end_date).toISOString().split('T')[0]; // Convert to ISO format
 
-    if (isEditMode.value) {
-        // Update promotion
-        promotionForm.put(route('promotions.update', currentPromotion.value), {
-            onSuccess: () => {
-                showModal.value = false;
-                promotionForm.reset();
-                currentPromotion.value = null;
-            },
-        });
-    } else {
-        // Create promotion
-        promotionForm.post(route('promotions.store'), {
-            onSuccess: () => {
-                showModal.value = false;
-                promotionForm.reset();
-                currentPromotion.value = null;
-            },
-        });
-    }
-};
 
 const handleCancel = () => {
     showModal.value = false;
@@ -229,7 +202,7 @@ watch(
             </div>
         </div>
 
-        <!-- Dialog Modal -->
+        <!-- Create/Edit Dialog -->
         <DialogModal :show="showModal" @close="showModal = false" max-width="4xl">
             <template #title>
                 <h2 class="text-lg font-semibold text-neutral-light">
@@ -298,7 +271,7 @@ watch(
             </template>
         </DialogModal>
 
-        <!-- Confirmation Modal -->
+        <!-- Delete Confirmation Modal -->
         <ConfirmationModal :show="showDeleteConfirmationModal" @close="showDeleteConfirmationModal = false">
             <template #title>
                 Potrditev izbrisa
@@ -321,7 +294,7 @@ watch(
             </template>
         </ConfirmationModal>
 
-        <!-- Confirmation Modal -->
+        <!-- Send To Subscribers Confirmation Modal -->
         <ConfirmationModal :show="showSendConfirmationModal" @close="showSendConfirmationModal = false">
             <template #title>
                 Potrditev pošiljanja akcije
