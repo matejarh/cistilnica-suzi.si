@@ -12,6 +12,7 @@ import PhoneIcon from '@/Icons/PhoneIcon.vue';
 import MapPinIcon from '@/Icons/MapPinIcon.vue';
 import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 import MegaphoneIcon from '@/Icons/MegaphoneIcon.vue';
+import Alert from '../Alert.vue';
 
 const form = useForm({
     name: '',
@@ -34,7 +35,7 @@ const submitForm = () => {
 
 <template>
     <section class="py-12 bg-neutral-dark/40 backdrop-blur-xs">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
             <h2 class="text-3xl font-extrabold text-primary-light text-center">
                 Pošljite nam povpraševanje
             </h2>
@@ -153,6 +154,11 @@ const submitForm = () => {
                     Vaše povpraševanje je bilo uspešno poslano. Hvala!
                 </p>
             </form>
+
+
+            <Alert
+                    type="info"
+                    message="Na vaš naslov po poslano sporočilo s povezavo za potrditev. Povezavo morate odpreti v tem brskalniku.<br>Če sporočila ne prejmete, preverite mapo z vsiljeno pošto." />
         </div>
     </section>
 </template>
