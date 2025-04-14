@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
             </header> -->
 
             <!-- Page Content -->
-            <main id="main" @scroll="handleScroll" class="overflow-y-auto h-full custom-scrollbar scroll-smooth pb-24">
+            <main id="main" @scroll="handleScroll" class="overflow-y-auto h-full custom-scrollbar scroll-smooth pb-32 sm:pb-24">
                 <slot />
             </main>
 
@@ -119,7 +119,7 @@ onBeforeUnmount(() => {
 } */
 .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(14, 165, 233, 0.5) transparent;
+    scrollbar-color: rgba(12, 148, 211, 0.5) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -128,12 +128,12 @@ onBeforeUnmount(() => {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(14, 165, 233, 0.5);
+    background-color: rgba(12, 148, 211, 0.5);
     border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(14, 165, 233, 0.7);
+    background-color: rgba(12, 148, 211, 0.6);
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -146,10 +146,10 @@ onBeforeUnmount(() => {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     animation: float 6s infinite ease-in-out;
-    pointer-events: none;
     /* Prevent bubbles from interfering with user interactions */
-    z-index: -1;
+    pointer-events: none;
     /* Behind all other elements */
+    z-index: -1;
 }
 
 @keyframes float {
