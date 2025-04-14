@@ -4,6 +4,7 @@ import EnvelopeSolidIcon from '@/Icons/EnvelopeSolidIcon.vue';
 import ExclamationIcon from '@/Icons/ExclamationIcon.vue';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import Alert from './Alert.vue';
 
 const emailInput = ref(null);
 
@@ -91,6 +92,15 @@ const inputClasses = computed(() => {
                         </a>.
                     </div> -->
                 </form>
+
+                <Alert
+                    type="info"
+
+                    message="Na vaš naslov po poslano sporočilo s povezavo za potrditev. Povezavo morate odpreti v tem brskalniku.<br>Če sporočila ne prejmete, preverite mapo z vsiljeno pošto." />
+
+                <!-- <p class="mx-auto max-w-2xl font-light text-neutral-light text-xs">
+                    Na vaš naslov po poslano sporočilo s povezavo za potrditev. Povezavo morate odpreti v tem brskalniku.<br>Če sporočila ne prejmete, preverite mapo z vsiljeno pošto.
+                </p> -->
             </div>
         </div>
     </section>
