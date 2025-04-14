@@ -5,11 +5,13 @@ import { shallowRef } from 'vue';
 import TagOutlineIcon from '@/Icons/TagOutlineIcon.vue';
 import ChatBubbleBottomCenterTextIcon from '@/Icons/ChatBubbleBottomCenterTextIcon.vue';
 import UsersOutlineIcon from '@/Icons/UsersOutlineIcon.vue';
+import UserIcon from '@/Icons/UserIcon.vue';
 
 const links = shallowRef([
     { name: 'Akcije', href: route('promotions.index'), icon: TagOutlineIcon },
     { name: 'Poizvedbe', href: route('inquiries.index'), icon: ChatBubbleBottomCenterTextIcon },
     { name: 'Naročniki', href: route('subscribers.index'), icon: UsersOutlineIcon },
+    { name: 'Profil', href: route('profile.show'), icon: UserIcon },
 ]);
 </script>
 
