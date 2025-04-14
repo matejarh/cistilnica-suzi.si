@@ -26,6 +26,7 @@
   --color-accent-dark: #0891b2;
 
   --height-max-content: max-content;
+  --list-check-symbol: '✅';
 }
 
 /*
@@ -49,3 +50,15 @@
 [x-cloak] {
     display: none;
 }
+
+/* Custom utility */
+@layer utilities {
+    .list-check li {
+      @apply relative pl-6;
+    }
+
+    .list-check li::before {
+      content: var(--list-check-symbol);
+      @apply absolute left-0 ;
+    }
+  }
