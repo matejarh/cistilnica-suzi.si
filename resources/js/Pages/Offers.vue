@@ -27,23 +27,27 @@ const scrollToContactForm = (targetId) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8 md:space-y-12">
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
-                    <div class="">
-                        <HeroSection @scroll-to-contact="scrollToContactForm" />
-                    </div>
+                    <HeroSection @scroll-to-contact="scrollToContactForm" />
                 </div>
+
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <LaundryAndIroning />
                 </div>
+
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <DryCleaning />
                 </div>
+
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <LinenRental />
                 </div>
+
                 <div class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <SpecialCleaning />
                 </div>
-                <div id="povprasevanje" class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
+
+                <div id="povprasevanje"
+                    class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs">
                     <ContactForm />
                 </div>
             </div>
