@@ -95,7 +95,6 @@ const inputClasses = computed(() => {
 
                 <Alert
                     type="info"
-
                     message="Na vaš naslov po poslano sporočilo s povezavo za potrditev. Povezavo morate odpreti v tem brskalniku.<br>Če sporočila ne prejmete, preverite mapo z vsiljeno pošto." />
 
                 <!-- <p class="mx-auto max-w-2xl font-light text-neutral-light text-xs">
