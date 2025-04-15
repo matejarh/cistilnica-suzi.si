@@ -17,14 +17,16 @@ class SendPromotionToSubscriberJob implements ShouldQueue, ShouldBeUnique {
     use Dispatchable, InteractsWithQueue, SerializesModels;
     public $promotion;
     public $subscriber;
+    public $unsubscribeUrl;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(Promotion $promotion, Subscriber $subscriber)
+    public function __construct(Promotion $promotion, Subscriber $subscriber, string $unsubscribeUrl = null)
     {
         $this->promotion = $promotion;
         $this->subscriber = $subscriber;
+        $this->unsubscribeUrl = $unsubscribeUrl;
     }
 
     /**
@@ -49,7 +51,7 @@ class SendPromotionToSubscriberJob implements ShouldQueue, ShouldBeUnique {
      */
     public function handle(): void
     {
-            Mail::to($this->subscriber->email)->send(new PromotionEmail($this->promotion, $this->subscriber));
+            Mail::to($this->subscriber->email)->send(new PromotionEmail($this->promotion, $this->subscriber, $this->unsubscribeUrl));
 
     }
 
