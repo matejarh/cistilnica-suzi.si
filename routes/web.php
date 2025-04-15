@@ -20,7 +20,8 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
 
     Route::get('/kontakt', fn() => Inertia::render('Contact'))->name('contact');
 
-    Route::get('/akcije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::latest()->take(10)]))->name('akcije');
+    Route::get('/akcije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::latest()->take(10)->get()]))->name('akcije');
+    Route::get('/akcije/activne', [PromotionsController::class, 'active'])->name('promotions.active');
 });
 
 
@@ -30,12 +31,13 @@ Route::prefix('povprasevanja')->name('inquiries.')->middleware('throttle:10,1')-
     Route::post('/potrditev', [InquiriesController::class, 'sendConfirmationEmail'])->name('confirm');
 });
 
-// Subscriber Routes
+// Subscriber Public Routes
 Route::prefix('promocije')->name('subscribers.')->middleware('throttle:10,1')->group(function () {
     Route::post('/prijava', [SubscribersController::class, 'confirm'])->name('confirm');
     Route::get('/prijava', [SubscribersController::class, 'store'])->name('store');
+    Route::get('/odjava', [SubscribersController::class, 'unsubscribe'])->name('unsubscribe');
     Route::post('/odjava', [SubscribersController::class, 'unsubscribeConfirm'])->name('unsubscribe.confirm');
-    Route::get('/odjava', [SubscribersController::class, 'unsubscribeStore'])->name('unsubscribe.store');
+    Route::get('/odjavi', [SubscribersController::class, 'unsubscribeStore'])->name('unsubscribe.store');
     Route::delete('/', [SubscribersController::class, 'destroy'])->name('destroy');
 });
 
@@ -46,6 +48,7 @@ if (app()->environment('local')) {
         $email = fake()->safeEmail();
         $token = hash_hmac('sha256', $email, config('app.key'));
         $email = encrypt($email);
+        $unsubscribeUrl = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
         $data = [
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
