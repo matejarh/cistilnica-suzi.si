@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Jetstream\Agent;
 
 class Subscriber extends Model
 {
+    use HasFactory;
     // Define the attributes that are mass assignable
     protected $fillable = [
         'email',
