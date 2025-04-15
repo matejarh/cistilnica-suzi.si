@@ -11,9 +11,10 @@ use Inertia\Response;
 
 class PromotionsController extends Controller
 {
-    #[Middleware('auth', except: ['active'])]
+    #[Middleware('auth', except: ['active', 'akcije'])]
+
     /**
-     * Prikaže seznam promocij.
+     * Prikaže seznam promocij za prijavljenega uporabnika.
      *
      * @param Request $request
      * @return Response
@@ -21,25 +22,43 @@ class PromotionsController extends Controller
     public function index(Request $request): Response
     {
         return inertia('Promotions/Index', [
-            'promotions' => Promotion::filter(
+            'promotions' => Promotion::active()->filter(
                     $request->get('search'),
                     $request->get('trashed')
                 )
-                ->latest()
+                ->orderByStartDate('asc')
                 ->paginate(10),
             'filters' => $request->only('search', 'trashed'),
         ]);
     }
 
     /**
-     * Prikaže aktivne promocije.
+     * Prikaže aktivne promocije za obiskovalce
      *
      * @return Response
      */
     public function active(): Response
     {
         return inertia('Promotions/Active', [
-            'promotions' => Promotion::active()->latest()->get(),
+            'promotions' => Promotion::active()->ongoing()->latest()->get(),
+        ]);
+    }
+
+    /**
+     * Prikaže promocije za obiskovalce.
+     *
+     * @return Response
+     */
+    public function akcije(Request $request): Response
+    {
+        $filters = $request->only('search', 'trashed');
+        $promotions = Promotion::filter(
+            $filters['search'] ?? null,
+            $filters['trashed'] ?? null
+        )->active()->ongoing()->latest()->paginate(10);
+        $promotions->appends($filters);
+        return inertia('Akcije', [
+            'promotions' => Promotion::active()->ongoing()->latest()->get(),
         ]);
     }
 
@@ -137,7 +156,16 @@ class PromotionsController extends Controller
     {
         $rules = [
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => [
+                'required',
+                'string',
+                'max:500',
+                function ($attribute, $value, $fail) {
+                    if (trim($value) === '<p></p>') {
+                        $fail(__('Opis promocije ne sme vsebovati samo praznih oznak <p></p>.'));
+                    }
+                },
+            ],
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
         ];
