@@ -9,6 +9,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import AtSymbolIcon from '@/Icons/AtSymbolIcon.vue';
 import KeyIcon from '@/Icons/KeyIcon.vue';
+import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 
 defineProps({
     canResetPassword: Boolean,
@@ -85,7 +86,9 @@ const submit = () => {
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Prijava
+                    <Cog8ToothIcon v-show="form.processing" class="w-5 h-5 me-2 animate-spin" :class="{ 'text-white': form.processing }" />
+                    <span v-if="form.processing" class="text-white">Obdelava...</span>
+                    <span v-else class="text-white">Prijava</span>
                 </PrimaryButton>
             </div>
         </form>
