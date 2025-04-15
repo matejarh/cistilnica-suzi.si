@@ -4,16 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Promotion;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\Middleware;
+use Inertia\Response;
+
 
 class PromotionsController extends Controller
 {
+    #[Middleware('auth', except: ['active'])]
     /**
-     * Display a listing of the resource.
+     * Prikaže seznam promocij.
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
-        return inertia()->render('Promotions/Index', [
-            'promotions' => Promotion::filter($request->get('search'), $request->get('trashed'))
+        return inertia('Promotions/Index', [
+            'promotions' => Promotion::filter(
+                    $request->get('search'),
+                    $request->get('trashed')
+                )
                 ->latest()
                 ->paginate(10),
             'filters' => $request->only('search', 'trashed'),
@@ -21,64 +32,94 @@ class PromotionsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Prikaže aktivne promocije.
+     *
+     * @return Response
      */
-    public function show(Promotion $promotion)
+    public function active(): Response
     {
-        return inertia()->render('Promotions/Show', [
+        return inertia('Promotions/Active', [
+            'promotions' => Promotion::active()->latest()->get(),
+        ]);
+    }
+
+    /**
+     * Prikaže izbrano promocijo.
+     *
+     * @param Promotion $promotion
+     * @return Response
+     */
+    public function show(Promotion $promotion): Response
+    {
+        return inertia('Promotions/Show', [
             'promotion' => $promotion,
         ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Prikaže urejevalnik promocije.
+     *
+     * @param Promotion $promotion
+     * @return Response
      */
-    public function edit(Promotion $promotion)
+    public function edit(Promotion $promotion): Response
     {
-        return inertia()->render('Promotions/Edit', [
+        return inertia('Promotions/Edit', [
             'promotion' => $promotion,
         ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Shrani novo promocijo.
+     *
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->validatePromotion($request);
 
         Promotion::create($request->all());
 
-        return $this->flashAndRedirect( __('Akcija uspešno ustvarjena'), 'promotions.index');
+        return $this->flashAndRedirect(__('Akcija uspešno ustvarjena'), 'promotions.index');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Posodobi obstoječo promocijo.
+     *
+     * @param Request $request
+     * @param Promotion $promotion
+     * @return RedirectResponse
      */
-    public function update(Request $request, Promotion $promotion)
+    public function update(Request $request, Promotion $promotion): RedirectResponse
     {
         $this->validatePromotion($request, true);
 
         $promotion->update($request->all());
 
-        return $this->flashAndRedirect( __('Akcija uspešno posodobljena'));
+        return $this->flashAndRedirect(__('Akcija uspešno posodobljena'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Izbriše promocijo.
+     *
+     * @param Promotion $promotion
+     * @return RedirectResponse
      */
-    public function destroy(Promotion $promotion)
+    public function destroy(Promotion $promotion): RedirectResponse
     {
         $promotion->delete();
 
-        return $this->flashAndRedirect( __('Akcija uspešno izbrisana'));
+        return $this->flashAndRedirect(__('Akcija uspešno izbrisana'));
     }
 
-    /** Send given promotion to all active subscribers
+    /**
+     * Pošlje promocijo vsem aktivnim naročnikom.
+     *
      * @param Promotion $promotion
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function send(Promotion $promotion)
+    public function send(Promotion $promotion): RedirectResponse
     {
         $promotion->sendToSubscribers();
 
@@ -86,9 +127,13 @@ class PromotionsController extends Controller
     }
 
     /**
-     * Validate promotion data.
+     * Validira podatke promocije.
+     *
+     * @param Request $request
+     * @param bool $isUpdate
+     * @return void
      */
-    private function validatePromotion(Request $request, $isUpdate = false)
+    private function validatePromotion(Request $request, bool $isUpdate = false): void
     {
         $rules = [
             'name' => 'required|string|max:255',
@@ -120,13 +165,13 @@ class PromotionsController extends Controller
     }
 
     /**
-     * Flash a success message and redirect back.
+     * Prikaže uspešno sporočilo in preusmeri.
      *
      * @param string $message
      * @param string|null $route
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    private function flashAndRedirect(string $message, ?string $route = null)
+    private function flashAndRedirect(string $message, ?string $route = null): RedirectResponse
     {
         session()->flash('flash.banner', $message);
         session()->flash('flash.bannerStyle', 'success');
