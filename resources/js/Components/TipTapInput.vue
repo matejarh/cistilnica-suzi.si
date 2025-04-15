@@ -4,7 +4,7 @@
             <div class="w-full flex justify-between flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
                 <div class="left justify-self-stretch flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:pe-4">
                     <template v-for="(button, index) in toolbarButtons" :key="index">
-                        <button v-if="button.condition" @click="button.action" :class="[buttonClasses, button.active ? activeButtonClasses : '']">
+                        <button v-if="button.condition" @click.prevent="button.action" :class="[buttonClasses, button.active ? activeButtonClasses : '']">
                             <div class="flex">
                                 <component :is="button.icon" :class="iconClasses" />
                                 <span v-if="button.label">{{ button.label }}</span>
