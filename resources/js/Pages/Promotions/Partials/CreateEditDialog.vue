@@ -22,8 +22,12 @@ const props = defineProps({
     onClose: Function,
 });
 
+// Emit events for parent component
 const emit = defineEmits(['submit', 'close', 'clearCurrentPromotion']);
 
+// Initialize form
+// The form is initialized with empty values
+// and will be populated when the dialog is opened
 const promotionForm = useForm({
     name: '',
     description: '',
@@ -93,18 +97,20 @@ watch(
 );
 
 // Handle form submission
-// Handle form submission
+// This function is called when the user clicks the "Shrani" button
+// It checks if the form is in edit mode or create mode
+// and sends the appropriate request to the server
+// If the form is in edit mode, it sends a PUT request to update the promotion
+// If the form is in create mode, it sends a POST request to create a new promotion
 const handleSubmit = () => {
-    //form.start_date =new Date(form.start_date).toISOString().split('T')[0]; // Convert to ISO format
-    //form.end_date = new Date(form.end_date).toISOString().split('T')[0]; // Convert to ISO format
 
     if (props.isEditMode) {
         // Update promotion
         promotionForm.put(route('promotions.update', props.promotion), {
             onSuccess: () => {
                 emit('close')
-                promotionForm.reset();
                 emit('clearCurrentPromotion')
+                promotionForm.reset();
             },
         });
     } else {
@@ -112,13 +118,16 @@ const handleSubmit = () => {
         promotionForm.post(route('promotions.store'), {
             onSuccess: () => {
                 emit('close')
-                promotionForm.reset();
                 emit('clearCurrentPromotion')
+                promotionForm.reset();
             },
         });
     }
 };
 
+// Handle cancel button click
+// This function is called when the user clicks the "Prekliči" button
+// It resets the form and closes the dialog
 const handleCancel = () => {
     emit('close');
     emit('clearCurrentPromotion')
@@ -200,3 +209,72 @@ const handleCancel = () => {
         </template>
     </DialogModal>
 </template>
+
+
+<style>
+:root {
+    /*General*/
+    --dp-font-family: "Latto", "Segoe UI", "Roboto", "Helvetica", "Arial", "Noto Sans", sans-serif;
+    /*Font family*/
+    --dp-border-radius: 0.5rem;
+    /*Configurable border-radius*/
+    --dp-cell-border-radius: 0.2rem;
+    /*Specific border radius for the calendar cell*/
+    --dp-common-transition: all 0.1s ease-in;
+    /*Generic transition applied on buttons and calendar cells*/
+
+    /*Sizing*/
+    --dp-button-height: 35px;
+    /*Size for buttons in overlays*/
+    --dp-month-year-row-height: 35px;
+    /*Height of the month-year select row*/
+    --dp-month-year-row-button-size: 35px;
+    /*Specific height for the next/previous buttons*/
+    --dp-button-icon-height: 20px;
+    /*Icon sizing in buttons*/
+    --dp-cell-size: 35px;
+    /*Width and height of calendar cell*/
+    --dp-cell-padding: 5px;
+    /*Padding in the cell*/
+    --dp-common-padding: 10px;
+    /*Common padding used*/
+    --dp-input-icon-padding: 35px;
+    /*Padding on the left side of the input if icon is present*/
+    --dp-input-padding: 6px 30px 6px 12px;
+    /*Padding in the input*/
+    --dp-input-padding: calc(var(--spacing) * 3);
+    /*Padding in the input*/
+    --dp-menu-min-width: 260px;
+    /*Adjust the min width of the menu*/
+    --dp-action-buttons-padding: 2px 5px;
+    /*Adjust padding for the action buttons in action row*/
+    --dp-row-margin: 5px 0;
+    /*Adjust the spacing between rows in the calendar*/
+    --dp-calendar-header-cell-padding: 0.5rem;
+    /*Adjust padding in calendar header cells*/
+    --dp-two-calendars-spacing: 10px;
+    /*Space between multiple calendars*/
+    --dp-overlay-col-padding: 3px;
+    /*Padding in the overlay column*/
+    --dp-time-inc-dec-button-size: 32px;
+    /*Sizing for arrow buttons in the time picker*/
+    --dp-menu-padding: 6px 8px;
+    /*Menu padding*/
+
+    /*Font sizes*/
+    --dp-font-size: 0.875rem;
+    /*Default font-size*/
+    --dp-preview-font-size: 0.8rem;
+    /*Font size of the date preview in the action row*/
+    --dp-time-font-size: 0.8rem;
+    /*Font size in the time picker*/
+
+    /*Transitions*/
+    --dp-animation-duration: 0.1s;
+    /*Transition duration*/
+    --dp-menu-appear-transition-timing: cubic-bezier(.4, 0, 1, 1);
+    /*Timing on menu appear animation*/
+    --dp-transition-timing: ease-out;
+    /*Timing on slide animations*/
+}
+</style>
