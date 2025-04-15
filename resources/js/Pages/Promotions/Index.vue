@@ -1,6 +1,7 @@
 <script setup>
 import { defineAsyncComponent, ref, watch } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
+import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import DialogModal from '@/Components/DialogModal.vue';
@@ -16,9 +17,7 @@ import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
 const TipTapInput = defineAsyncComponent(() =>
     import('@/Components/TipTapInput.vue')
 );
-const Datepicker = defineAsyncComponent(() =>
-    import('@vuepic/vue-datepicker')
-);
+
 
 
 const showModal = ref(false);
