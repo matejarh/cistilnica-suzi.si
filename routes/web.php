@@ -20,7 +20,7 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
 
     Route::get('/kontakt', fn() => Inertia::render('Contact'))->name('contact');
 
-    Route::get('/akcije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::active()->ongoing()->latest()->get()]))->name('akcije');
+    Route::get('/akcije', [PromotionsController::class, 'akcije'])->name('akcije');
     Route::get('/akcije/activne', [PromotionsController::class, 'active'])->name('promotions.active');
 });
 
