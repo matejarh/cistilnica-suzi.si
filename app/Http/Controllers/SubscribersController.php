@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmSubscription;
+use App\Mail\ConfirmUnsubscription;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class SubscribersController extends Controller
 {
@@ -38,12 +41,19 @@ class SubscribersController extends Controller
             'data' => Session::get($sessionKey),
         ]);
 
-        Mail::send('emails.confirm-subscription', [
+        $link = route('subscribers.store', [
+            'email' => encrypt($email),
+            'token' => $token,
+        ]);
+
+        Mail::to($email)->send(new ConfirmSubscription($token, encrypt($email), $link));
+
+       /*  Mail::send('emails.confirm-subscription', [
             'token' => $token,
             'email' => encrypt($email),
         ], function ($message) use ($email) {
             $message->to($email)->subject('Potrdite prijavo na akcije');
-        });
+        }); */
 
         return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.");
     }
@@ -72,6 +82,20 @@ class SubscribersController extends Controller
         Session::forget($sessionKey);
 
         return $this->flashAndRedirect('Uspešno ste se prijavili na naše akcije.', 'public.home');
+    }
+
+    /**
+     * Show the unsubscribe form.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Inertia\Response
+     */
+    public function unsubscribe(Request $request)
+    {
+        return Inertia::render('Subscribers/Unsubscribe', [
+            'email' => decrypt(request('email')),
+            'token' => request('token'),
+        ]);
     }
 
     /**
@@ -109,12 +133,20 @@ class SubscribersController extends Controller
             'data' => Session::get($sessionKey),
         ]);
 
-        Mail::send('emails.unsubscribe-confirmation', [
+        $link = route('subscribers.unsubscribe.store', [
+            'email' => encrypt($email),
+            'token' => $token,
+        ]);
+
+        Mail::to($email)->send(new ConfirmUnsubscription($token, encrypt($email), $link));
+
+
+        /* Mail::send('emails.unsubscribe-confirmation', [
             'token' => $token,
             'email' => encrypt($email),
         ], function ($message) use ($email) {
             $message->to($email)->subject('Potrdite odjavo od akcij');
-        });
+        }); */
 
         return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo odjavo.");
     }
