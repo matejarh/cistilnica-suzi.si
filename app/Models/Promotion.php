@@ -68,7 +68,8 @@ class Promotion extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->where('is_active', true)->where('start_date', '<=', now())
+            ->where('end_date', '>=', now());
     }
     public function scopeInactive($query)
     {
@@ -96,10 +97,13 @@ class Promotion extends Model
         // Assuming you have a method to send the promotion to subscribers
         // This is just a placeholder for the actual implementation
         $subscribers = Subscriber::active()->get();
+
         foreach ($subscribers as $subscriber) {
+            $email = $subscriber->email;
+            $unsubscribeUrl = route('subscribers.unsubscribe', ['email' => encrypt($email), 'token' => hash_hmac('sha256', $email, config('app.key'))]);
             // Send the promotion to the subscriber
             // You can use a notification or a mailer here
-            SendPromotionToSubscriberJob::dispatch($this, $subscriber);
+            SendPromotionToSubscriberJob::dispatch($this, $subscriber, $unsubscribeUrl);
         }
     }
 
