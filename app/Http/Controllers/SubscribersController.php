@@ -93,7 +93,7 @@ class SubscribersController extends Controller
     public function unsubscribe(Request $request)
     {
         return Inertia::render('Subscribers/Unsubscribe', [
-            'email' => decrypt(request('email')),
+            'email' => request('email') && Subscriber::where('email', decrypt(request('email')))->exists() ? decrypt(request('email')) : null,
             'token' => request('token'),
         ]);
     }
