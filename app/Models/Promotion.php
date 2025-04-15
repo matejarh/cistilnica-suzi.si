@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Jobs\SendPromotionToSubscriberJob;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Promotion extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
     protected $fillable = [
         'name',
         'description',
@@ -24,6 +25,11 @@ class Promotion extends Model
     protected $appends = [
         'formatted_start_date',
         'formatted_end_date',
+        'is_ongoing',
+        'is_expired',
+        'is_upcoming',
+        'status',
+        'status_color',
     ];
     protected $hidden = [
         'created_at',
@@ -35,15 +41,15 @@ class Promotion extends Model
     ];
     public function getFormattedStartDateAttribute()
     {
-        return $this->start_date ? $this->start_date->format('d.m.Y') : null;
+        return $this->start_date?->format('d.m.Y');
     }
     public function getFormattedEndDateAttribute()
     {
-        return $this->end_date ? $this->end_date->format('d.m.Y') : null;
+        return $this->end_date?->format('d.m.Y');
     }
     public function getImageUrlAttribute()
     {
-        return $this->image_path ? asset('storage/' . $this->image_path) : null;
+        return $this->image_path ? asset("storage/{$this->image_path}") : null;
     }
 
     /**Filter
@@ -55,8 +61,8 @@ class Promotion extends Model
     public function scopeFilter($query, $search = null, $trashed = null)
     {
         if ($search) {
-            $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%');
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
         }
         if ($trashed) {
             $query->onlyTrashed();
@@ -86,6 +92,52 @@ class Promotion extends Model
     {
         return $query->where('start_date', '<=', now())
             ->where('end_date', '>=', now());
+    }
+
+    public function scopeOrderByStartDate($query, $direction = 'asc')
+    {
+        return $query->orderBy('start_date', $direction);
+    }
+
+    public function getIsOngoingAttribute()
+    {
+        return $this->start_date <= now() && $this->end_date >= now();
+    }
+    public function getIsExpiredAttribute()
+    {
+        return $this->end_date < now();
+    }
+    public function getIsUpcomingAttribute()
+    {
+        return $this->start_date > now();
+    }
+
+    /**
+     * Summary of getStatusAttribute
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        return match (true) {
+            $this->is_ongoing => 'V teku',
+            $this->is_expired => 'Potekla',
+            $this->is_upcoming => 'Prihajajoča',
+            default => 'Neznano',
+        };
+    }
+
+    /**
+     * Summary of getStatusColorAttribute
+     * @return string
+     */
+    public function getStatusColorAttribute()
+    {
+        return match (true) {
+            $this->is_ongoing => 'green-600',
+            $this->is_expired => 'red-600',
+            $this->is_upcoming => 'primary',
+            default => 'gray',
+        };
     }
 
     /*
