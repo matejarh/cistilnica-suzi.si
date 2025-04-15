@@ -31,20 +31,20 @@
 
                     <!-- Main Content -->
                     <tr>
-                        <td style="padding: 20px; text-align: left; color: #334155; font-size: 16px; line-height: 1.5;">
+                        <td style="padding: 20px; text-align: left; color: #334155; font-size: 16px; line-height: 1.5; max-width: 570px; text-align: center;">
                             @yield('content')
                         </td>
                     </tr>
 
                     <!-- Footer -->
                     <tr style="border-bottom: 1px solid #e0f2fe;">
-                        <td style="text-align: center; font-size: 14px; color: #94a3b8; padding: 20px;">
-                            <p style="margin: 0;">@yield('footer-text', 'Čistilnica Suzi - brezhibna čistoča za vaše perilo.')</p>
+                        <td style="text-align: center; font-size: 14px; color: #94a3b8; padding: 20px; ;">
+                            <p style="margin: 0; display: inline-block;">@yield('footer-text', 'Čistilnica Suzi - brezhibna čistoča za vaše perilo.')</p>
                         </td>
                     </tr>
                     @hasSection('footer')
                         <tr>
-                            <td style="text-align: center; font-size: 10px; color: #94a3b8; padding: 20px;">
+                            <td style="text-align: center; font-size: 11px; color: #94a3b8; padding: 20px;">
                                 <p style="margin: 0;">@yield('footer')</p>
                             </td>
                         </tr>
