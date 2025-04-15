@@ -9,15 +9,20 @@ import HighlightIcon from '@/Icons/TipTapIcons/HighlightIcon.vue'
 import ItalicIcon from '@/Icons/TipTapIcons/ItalicIcon.vue'
 import ParagraphIcon from '@/Icons/TipTapIcons/ParagraphIcon.vue'
 import TextSlashIcon from '@/Icons/TipTapIcons/TextSlashIcon.vue'
-import IndentIcon from './Icons/TipTapIcons/IndentIcon.vue'
-import LanguageIcon from './Icons/TipTapIcons/LanguageIcon.vue'
-import ListIcon from './Icons/TipTapIcons/ListIcon.vue'
-import ListOrderedIcon from './Icons/TipTapIcons/ListOrderedIcon.vue'
-import OutdentIcon from './Icons/TipTapIcons/OutdentIcon.vue'
-import QuoteIcon from './Icons/TipTapIcons/QuoteIcon.vue'
-import TextSizeIcon from './Icons/TipTapIcons/TextSizeIcon.vue'
-import UnderlineIcon from './Icons/TipTapIcons/UnderlineIcon.vue'
-import FullScreenIcon from './Icons/TipTapIcons/FullScreenIcon.vue'
+import IndentIcon from '@/Icons/TipTapIcons/IndentIcon.vue'
+import LanguageIcon from '@/Icons/TipTapIcons/LanguageIcon.vue'
+import ListIcon from '@/Icons/TipTapIcons/ListIcon.vue'
+import ListOrderedIcon from '@/Icons/TipTapIcons/ListOrderedIcon.vue'
+import OutdentIcon from '@/Icons/TipTapIcons/OutdentIcon.vue'
+import QuoteIcon from '@/Icons/TipTapIcons/QuoteIcon.vue'
+import TextSizeIcon from '@/Icons/TipTapIcons/TextSizeIcon.vue'
+import UnderlineIcon from '@/Icons/TipTapIcons/UnderlineIcon.vue'
+import FullScreenIcon from '@/Icons/TipTapIcons/FullScreenIcon.vue'
+import ClearFormattingIcon from '@/Icons/TipTapIcons/ClearFormattingIcon.vue'
+import UndoIcon from '@/Icons/TipTapIcons/UndoIcon.vue'
+import RedoIcon from '@/Icons/TipTapIcons/RedoIcon.vue'
+import BulletListIcon from './Icons/TipTapIcons/BulletListIcon.vue'
+import NumberedListIcon from './Icons/TipTapIcons/NumberedListIcon.vue'
 
 export const icons = {
     AlignCenterIcon,
@@ -40,4 +45,9 @@ export const icons = {
     TextSlashIcon,
     UnderlineIcon,
     FullScreenIcon,
+    ClearFormattingIcon,
+    UndoIcon,
+    RedoIcon,
+    BulletListIcon,
+    NumberedListIcon,
 };
