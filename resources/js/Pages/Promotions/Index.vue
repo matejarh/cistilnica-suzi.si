@@ -13,6 +13,7 @@ import PromotionCard from '@/Components/PromotionCard.vue';
 import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
 import TrashIcon from '@/Icons/TrashIcon.vue';
 import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
+import TipTapInput from '@/Components/TipTapInput.vue';
 
 
 const showModal = ref(false);
@@ -235,7 +236,7 @@ watch(
                     </div>
                     <div class="mt-4">
                         <button @click="openCreateModal"
-                            class="px-4 py-2 bg-primary-light text-white rounded-lg hover:bg-primary">
+                            class="px-4 py-2 bg-primary-dark text-white rounded-lg hover:bg-primary-dark/70 cursor-pointer">
                             Dodaj novo akcijo
                         </button>
                     </div>
@@ -271,7 +272,7 @@ watch(
                 </h2>
             </template>
             <template #content>
-                <form @submit.prevent="handleSubmit" class="space-y-4">
+                <form class="space-y-4">
                     <div>
                         <InputLabel for="name" value="Naslov" class="mb-2" />
                         <input id="name" v-model="promotionForm.name" type="text" required
@@ -281,9 +282,9 @@ watch(
                     </div>
                     <div>
                         <InputLabel for="description" value="Opis" class="mb-2" />
-                        <textarea id="description" v-model="promotionForm.description" required
-                            class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light"
-                            placeholder="Vnesite opis akcije"></textarea>
+
+                        <TipTapInput v-model="promotionForm.description" :has-error="!!promotionForm.errors.description" :is-small="false"/>
+
                         <InputError :message="promotionForm.errors.description" class="mt-2" />
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -298,8 +299,7 @@ watch(
                                         placeholder="Izberi datum"
                                         :min-date="today"
                                         :max-date="promotionForm.end_date" />
-                            <!-- <input id="start_date" v-model="promotionForm.start_date" type="text" placeholder="dd.MM.yyyy" lang="sl-SI" required
-                                class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" /> -->
+
                             <InputError :message="promotionForm.errors.start_date" class="mt-2" />
                         </div>
                         <div>
@@ -312,8 +312,7 @@ watch(
                                         selectText="izberi"
                                         placeholder="Izberi datum"
                                         :min-date="promotionForm.start_date || today" />
-                            <!-- <input id="end_date" v-model="promotionForm.end_date" type="text" placeholder="dd.MM.yyyy" lang="sl-SI" required
-                                class="block p-3 w-full text-sm text-neutral-dark rounded-lg border border-neutral-light focus:ring-primary-light focus:border-primary-light" /> -->
+
                             <InputError :message="promotionForm.errors.end_date" class="mt-2" />
                         </div>
                     </div>
