@@ -20,7 +20,7 @@ Route::name('public.')->middleware('throttle:60,1')->group(function () {
 
     Route::get('/kontakt', fn() => Inertia::render('Contact'))->name('contact');
 
-    Route::get('/akcije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::latest()->take(10)->get()]))->name('akcije');
+    Route::get('/akcije', fn() => Inertia::render('Akcije', ['promotions' => Promotion::active()->ongoing()->latest()->get()]))->name('akcije');
     Route::get('/akcije/activne', [PromotionsController::class, 'active'])->name('promotions.active');
 });
 
@@ -41,32 +41,6 @@ Route::prefix('promocije')->name('subscribers.')->middleware('throttle:10,1')->g
     Route::delete('/', [SubscribersController::class, 'destroy'])->name('destroy');
 });
 
-// Test Routes
-if (app()->environment('local')) {
-    Route::get('/test-email/{template}', function () {
-        $template = request('template');
-        $email = fake()->safeEmail();
-        $token = hash_hmac('sha256', $email, config('app.key'));
-        $email = encrypt($email);
-        $unsubscribeUrl = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
-        $link = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
-        $unsubscribeUrl = str_replace('http://localhost:8000', 'https://www.example.com', $unsubscribeUrl);
-        $data = [
-            'name' => fake()->name(),
-            'email' => fake()->safeEmail(),
-            'phone' => fake()->phoneNumber(),
-            'company' => fake()->company(),
-            'address' => fake()->address(),
-            'subject' => fake()->sentence(),
-            'message' => fake()->paragraph(),
-        ];
-        $inquiry = Inquiry::first();
-        $promotion = Promotion::first();
-        $subscriber = Subscriber::first();
-
-        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber', 'link', 'unsubscribeUrl'));
-    })->name('test.email');
-}
 
 // Authenticated Routes
 Route::middleware([
@@ -104,3 +78,30 @@ Route::middleware([
     });
 });
 
+
+// Test Routes
+if (app()->environment('local')) {
+    Route::get('/test-email/{template}', function () {
+        $template = request('template');
+        $email = fake()->safeEmail();
+        $token = hash_hmac('sha256', $email, config('app.key'));
+        $email = encrypt($email);
+        $unsubscribeUrl = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
+        $link = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
+        $unsubscribeUrl = str_replace('http://localhost:8000', 'https://www.example.com', $unsubscribeUrl);
+        $data = [
+            'name' => fake()->name(),
+            'email' => fake()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'company' => fake()->company(),
+            'address' => fake()->address(),
+            'subject' => fake()->sentence(),
+            'message' => fake()->paragraph(),
+        ];
+        $inquiry = Inquiry::first();
+        $promotion = Promotion::first();
+        $subscriber = Subscriber::first();
+
+        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber', 'link', 'unsubscribeUrl'));
+    })->name('test.email');
+}
