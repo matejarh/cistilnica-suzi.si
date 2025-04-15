@@ -14,9 +14,8 @@ import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
 import TrashIcon from '@/Icons/TrashIcon.vue';
 import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
 
-const TipTapInput = defineAsyncComponent(() =>
-    import('@/Components/TipTapInput.vue')
-);
+import TipTapInput from '@/Components/TipTapInput.vue';
+
 
 
 
