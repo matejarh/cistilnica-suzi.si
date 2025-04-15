@@ -49,6 +49,8 @@ if (app()->environment('local')) {
         $token = hash_hmac('sha256', $email, config('app.key'));
         $email = encrypt($email);
         $unsubscribeUrl = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
+        $link = route('subscribers.unsubscribe', ['email' => $email, 'token' => $token]);
+        $unsubscribeUrl = str_replace('http://localhost:8000', 'https://www.example.com', $unsubscribeUrl);
         $data = [
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
@@ -62,7 +64,7 @@ if (app()->environment('local')) {
         $promotion = Promotion::first();
         $subscriber = Subscriber::first();
 
-        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber'));
+        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber', 'link', 'unsubscribeUrl'));
     })->name('test.email');
 }
 
