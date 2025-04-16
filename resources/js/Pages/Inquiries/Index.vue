@@ -1,7 +1,6 @@
 <script setup>
 import AdminNav from '@/Components/AdminNav.vue';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
-import Table from './Partials/Table.vue';
 import InquiryCard from './Partials/InquiryCard.vue';
 
 </script>
