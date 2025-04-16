@@ -80,5 +80,11 @@
     "You are receiving this email because we received a verification request for your account.": "To elektronsko sporočilo ste prejeli, ker smo prejeli zahtevo za potrditev računa.",
     "You are receiving this email because we received an account verification request for your account.": "To elektronsko sporočilo ste prejeli, ker smo prejeli zahtevo za potrditev računa.",
     "You are receiving this email because we received an invitation to join a team.": "To elektronsko sporočilo ste prejeli, ker smo prejeli povabilo za pridružitev ekipi.",
-    "You are receiving this email because we received an invitation to join your team.": "To elektronsko sporočilo ste prejeli, ker smo prejeli povabilo za pridružitev vaši ekipi."
+    "You are receiving this email because we received an invitation to join your team.": "To elektronsko sporočilo ste prejeli, ker smo prejeli povabilo za pridružitev vaši ekipi.",
+    "first": "&laquo; Prva",
+    "last": "Zadnja &raquo;",
+    "Showing": "Prikazujem",
+    "to": "do",
+    "of": "od",
+    "results": "rezultatov"
 }
