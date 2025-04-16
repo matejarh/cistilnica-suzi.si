@@ -86,6 +86,14 @@ class Inquiry extends Model
                     ->orWhere('subject', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed) {
+                $query->onlyTrashed();
+            } else {
+                $query->withoutTrashed();
+            }
+        })->when($filters['status'] ?? null, function ($query, $status) {
+            $query->where('status', $status);
         });
     }
 
