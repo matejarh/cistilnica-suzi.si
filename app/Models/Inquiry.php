@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inquiry extends Model
 {
+    use SoftDeletes, HasFactory;
+
     // Define the attributes that are mass assignable
     protected $fillable = [
         'name',
@@ -31,6 +35,10 @@ class Inquiry extends Model
         'status' => 'pending',
     ];
 
+    protected $appends = [
+        'status_color',
+    ];
+
     /**
      * Accessor for the "status" attribute.
      * Converts the status value into a human-readable format.
@@ -41,6 +49,23 @@ class Inquiry extends Model
     public function getStatusAttribute($value)
     {
         return $value === 'pending' ? 'V obdelavi' : ($value === 'answered' ? 'Odgovorjeno' : 'Zaključeno');
+    }
+
+    /**
+     * Accessor for the "status_color" attribute.
+     * Returns a color code based on the status value.
+     *
+     * @return string
+     */
+    public function getStatusColorAttribute()
+    {
+
+        return match (true) {
+            $this->status === 'V obdelavi' => 'yellow',
+            $this->status === 'Odgovorjeno' => 'green',
+            $this->status === 'Zaključeno' => 'gray',
+            default => 'gray',
+        };
     }
 
     /**
