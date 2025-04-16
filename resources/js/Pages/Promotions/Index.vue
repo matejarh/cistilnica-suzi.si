@@ -5,6 +5,7 @@ import PromotionCard from '@/Components/PromotionCard.vue';
 import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
 import TrashIcon from '@/Icons/TrashIcon.vue';
 import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
+import AdminNav from '@/Components/AdminNav.vue';
 const CreateEditDialog = defineAsyncComponent(() => import('./Partials/CreateEditDialog.vue'));
 const DeleteConfirmationDialog = defineAsyncComponent(() => import('./Partials/DeleteConfirmationDialog.vue'));
 const SendToSubscribersConfirmationDialog = defineAsyncComponent(() => import('./Partials/SendToSubscribersConfirmationDialog.vue'));
@@ -51,6 +52,7 @@ const openEditModal = (promotion) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <!-- Page Header -->
+                <AdminNav />
                 <div class="bg-primary/60 overflow-hidden shadow-xl sm:rounded-lgbackdrop-blur-xs p-6">
                     <h1 class="text-3xl font-bold text-neutral-light">Upravljanje z akcijam</h1>
                     <p class="text-neutral-light mt-2">

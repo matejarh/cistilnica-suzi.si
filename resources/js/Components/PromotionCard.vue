@@ -3,6 +3,7 @@ import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
 import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
 import TrashIcon from '@/Icons/TrashIcon.vue';
 import Tooltip from './Tooltip.vue';
+import Badge from './Badge.vue';
 
 defineProps({
     promotion: {
@@ -12,13 +13,17 @@ defineProps({
 });
 
 defineEmits(['send', 'edit', 'delete']);
+
+// Format dates for display
+const formatDate = (date) => new Date(date).toLocaleDateString('sl-SI');
 </script>
 
 <template>
     <div class="border-b pb-4 bg-neutral-light/60 rounded-lg shadow-lg p-4 relative">
         <div class="absolute inset-x-0 -top-2 flex justify-center">
-            <span :class="`bg-${promotion.status_color} text-white text-xs font-medium px-2.5 py-0.5 rounded-full`">{{
-                promotion.status }}</span>
+            <Badge :color="promotion.status_color">
+                {{ promotion.status }}
+            </Badge>
         </div>
         <div class="mb-2 flex justify-between border-b border-neutral-dark pb-2">
             <div class="flex space-x-4">
@@ -53,10 +58,10 @@ defineEmits(['send', 'edit', 'delete']);
 
         <p class="text-neutral-500 text-sm flex justify-between">
             <span>
-                Začetni datum:<br>{{ new Date(promotion.start_date).toLocaleDateString('sl-SI') }}
+                Začetni datum:<br />{{ formatDate(promotion.start_date) }}
             </span>
             <span>
-                Končni datum:<br>{{ new Date(promotion.end_date).toLocaleDateString('sl-SI') }}
+                Končni datum:<br />{{ formatDate(promotion.end_date) }}
             </span>
         </p>
     </div>
