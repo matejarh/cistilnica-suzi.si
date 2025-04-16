@@ -50,30 +50,30 @@ defineProps({
 
         <div class="flex justify-between">
             <div class="">
-                <div class="flex items-center text-sm text-neutral-500">
+                <div class="flex items-center text-sm text-neutral-500 whitespace-nowrap">
 
-                    <span class="font-medium me-1">Datum: </span>
+                    <!-- <span class="font-medium me-1">Datum: </span> -->
                     {{ new Date(inquiry.created_at).toLocaleDateString('sl-SI') }}
                 </div>
-                <div class="flex items-center text-sm text-neutral-500">
+                <div class="flex items-center text-sm text-neutral-500 whitespace-nowrap">
 
-                    <span class="font-medium me-1">Od: </span>
+                    <!-- <span class="font-medium me-1">Od: </span> -->
                     {{ inquiry.name }}
                 </div>
             </div>
             <div class="">
 
-                <div class="flex items-center text-sm text-neutral-500">
+                <div class="flex items-center text-sm text-neutral-500 whitespace-nowrap">
 
-                    <span class="font-medium me-1">E-pošta: </span>
+                    <!-- <span class="font-medium me-1">E-pošta: </span> -->
                     <a href="mailto:{{ inquiry.email }}"
                         class="text-neutral-500 hover:underline hover:-translate-y-0.5 transition ease-in-out duration-150 cursor-pointer">
                         {{ inquiry.email }}
                     </a>
                 </div>
-                <div class="flex items-center text-sm text-neutral-500">
+                <div class="flex items-center text-sm text-neutral-500 whitespace-nowrap">
 
-                    <span class="font-medium me-1">Telefon: </span>
+                    <!-- <span class="font-medium me-1">Telefon: </span> -->
                     <a href="tel:{{ inquiry.phone }}"
                         class="text-neutral-500 hover:underline hover:-translate-y-0.5 transition ease-in-out duration-150 cursor-pointer">
                         {{ inquiry.phone }}
