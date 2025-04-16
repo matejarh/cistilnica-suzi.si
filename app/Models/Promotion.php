@@ -133,9 +133,9 @@ class Promotion extends Model
     public function getStatusColorAttribute()
     {
         return match (true) {
-            $this->is_ongoing => 'green-600',
-            $this->is_expired => 'red-600',
-            $this->is_upcoming => 'primary',
+            $this->is_ongoing => 'green',
+            $this->is_expired => 'red',
+            $this->is_upcoming => 'blue',
             default => 'gray',
         };
     }
