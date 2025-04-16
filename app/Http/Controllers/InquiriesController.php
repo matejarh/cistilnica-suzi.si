@@ -18,13 +18,27 @@ class InquiriesController extends Controller
      */
     public function index(Request $request)
     {
+        $perPage = $request->get('per_page', 12);
         // Fetch inquiries from the database
-        $inquiries = Inquiry::filter($request->only(['search', 'trashed']))->latest()->paginate(10);
+        $inquiries = Inquiry::filter($request->only(['search', 'trashed', 'status']))
+        ->latest()
+        ->paginate($perPage, ['*'], 'stran')
+        ->appends($request->except('page'));
 
         // Return the view with inquiries data
         return inertia('Inquiries/Index', [
             'inquiries' => $inquiries,
-            'filters' => $request->only(['search', 'trashed']),
+            'filters' => $request->only(['search', 'trashed', 'status', 'per_page' => $perPage]),
+            /* 'links' => $inquiries->links('vendor.pagination.tailwind', [
+                'onEachSide' => 3,
+            ])->toHtml(), */
+            /* 'pagination' => [
+                'current_page' => $inquiries->currentPage(),
+                'last_page' => $inquiries->lastPage(),
+                'per_page' => $inquiries->perPage(),
+                'total' => $inquiries->total(),
+                'links' => $inquiries->linkCollection(), // Use the paginator's link collection
+            ], */
         ]);
     }
 
