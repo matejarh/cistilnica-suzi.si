@@ -247,13 +247,6 @@ const toolbarButtons = computed(() => [
     },
     {
         condition: !props.isSmall && props.hasHeadings,
-        action: () => editor.value.chain().focus().unsetAllMarks().run(),
-        icon: icons.ClearFormattingIcon,
-        label: '',
-        active: editor.value?.isActive( 'unsetAllMarks' )
-    },
-    {
-        condition: !props.isSmall && props.hasHeadings,
         action: () => editor.value.chain().focus().toggleBulletList().run(),
         icon: icons.BulletListIcon,
         label: '',
@@ -265,6 +258,13 @@ const toolbarButtons = computed(() => [
         icon: icons.NumberedListIcon,
         label: '',
         active: editor.value?.isActive('orderedList')
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().unsetAllMarks().run(),
+        icon: icons.ClearFormattingIcon,
+        label: '',
+        active: editor.value?.isActive( 'unsetAllMarks' )
     },
 
 ])
