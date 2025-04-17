@@ -42,7 +42,7 @@ class PromotionsController extends Controller
      */
     public function active(): Response
     {
-        return inertia('Promotions/Active', [
+        return Inertia('Promotions/Active', [
             'promotions' => Promotion::active()->ongoing()->latest()->get(),
         ]);
     }
@@ -54,14 +54,9 @@ class PromotionsController extends Controller
      */
     public function akcije(Request $request): Response
     {
-        $filters = $request->only('search', 'trashed');
-        $promotions = Promotion::filter(
-            $filters['search'] ?? null,
-            $filters['trashed'] ?? null
-        )->active()->ongoing()->latest()->paginate(10);
-        $promotions->appends($filters);
-        return inertia('Akcije', [
-            'promotions' => Promotion::active()->ongoing()->latest()->get(),
+        return Inertia('Akcije', [
+            'active_promotions' => Promotion::active()->ongoing()->get(),
+            'upcoming_promotions' => Promotion::active()->upcoming()->get(),
         ]);
     }
 
@@ -73,7 +68,7 @@ class PromotionsController extends Controller
      */
     public function show(Promotion $promotion): Response
     {
-        return inertia('Promotions/Show', [
+        return Inertia('Promotions/Show', [
             'promotion' => $promotion,
         ]);
     }
@@ -86,7 +81,7 @@ class PromotionsController extends Controller
      */
     public function edit(Promotion $promotion): Response
     {
-        return inertia('Promotions/Edit', [
+        return Inertia('Promotions/Edit', [
             'promotion' => $promotion,
         ]);
     }
