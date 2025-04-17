@@ -116,7 +116,7 @@ const openEditModal = (promotion) => {
 
         <!-- Create/Edit Dialog -->
         <CreateEditDialog :show="showModal" :is-edit-mode="isEditMode" :promotion="currentPromotion"
-            @close="showModal = false" @clear-current-promotion="showModal = false" />
+            @close="showModal = false" @clear-current-promotion="currentPromotion = null" />
 
         <!-- Delete Confirmation Dialog -->
         <DeleteConfirmationDialog :show="showDeleteConfirmationModal" :promotion="promotionToDelete"
