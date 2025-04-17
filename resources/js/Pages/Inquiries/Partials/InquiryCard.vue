@@ -12,6 +12,8 @@ defineProps({
         required: true,
     },
 });
+
+defineEmits(['send', 'edit', 'delete']);
 </script>
 
 <template>
@@ -25,7 +27,7 @@ defineProps({
         <div class="mb-2 flex justify-between border-b border-neutral-dark pb-2">
             <div class="flex space-x-4">
                 <Tooltip text="Odgovori" location="top">
-                    <button @click="$emit('send', promotion)"
+                    <button @click="$emit('send', inquiry)"
                         class="text-primary hover:underline hover:-translate-y-0.5 transition ease-in-out duration-150 cursor-pointer">
                         <PaperAirplaneIcon class="w-5 h-5 " />
 
@@ -33,7 +35,7 @@ defineProps({
                 </Tooltip>
 
                 <Tooltip text="Uredi" location="top">
-                    <button @click="$emit('edit', promotion)"
+                    <button @click="$emit('edit', inquiry)"
                         class="text-primary hover:underline hover:-translate-y-0.5 transition ease-in-out duration-150 cursor-pointer">
                         <PencileSquareIcon class="w-5 h-5 " />
 
@@ -41,7 +43,7 @@ defineProps({
                 </Tooltip>
             </div>
             <Tooltip text="Izbriši" location="top">
-                <button @click="$emit('delete', promotion)"
+                <button @click="$emit('delete', inquiry)"
                     class="text-red-500 hover:underline hover:-translate-y-0.5 transition ease-in-out duration-150 cursor-pointer">
                     <TrashIcon class="w-5 h-5 " />
                 </button>
@@ -89,7 +91,7 @@ defineProps({
         <div class="flex items-center text-sm text-neutral">
 
         </div>
-        <inertia-link :href="route('inquiries.show', inquiry)"
+        <!-- <inertia-link :href="route('inquiries.show', inquiry)"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white  rounded-lg  focus:ring-4 focus:outline-none  bg-primary hover:bg-primary/90 focus:ring-primary/50">
             Podrobnosti
             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +99,7 @@ defineProps({
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M1 5h12m0 0L9 1m4 4L9 9" />
             </svg>
-        </inertia-link>
+        </inertia-link> -->
     </div>
 
 </template>
