@@ -9,7 +9,7 @@ import AdminNav from '@/Components/AdminNav.vue';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import Filters from './Partials/Filters.vue';
 import SubscriberCard from '@/Components/SubscriberCard.vue';
-import SendToSubscribersConfirmationDialog from './Partials/SendToSubscribersConfirmationDialog.vue';
+const SendToSubscribersConfirmationDialog = defineAsyncComponent(() => import('./Partials/SendToSubscribersConfirmationDialog.vue'));
 const DeleteConfirmationDialog = defineAsyncComponent(() => import('./Partials/DeleteConfirmationDialog.vue'));
 const SubscriberModal = defineAsyncComponent(() => import('./Partials/SubscriberModal.vue'));
 
@@ -113,20 +113,10 @@ const openSendToSubscribersConfirmationModal = (subscriber) => {
                     <div v-else class="text-gray-600">
                         Trenutno ni nobenega naročnika.
                     </div>
+                    <Paginator :links="$page.props.subscribers.links" :for-each-side="3" class="mt-4" />
                 </div>
             </div>
         </div>
-
-
-        <!-- <div class="container mx-auto px-4 py-8">
-            <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Upravljanje naročnikov</h1>
-                <Button @click="openCreateModal" class="bg-blue-500 text-white px-4 py-2 rounded">Dodaj naročnika</Button>
-            </div>
-            <SearchBar v-model="form.search" placeholder="Išči naročnike..." />
-            <SubscribersTable :subscribers="subscribers" @edit="openEditModal" @delete="openDeleteConfirmation" @send="openSendToSubscribersConfirmationModal" />
-            <Pagination :links="links" @page-changed="fetchSubscribers" />
-        </div> -->
 
         <!-- Create/Edit Subscriber Modal -->
         <SubscriberModal :show="showModal" :subscriber="currentSubscriber" @close="showModal = false" />
