@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\ConfirmSubscription;
 use App\Mail\ConfirmUnsubscription;
+use App\Mail\MessageToSubscriber;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -14,6 +15,13 @@ use Inertia\Inertia;
 
 class SubscribersController extends Controller
 {
+    #[Middleware('auth', except: [
+        'confirm',
+        'store',
+        'unsubscribe',
+        'unsubscribeConfirm',
+        'unsubscribeStore',
+    ])]
     /**
      * Handle subscription confirmation request.
      * Validates the email, generates a confirmation token, and sends a confirmation email.
@@ -48,13 +56,6 @@ class SubscribersController extends Controller
 
         Mail::to($email)->send(new ConfirmSubscription($token, encrypt($email), $link));
 
-       /*  Mail::send('emails.confirm-subscription', [
-            'token' => $token,
-            'email' => encrypt($email),
-        ], function ($message) use ($email) {
-            $message->to($email)->subject('Potrdite prijavo na akcije');
-        }); */
-
         return $this->flashAndRedirect("Potrditveno elektronsko sporočilo je bilo poslano na naslov <b>$email</b>. Prosimo, preverite svojo mapo Prejeto in potrdite svojo prijavo.");
     }
 
@@ -82,6 +83,25 @@ class SubscribersController extends Controller
         Session::forget($sessionKey);
 
         return $this->flashAndRedirect('Uspešno ste se prijavili na naše akcije.', 'public.home');
+    }
+
+    /** Store new subscriber on admin post
+     * Validates the email and saves the subscriber to the database
+     */
+    public function storeNewSubscriber(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|unique:subscribers,email',
+        ], $this->validationMessages());
+
+        Subscriber::create([
+            'email' => $validated['email'],
+            'is_subscribed' => true,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+        ]);
+
+        return $this->flashAndRedirect('Uspešno ste dodali naročnika.', 'subscribers.index');
     }
 
     /**
@@ -171,7 +191,56 @@ class SubscribersController extends Controller
     }
 
     /**
-     * Delete a subscriber.
+     * Show the subscriber list.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Inertia\Response
+     */
+    public function index(Request $request)
+    {
+        $perPage = $request->get('per_page', 12);
+        $subscribers = Subscriber::filter($request->only(['search', 'trashed']))
+            ->latest()
+            ->paginate($perPage, ['*'], 'stran')
+            ->appends($request->except('page'));
+
+        return Inertia::render('Subscribers/Index', [
+            'subscribers' => $subscribers,
+            'filters' => $request->only(['search', 'trashed', 'per_page' => $perPage]),
+        ]);
+    }
+
+    /**Send message to a given subscriber
+     *
+     * Validates the email and sends a message to the subscriber
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Subscriber $subscriber
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function send(Request $request, Subscriber $subscriber)
+    {
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ],[
+            'message.required' => 'Sporočilo je obvezno.',
+            'message.string' => 'Sporočilo mora biti besedilo.',
+            'message.max' => 'Sporočilo ne sme biti daljše od 255 znakov.',
+        ]);
+
+        $unsubscribeUrl = route('subscribers.unsubscribe', [
+            'email' => encrypt($subscriber->email),
+        ]);
+
+        // Send the message to the subscriber
+        $subscriber->sendMessage($validated['message'], $unsubscribeUrl);
+
+        return $this->flashAndRedirect("Sporočilo je bilo uspešno poslano na naslov {$subscriber->email}");
+    }
+
+
+    /**
+     * Authenticated user delete a subscriber.
      * Validates the email and removes the subscriber from the database.
      *
      * @param \Illuminate\Http\Request $request

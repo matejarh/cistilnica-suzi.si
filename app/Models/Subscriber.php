@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Mail\MessageToSubscriber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Agent;
 
 class Subscriber extends Model
@@ -20,6 +22,11 @@ class Subscriber extends Model
     // Cast attributes to specific data types
     protected $casts = [
         'is_subscribed' => 'boolean',
+    ];
+
+    protected $appends = [
+        'agent',
+        'status_color',
     ];
 
     /**
@@ -43,6 +50,12 @@ class Subscriber extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('email', 'like', '%' . $search . '%');
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'only') {
+                $query->onlyTrashed();
+            } elseif ($trashed === 'with') {
+                $query->withTrashed();
+            }
         });
     }
 
@@ -115,6 +128,11 @@ class Subscriber extends Model
         });
     }
 
+    public function getStatusColorAttribute()
+    {
+        return $this->is_subscribed ? 'green' : 'red';
+    }
+
     /**
      * Create a new agent instance from the given session.
      *
@@ -124,5 +142,21 @@ class Subscriber extends Model
     protected function createAgent()
     {
         return tap(new Agent(), fn($agent) => $agent->setUserAgent($this->user_agent));
+    }
+
+    /**
+     * Send message
+     *
+     *
+     * */
+    public function sendMessage($message, $unsubscribeUrl = null)
+    {
+        // Check if the subscriber is active
+        if (!$this->is_subscribed) {
+            return;
+        }
+
+        // Send the message to the subscriber
+        Mail::to($this->email)->send(new MessageToSubscriber($message, $this, $unsubscribeUrl));
     }
 }
