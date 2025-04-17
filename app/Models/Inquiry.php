@@ -60,7 +60,7 @@ class Inquiry extends Model
     public function getStatusColorAttribute()
     {
         return match (true) {
-            $this->status === 'V obdelavi' => 'yellow',
+            $this->status === 'V obdelavi' => 'red',
             $this->status === 'Odgovorjeno' => 'green',
             $this->status === 'Zaključeno' => 'gray',
             default => 'gray',
