@@ -6,6 +6,7 @@ use App\Models\Promotion;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\Middleware;
+use Inertia\Inertia;
 use Inertia\Response;
 
 
@@ -21,14 +22,16 @@ class PromotionsController extends Controller
      */
     public function index(Request $request): Response
     {
-        return inertia('Promotions/Index', [
-            'promotions' => Promotion::active()->filter(
-                    $request->get('search'),
-                    $request->get('trashed')
-                )
-                ->orderByStartDate('asc')
-                ->paginate(10),
-            'filters' => $request->only('search', 'trashed'),
+        $perPage = $request->get('per_page', 12);
+        // Fetch inquiries from the database
+        $promotions = Promotion::active()->filter($request->only(['search', 'trashed', 'status']))
+        ->latest()
+        ->paginate($perPage, ['*'], 'stran')
+        ->appends($request->except('page'));
+
+        return Inertia('Promotions/Index', [
+            'promotions' => $promotions,
+            'filters' => $request->only(['search', 'trashed', 'status', 'per_page' => $perPage]),
         ]);
     }
 
