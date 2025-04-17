@@ -1,15 +1,25 @@
 <script setup>
-import { defineAsyncComponent, ref } from 'vue';
+import { defineAsyncComponent, ref, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
+import debounce from "lodash/debounce";
+import mapValues from "lodash/mapValues";
+import pickBy from "lodash/pickBy";
+import { trim } from 'lodash';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import PromotionCard from '@/Components/PromotionCard.vue';
 import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
 import TrashIcon from '@/Icons/TrashIcon.vue';
 import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
 import AdminNav from '@/Components/AdminNav.vue';
+import Filters from './Partials/Filters.vue';
 const CreateEditDialog = defineAsyncComponent(() => import('./Partials/CreateEditDialog.vue'));
 const DeleteConfirmationDialog = defineAsyncComponent(() => import('./Partials/DeleteConfirmationDialog.vue'));
 const SendToSubscribersConfirmationDialog = defineAsyncComponent(() => import('./Partials/SendToSubscribersConfirmationDialog.vue'));
 
+const props = defineProps({
+    promotions: Object,
+    filters: Object,
+})
 
 const showModal = ref(false);
 const isEditMode = ref(false); // Determines if the modal is in edit mode
@@ -18,6 +28,28 @@ const showDeleteConfirmationModal = ref(false); // State for showing the confirm
 const showSendConfirmationModal = ref(false); // State for showing the confirmation modal
 const promotionToDelete = ref(null); // Holds the promotion to be deleted
 const promotionToSend = ref(null); // Holds the promotion to be deleted
+
+const form = ref({
+    search: props.filters.search,
+    status: props.filters.status ? props.filters.status : "",
+    deleted: props.filters.deleted ? props.filters.deleted : "",
+    per_page: props.filters.per_page ? props.filters.per_page : 12,
+})
+
+const debouncedHandler = debounce(() => {
+    form.value.search = trim(form.value.search)
+    router.get(route('promotions.index'), pickBy(form.value), {
+        preserveState: true,
+        preserveScroll: true,
+    });
+}, 500);
+
+watch(form, debouncedHandler, { deep: true });
+
+const reset = () => {
+    form.value = mapValues(form.value, () => null);
+};
+
 
 
 // Open the modal for creating a new promotion
@@ -96,6 +128,11 @@ const openEditModal = (promotion) => {
                     </div>
                 </div>
 
+                                <!-- Filters -->
+                <div class="bg-neutral-light/65  backdrop-blur-xs shadow-xs sm:rounded-lg p-6">
+                    <Filters v-model:filters="form" @reset="reset" />
+                </div>
+
                 <!-- Promotions List -->
                 <div class="bg-neutral-light/65  backdrop-blur-xs shadow-xs sm:rounded-lg p-6">
                     <h2 class="text-xl font-bold text-primary-dark">Seznam akcij</h2>
@@ -125,52 +162,5 @@ const openEditModal = (promotion) => {
         <!-- Send To Subscribers Confirmation Dialog -->
         <SendToSubscribersConfirmationDialog :show="showSendConfirmationModal" :promotion="promotionToSend"
             @close="showSendConfirmationModal = false" @clear-promotion-to-send="promotionToSend = null" />
-
-        <!-- Delete Confirmation Dialog -->
-<!--         <ConfirmationModal :show="showDeleteConfirmationModal" @close="showDeleteConfirmationModal = false">
-            <template #title>
-                Potrditev izbrisa
-            </template>
-            <template #content>
-                Ali ste prepričani, da želite izbrisati akcijo "<strong>{{ promotionToDelete?.name }}</strong>"?
-                Ta dejanje je nepovratno.
-            </template>
-            <template #footer>
-                <button @click="showDeleteConfirmationModal = false"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-neutral rounded-lg hover:bg-gray-300">
-                    Prekliči
-                </button>
-                <button @click="confirmDelete" :disabled="confirmDeleteBusy"
-                    class="flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50">
-                    <Cog8ToothIcon class="w-5 h-5 mr-2 animate-spin" v-show="confirmDeleteBusy" />
-                    {{ confirmDeleteBusy ? 'Brišem...' : 'Izbriši' }}
-
-                </button>
-            </template>
-        </ConfirmationModal> -->
-
-        <!-- Send To Subscribers Confirmation Dialog -->
-<!--         <ConfirmationModal :show="showSendConfirmationModal" @close="showSendConfirmationModal = false">
-            <template #title>
-                Potrditev pošiljanja akcije
-            </template>
-            <template #content>
-                Ali ste prepričani, da želite poslati akcijo "<strong>{{ promotionToSend?.name }}</strong>" vsem
-                naročnikom?
-                Prepričajte se, da so podatki pravilni, saj bo akcija poslana takoj.
-            </template>
-            <template #footer>
-                <button @click="showSendConfirmationModal = false"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-neutral rounded-lg hover:bg-gray-300">
-                    Prekliči
-                </button>
-                <button @click="confirmToSend" :disabled="confirmSendBusy"
-                    class="flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50">
-                    <Cog8ToothIcon class="w-5 h-5 mr-2 animate-spin" v-show="confirmSendBusy" />
-                    {{ confirmSendBusy ? 'Pošiljam...' : 'Pošlji' }}
-
-                </button>
-            </template>
-        </ConfirmationModal> -->
     </SiteLayout>
 </template>
