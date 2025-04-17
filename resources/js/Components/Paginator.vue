@@ -1,32 +1,26 @@
 <template>
     <nav v-if="filteredLinks.length > 3" class="flex justify-center mt-4">
         <ul class="flex flex-wrap justify-center gap-2 sm:gap-4">
-            <li v-for="link in filteredLinks" :key="link.label" class="flex">
+            <li v-for="link in filteredLinks" :key="link.label" :class="[
+                link.label.includes('Prejšnja') || link.label.includes('Naslednja') ? 'flex' : 'hidden sm:flex',
+            ]">
                 <!-- Render "Three Dots" Separator -->
-                <span
-                    v-if="!link.url && !link.active"
+                <span v-if="!link.url && !link.active"
                     class="px-3 py-2 border rounded bg-neutral-200 text-neutral-500 cursor-not-allowed text-xs sm:text-sm"
-                    v-html="link.label"
-                ></span>
+                    v-html="link.label"></span>
 
                 <!-- Render Active or Inactive Links -->
-                <inertia-link
-                    v-else-if="link.url"
-                    :href="link.url"
-                    :class="[
-                        'px-3 py-2 border rounded text-xs sm:text-sm',
-                        link.active ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-primary-light hover:text-white',
-                    ]"
-                >
+                <inertia-link v-else-if="link.url" :href="link.url" :class="[
+                    'px-3 py-2 border rounded text-xs sm:text-sm',
+                    link.active ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-primary-light hover:text-white',
+                ]">
                     <span v-html="link.label"></span>
                 </inertia-link>
 
                 <!-- Render Disabled Links -->
-                <span
-                    v-else
+                <span v-else
                     class="px-3 py-2 border rounded bg-neutral-200 text-neutral-500 cursor-not-allowed text-xs sm:text-sm"
-                    v-html="link.label"
-                ></span>
+                    v-html="link.label"></span>
             </li>
         </ul>
     </nav>
