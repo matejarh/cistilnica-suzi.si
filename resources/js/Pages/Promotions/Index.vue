@@ -144,6 +144,7 @@ const openEditModal = (promotion) => {
                     <div v-else class="text-gray-600">
                         Trenutno ni dodane nobene akcije.
                     </div>
+                    <Paginator :links="$page.props.promotions.links" :for-each-side="3" class="mt-4" />
                 </div>
             </div>
         </div>
