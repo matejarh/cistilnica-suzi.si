@@ -58,6 +58,7 @@ Route::middleware([
         Route::put('/{inquiry}', [InquiriesController::class, 'update'])->name('update');
         Route::get('/{inquiry}/restore', [InquiriesController::class, 'restore'])->name('restore');
         Route::get('/{inquiry}/delete', [InquiriesController::class, 'delete'])->name('delete');
+        Route::post('/{inquiry}/reply', [InquiriesController::class, 'reply'])->name('reply');
     });
 
     Route::prefix('narocniki')->name('subscribers.')->group(function () {

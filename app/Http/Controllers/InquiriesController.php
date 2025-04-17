@@ -147,6 +147,32 @@ class InquiriesController extends Controller
         // return redirect()->route('inquiries.index')->with('success', 'Inquiry deleted successfully.');
     }
 
+    /** Reply to inquiry
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Inquiry $inquiry
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function reply(Request $request, Inquiry $inquiry)
+    {
+        // Validate the request data
+        $validated = $request->validate([
+            'reply' => 'required|string|max:1000',
+        ], [
+            'reply.required' => 'Odgovor je obvezen.',
+            'reply.string' => 'Odgovor mora biti veljaven niz.',
+            'reply.max' => 'Odgovor ne sme biti daljši od 1000 znakov.',
+        ]);
+
+        // Send email to the inquiry's email address
+        /* \Mail::send('emails.reply-inquiry', ['inquiry' => $inquiry, 'data' => $validated], function ($message) use ($inquiry) {
+            $message->to($inquiry->email)
+                ->subject('Odgovor na vaše povpraševanje');
+        });
+ */
+        // Flash success message and redirect back
+        return $this->flashAndRedirect('Uspešno ste poslali odgovor na povpraševanje.');
+    }
+
     /**
      * Validate the request data for creating or updating an inquiry.
      *
