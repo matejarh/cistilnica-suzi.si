@@ -58,18 +58,44 @@ class Promotion extends Model
      * @param bool|null $trashed
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFilter($query, $search = null, $trashed = null)
+    public function scopeFilter($query, $filters)
     {
-        if ($search) {
-            $query->where('name', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
-        }
-        if ($trashed) {
-            $query->onlyTrashed();
-        } else {
-            $query->whereNull('deleted_at');
-        }
-        return $query;
+        $filters = array_map('trim', $filters);
+        $filters = array_filter($filters, function ($value) {
+            return $value !== null && $value !== '';
+        });
+        return $query
+            ->when($filters['search'] ?? null, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    if (strtotime($search)) {
+                        $date = date('Y-m-d', strtotime($search));
+                        $query->where('start_date', '<=', $date)
+                            ->where('end_date', '>=', $date);
+                    } else {
+                        $query->where('name', 'like', "%{$search}%")
+                            ->orWhere('description', 'like', "%{$search}%");
+                    }
+                });
+            })
+            ->when($filters['trashed'] ?? null, function ($query, $trashed) {
+                if ($trashed === 'with') {
+                    return $query->withTrashed();
+                } elseif ($trashed === 'only') {
+                    return $query->onlyTrashed();
+                }
+            })
+            ->when($filters['status'] ?? null, function ($query, $status) {
+                $query->where(function ($query) use ($status) {
+                    if ($status === 'V teku') {
+                        $query->where('start_date', '<=', now())
+                            ->where('end_date', '>=', now());
+                    } elseif ($status === 'Potekla') {
+                        $query->where('end_date', '<', now());
+                    } elseif ($status === 'Prihajajoča') {
+                        $query->where('start_date', '>', now());
+                    }
+                });
+            });
     }
 
     public function scopeActive($query)
