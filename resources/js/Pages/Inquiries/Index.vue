@@ -10,11 +10,18 @@ import pickBy from "lodash/pickBy";
 import { trim } from 'lodash';
 import Paginator from '@/Components/Paginator.vue';
 import SelectInput from '@/Components/SelectInput.vue';
+import Filters from './Partials/Filters.vue';
+import ReplyDialog from './Partials/ReplyDialog.vue';
 
 const props = defineProps({
     inquiries: Object,
     filters: Object,
 })
+
+const showReplyDialog = ref(false);
+const showDeleteDialog = ref(false);
+const inquiryToReply = ref(null);
+const inquiryToDelete = ref(null);
 
 const form = ref({
     search: props.filters.search,
@@ -36,6 +43,30 @@ watch(form, debouncedHandler, { deep: true });
 const reset = () => {
     form.value = mapValues(form.value, () => null);
 };
+
+const handleReply = (inquiry) => {
+    console.log('handleReply', inquiry);
+    inquiryToReply.value = inquiry;
+    showReplyDialog.value = true;
+};
+const handleDelete = (inquiry) => {
+    inquiryToDelete.value = inquiry;
+    showDeleteDialog.value = true;
+};
+const handleEdit = (inquiry) => {
+    router.get(route('inquiries.edit', inquiry.id), {}, {
+        preserveState: true,
+        preserveScroll: true,
+    });
+};
+const handleReplyDialogClose = () => {
+    inquiryToReply.value = null;
+    showReplyDialog.value = false;
+};
+const handleDeleteDialogClose = () => {
+    inquiryToDelete.value = null;
+    showDeleteDialog.value = false;
+};
 </script>
 
 <template>
@@ -48,50 +79,7 @@ const reset = () => {
 
                 <!-- Filters -->
                 <div class="bg-neutral-light/65  backdrop-blur-xs shadow-xs sm:rounded-lg p-6">
-                    <form>
-                        <div
-                            class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-                            <!-- Search Input -->
-                            <div class="flex-1">
-                                <input type="search" @reset="reset" v-model="form.search"
-                                    placeholder="Išči po poizvedbah..."
-                                    class="w-full px-4 py-2 text-sm border-2 border-primary text-neutral-dark rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-primary focus:border-primary" />
-                            </div>
-
-                            <!-- Status Filter -->
-                            <div class="flex sm:ml-4">
-                                <SelectInput v-model="form.status" :placeholder="'-- izberi --'">
-                                    <option disabled>-- izberi --</option>
-                                    <option selected value="">Vsi statusi</option>
-                                    <option value="pending">V obdelavi</option>
-                                    <option value="completed">Zaključeno</option>
-                                    <option value="cancelled">Preklicano</option>
-                                </SelectInput>
-                            </div>
-
-                            <!-- Deleted Filter -->
-                            <div class="flex sm:ml-4">
-                                <SelectInput v-model="form.deleted" :placeholder="'-- izberi --'">
-                                    <option disabled>-- izberi --</option>
-                                    <option selected value="">Vse poizvedbe</option>
-                                    <option :value="false">Neizbrisane</option>
-                                    <option :value="true">Izbrisane</option>
-                                </SelectInput>
-                            </div>
-
-                            <!-- Records On page -->
-                            <div class="flex sm:ml-4">
-                                <SelectInput v-model="form.per_page" :placeholder="'-- izberi --'">
-                                    <option disabled>-- izberi --</option>
-                                    <option value="6">6</option>
-                                    <option value="9">9</option>
-                                    <option selected value="12">12</option>
-                                    <option value="24">24</option>
-                                    <option value="48">48</option>
-                                </SelectInput>
-                            </div>
-                        </div>
-                    </form>
+                    <Filters v-model:filters="form" @reset="reset" />
                 </div>
 
 
@@ -100,7 +88,7 @@ const reset = () => {
                     <div v-if="$page.props.inquiries.total > 0" class="mt-4 space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <InquiryCard v-for="inquiry in $page.props.inquiries.data" :key="inquiry.id"
-                                :inquiry="inquiry" />
+                                :inquiry="inquiry" @send="handleReply" @delete="handleDelete" @edit="handleEdit" />
                         </div>
                     </div>
                     <div v-else class="text-gray-600">
@@ -115,5 +103,6 @@ const reset = () => {
                 </div>
             </div>
         </div>
+        <ReplyDialog :show="showReplyDialog" :inquiry="inquiryToReply" @close="handleReplyDialogClose" />
     </SiteLayout>
 </template>

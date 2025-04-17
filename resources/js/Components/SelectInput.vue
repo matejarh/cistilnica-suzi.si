@@ -1,12 +1,11 @@
 <template>
-    <select
-        v-model="internalValue"
-        :placeholder="placeholder"
-        :class="[
-            'block w-full pl-4 pr-10 py-2 text-sm rounded-lg border-2 focus:ring-primary focus:border-primary',
-            hasError ? 'bg-red-100 border-red-500 text-red-900 placeholder-red-500 focus:ring-red-500 focus:border-red-500' : 'bg-neutral-light border-primary text-neutral-dark placeholder-neutral-dark',
-        ]">
-        <slot />
+    <select v-model="internalValue" :placeholder="placeholder" :class="[
+        'block w-full pl-4 pr-10 py-2 text-sm rounded-lg border-2 focus:ring-primary focus:border-primary',
+        hasError ? 'bg-red-100 border-red-500 text-red-900 placeholder-red-500 focus:ring-red-500 focus:border-red-500' : 'bg-neutral-light border-primary text-neutral-dark placeholder-neutral-dark',
+    ]">
+        <option v-for="option in options" :key="option.value" :value="option.value">
+            {{ option.label }}
+        </option>
     </select>
 </template>
 
@@ -21,6 +20,11 @@ const props = defineProps({
     hasError: {
         type: Boolean,
         default: false,
+    },
+    options: {
+        type: Array,
+        required: true,
+        default: () => [],
     },
     placeholder: {
         type: String,
