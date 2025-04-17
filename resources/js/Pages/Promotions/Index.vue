@@ -7,9 +7,6 @@ import pickBy from "lodash/pickBy";
 import { trim } from 'lodash';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import PromotionCard from '@/Components/PromotionCard.vue';
-import PaperAirplaneIcon from '@/Icons/PaperAirplaneIcon.vue';
-import TrashIcon from '@/Icons/TrashIcon.vue';
-import PencileSquareIcon from '@/Icons/PencileSquareIcon.vue';
 import AdminNav from '@/Components/AdminNav.vue';
 import Filters from './Partials/Filters.vue';
 const CreateEditDialog = defineAsyncComponent(() => import('./Partials/CreateEditDialog.vue'));
@@ -128,7 +125,7 @@ const openEditModal = (promotion) => {
                     </div>
                 </div>
 
-                                <!-- Filters -->
+                <!-- Filters -->
                 <div class="bg-neutral-light/65  backdrop-blur-xs shadow-xs sm:rounded-lg p-6">
                     <Filters v-model:filters="form" @reset="reset" />
                 </div>
