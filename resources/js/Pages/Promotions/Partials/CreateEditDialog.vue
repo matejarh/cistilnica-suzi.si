@@ -66,7 +66,7 @@ watch(
             return;
         }
         const now = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
-        if (newStartDate < now) {
+        if (newStartDate < now && !props.isEditMode) {
             promotionForm.errors.start_date = 'Začetni datum ne sme biti pred današnjim datumom.';
             promotionForm.start_date = now;
         } else {
@@ -110,7 +110,7 @@ const handleSubmit = () => {
             onSuccess: () => {
                 emit('close')
                 emit('clearCurrentPromotion')
-                promotionForm.reset();
+                resetForm();
             },
         });
     } else {
@@ -119,10 +119,17 @@ const handleSubmit = () => {
             onSuccess: () => {
                 emit('close')
                 emit('clearCurrentPromotion')
-                promotionForm.reset();
+                resetForm();
             },
         });
     }
+};
+
+const resetForm = () => {
+    setTimeout(() => {
+        promotionForm.clearErrors();
+        promotionForm.reset();
+    }, 500);
 };
 
 // Handle cancel button click
@@ -130,8 +137,8 @@ const handleSubmit = () => {
 // It resets the form and closes the dialog
 const handleCancel = () => {
     emit('close');
-    emit('clearCurrentPromotion')
-    promotionForm.reset();
+    emit('clearCurrentPromotion');
+    resetForm();
 };
 </script>
 
