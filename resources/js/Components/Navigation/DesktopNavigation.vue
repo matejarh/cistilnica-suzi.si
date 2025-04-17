@@ -4,6 +4,7 @@ import ApplicationMark from '@/Components/ApplicationMark.vue';
 import DropdownLink from '../DropdownLink.vue';
 import Dropdown from '../Dropdown.vue';
 import { router } from '@inertiajs/vue3';
+import Hamburger from '../Hamburger.vue';
 
 defineProps({
     navigationLinks: {
@@ -110,20 +111,9 @@ const logout = () => {
 
                     <!-- Hamburger Menu -->
                     <div class="-me-2 flex items-center sm:hidden">
-                        <button
-                            class="hamburger-button inline-flex items-center justify-center p-2 rounded-md text-neutral-light hover:text-white hover:bg-primary-light focus:outline-hidden focus:bg-primary-light focus:text-white transition duration-150 ease-in-out"
-                            @click.stop="$emit('toggleMobileNavigationDropdown')">
-                            <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path
-                                    :class="{ hidden: showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }"
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16" />
-                                <path
-                                    :class="{ hidden: !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                        <Hamburger
+                            :is-open="showingNavigationDropdown"
+                            @toggle="$emit('toggleMobileNavigationDropdown')" />
                     </div>
                 </div>
             </div>
