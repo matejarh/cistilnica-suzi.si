@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReplyToInquiry;
 use App\Models\Inquiry;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InquiriesController extends Controller
 {
@@ -163,12 +165,11 @@ class InquiriesController extends Controller
             'reply.max' => 'Odgovor ne sme biti daljši od 1000 znakov.',
         ]);
 
-        // Send email to the inquiry's email address
-        /* \Mail::send('emails.reply-inquiry', ['inquiry' => $inquiry, 'data' => $validated], function ($message) use ($inquiry) {
-            $message->to($inquiry->email)
-                ->subject('Odgovor na vaše povpraševanje');
-        });
- */
+        $validated['email'] = 'cistilnica.suzi@gmail.com';
+
+        // Send email using Mailable class
+        Mail::to($inquiry->email)->send(new ReplyToInquiry($inquiry, $validated));
+
         // Flash success message and redirect back
         return $this->flashAndRedirect('Uspešno ste poslali odgovor na povpraševanje.');
     }

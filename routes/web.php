@@ -102,7 +102,11 @@ if (app()->environment('local')) {
         $inquiry = Inquiry::first();
         $promotion = Promotion::first();
         $subscriber = Subscriber::first();
+        $reply = [
+            'message' => fake()->paragraph(),
+            'email' => fake()->safeEmail(),
+        ];
 
-        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber', 'link', 'unsubscribeUrl'));
+        return view('emails.' . $template, compact('token', 'email', 'data', 'inquiry', 'promotion', 'subscriber', 'link', 'unsubscribeUrl', 'reply'));
     })->name('test.email');
 }
