@@ -1,17 +1,17 @@
 <script setup>
-import AdminNav from '@/Components/AdminNav.vue';
-import SiteLayout from '@/Layouts/SiteLayout.vue';
-import InquiryCard from './Partials/InquiryCard.vue';
 import { ref, watch } from 'vue';
 import { router } from '@inertiajs/vue3';
 import debounce from "lodash/debounce";
 import mapValues from "lodash/mapValues";
 import pickBy from "lodash/pickBy";
 import { trim } from 'lodash';
+import SiteLayout from '@/Layouts/SiteLayout.vue';
+import AdminNav from '@/Components/AdminNav.vue';
+import InquiryCard from './Partials/InquiryCard.vue';
 import Paginator from '@/Components/Paginator.vue';
-import SelectInput from '@/Components/SelectInput.vue';
 import Filters from './Partials/Filters.vue';
 import ReplyDialog from './Partials/ReplyDialog.vue';
+import DeleteConfirmationDialog from './Partials/DeleteConfirmationDialog.vue';
 
 const props = defineProps({
     inquiries: Object,
@@ -103,6 +103,11 @@ const handleDeleteDialogClose = () => {
                 </div>
             </div>
         </div>
+
         <ReplyDialog :show="showReplyDialog" :inquiry="inquiryToReply" @close="handleReplyDialogClose" />
+
+        <DeleteConfirmationDialog :show="showDeleteDialog" :inquiry="inquiryToDelete"
+            @close="handleDeleteDialogClose" @clearInquiryToDelete="inquiryToDelete = null" />
+
     </SiteLayout>
 </template>

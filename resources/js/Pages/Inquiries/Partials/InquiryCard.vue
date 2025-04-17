@@ -34,13 +34,13 @@ defineEmits(['send', 'edit', 'delete']);
                     </button>
                 </Tooltip>
 
-                <Tooltip text="Uredi" location="top">
+<!--                 <Tooltip text="Uredi" location="top">
                     <button @click="$emit('edit', inquiry)"
                         class="text-primary hover:underline hover:-translate-y-0.5 transition ease-in-out duration-150 cursor-pointer">
                         <PencileSquareIcon class="w-5 h-5 " />
 
                     </button>
-                </Tooltip>
+                </Tooltip> -->
             </div>
             <Tooltip text="Izbriši" location="top">
                 <button @click="$emit('delete', inquiry)"

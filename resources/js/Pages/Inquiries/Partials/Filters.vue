@@ -23,13 +23,13 @@
             </div>
 
             <!-- Deleted Filter -->
-            <div class="flex sm:ml-4">
+<!--             <div class="flex sm:ml-4">
                 <SelectInput
                     v-model="filters.deleted"
                     :options="deletedOptions"
                     placeholder="-- izberi --"
                 />
-            </div>
+            </div> -->
 
             <!-- Records Per Page -->
             <div class="flex sm:ml-4">
@@ -58,8 +58,9 @@ const emit = defineEmits(['update:filters', 'reset']);
 const statusOptions = [
     { value: '', label: 'Vsi statusi' },
     { value: 'pending', label: 'V obdelavi' },
-    { value: 'completed', label: 'Zaključeno' },
-    { value: 'cancelled', label: 'Preklicano' },
+    { value: 'completed', label: 'Zaključeni' },
+    { value: 'cancelled', label: 'Preklicani' },
+    { value: 'answered', label: 'Odgovorjeni' },
 ];
 
 const deletedOptions = [
