@@ -43,6 +43,45 @@ const showUnsubscribeModal = ref(false);
                     <SubscribeSection class="rounded-lg" />
                 </div>
 
+                <!-- Active promotions -->
+                <div v-if="$page.props.active_promotions.length > 0" class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs p-6 lg:p-8">
+                    <h2 class="font-heading text-2xl font-bold text-neutral-light">Aktivne akcije</h2>
+                    <p class="text-neutral-light mt-4">
+                        Oglejte si naše trenutne akcije in promocije. Prijavite se, da ne zamudite nobene priložnosti!
+                    </p>
+                    <div class="mt-4">
+                        <ul class="text-neutral-light grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <li class="rounded-lg p-4 bg-primary-dark/65 flex flex-col justify-center items-center" v-for="promotion in $page.props.active_promotions" :key="promotion.id">
+                                <span class="text-sm">od <b>{{ promotion.formatted_start_date }}</b> do <b>{{ promotion.formatted_end_date }}</b></span>
+                                <hr class="w-full border-neutral-light/30 my-2" />
+                                <h3 class="font-bold text-lg mb-2">{{ promotion.name }}</h3>
+                                <div v-html="promotion.description"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Upcoming promotions -->
+                <div v-if="$page.props.upcoming_promotions.length > 0" class="bg-primary/60 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs p-6 lg:p-8">
+                    <h2 class="font-heading text-2xl font-bold text-neutral-light">Prihajajoče akcije</h2>
+                    <p class="text-neutral-light mt-4">
+                        Oglejte si naše prihajajoče akcije in promocije. Prijavite se, da ne zamudite nobene priložnosti!
+                    </p>
+                    <div class="mt-4">
+                        <ul v-if="$page.props.upcoming_promotions.length > 0" class="text-neutral-light grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <li class="rounded-lg p-4 bg-primary-dark/65 flex flex-col justify-center items-center" v-for="promotion in $page.props.upcoming_promotions" :key="promotion.id">
+                                <span class="text-sm">od <b>{{ promotion.formatted_start_date }}</b> do <b>{{ promotion.formatted_end_date }}</b></span>
+                                <hr class="w-full border-neutral-light/30 my-2" />
+                                <h3 class="font-bold text-lg mb-2">{{ promotion.name }}</h3>
+                                <div v-html="promotion.description"></div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+
+
                 <!-- Links Section -->
                 <div class="bg-primary-dark/40 overflow-hidden shadow-xl shadow-primary sm:rounded-lg backdrop-blur-xs p-6 lg:p-8 space-y-4">
                     <h2 class="font-heading text-2xl font-bold text-neutral-light">Upravljanje z akcijami</h2>
