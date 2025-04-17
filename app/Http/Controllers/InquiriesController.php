@@ -170,6 +170,9 @@ class InquiriesController extends Controller
         // Send email using Mailable class
         Mail::to($inquiry->email)->send(new ReplyToInquiry($inquiry, $validated));
 
+        // Update the inquiry's status to 'answered'
+        $inquiry->update(['status' => 'answered']);
+
         // Flash success message and redirect back
         return $this->flashAndRedirect('Uspešno ste poslali odgovor na povpraševanje.');
     }
