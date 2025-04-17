@@ -88,7 +88,6 @@ defineProps({
         <p class="mb-3 font-normal text-neutral-500" v-html="inquiry.message.replace(/\n/g, '<br>')"></p>
         <div class="flex items-center text-sm text-neutral">
 
-            >
         </div>
         <inertia-link :href="route('inquiries.show', inquiry)"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white  rounded-lg  focus:ring-4 focus:outline-none  bg-primary hover:bg-primary/90 focus:ring-primary/50">
