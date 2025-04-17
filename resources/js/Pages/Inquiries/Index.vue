@@ -77,6 +77,17 @@ const handleDeleteDialogClose = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
                 <AdminNav />
 
+                <div class="bg-primary/60 overflow-hidden shadow-xl sm:rounded-lg backdrop-blur-xs p-6">
+                    <h1 class="text-3xl font-bold text-neutral-light">Upravljanje s poizvedbam</h1>
+                    <p class="text-neutral-light">
+                        Tukaj lahko upravljate s poizvedbami strank. Uredite, izbrišite ali odgovorite na poizvedbe.
+                    </p>
+
+                    <p class="text-neutral-light">
+                        Uporabite filtre za iskanje po poizvedbah. Iskanje lahko izvedete po statusu, datumu in
+                        ključnih besedah.
+                    </p>
+                </div>
                 <!-- Filters -->
                 <div class="bg-neutral-light/65  backdrop-blur-xs shadow-xs sm:rounded-lg p-6">
                     <Filters v-model:filters="form" @reset="reset" />
