@@ -85,7 +85,7 @@ const openEditModal = (promotion) => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <!-- Page Header -->
                 <AdminNav />
-                <div class="bg-primary/60 overflow-hidden shadow-xl sm:rounded-lgbackdrop-blur-xs p-6">
+                <div class="bg-primary/60 overflow-hidden shadow-xl sm:rounded-lg backdrop-blur-xs p-6">
                     <h1 class="text-3xl font-bold text-neutral-light">Upravljanje z akcijam</h1>
                     <p class="text-neutral-light mt-2">
                         Tukaj lahko pregledate, urejate ali izbrišete obstoječe akcije.
@@ -100,7 +100,7 @@ const openEditModal = (promotion) => {
 
 
                     </p>
-                    <div class="mt-2">
+                    <!-- <div class="mt-2">
                         <div class="text-neutral-light flex items-center space-x-2">
                             <span>
                                 Akcije pošljete vsem naročnikom s pritiskom na ikono
@@ -119,7 +119,7 @@ const openEditModal = (promotion) => {
                             </span>
                             <PencileSquareIcon class="w-5 h-5 text-blue-500 " />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mt-4">
                         <button @click="openCreateModal"
                             class="px-4 py-2 bg-primary-dark text-white rounded-lg hover:bg-primary-dark/70 cursor-pointer">
