@@ -6,6 +6,7 @@ import PrimaryButton from './PrimaryButton.vue';
 import SecondaryButton from './SecondaryButton.vue';
 import TextInput from './TextInput.vue';
 import KeyIcon from '@/Icons/KeyIcon.vue';
+import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 
 const emit = defineEmits(['confirmed']);
 
@@ -104,6 +105,7 @@ const closeModal = () => {
 
                 <PrimaryButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
                     @click="confirmPassword">
+                    <Cog8ToothIcon class="w-5 h-5 me-2 animate-spin" v-show="form.processing" />
                     {{ button }}
                 </PrimaryButton>
             </template>

@@ -10,6 +10,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import QrCodeIcon from '@/Icons/QrCodeIcon.vue';
+import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 
 const props = defineProps({
     requiresConfirmation: Boolean,
@@ -28,11 +29,11 @@ const confirmationForm = useForm({
 });
 
 const twoFactorEnabled = computed(
-    () => ! enabling.value && page.props.auth.user?.two_factor_enabled,
+    () => !enabling.value && page.props.auth.user?.two_factor_enabled,
 );
 
 watch(twoFactorEnabled, () => {
-    if (! twoFactorEnabled.value) {
+    if (!twoFactorEnabled.value) {
         confirmationForm.reset();
         confirmationForm.clearErrors();
     }
@@ -116,7 +117,7 @@ const disableTwoFactorAuthentication = () => {
         </template>
 
         <template #content>
-            <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-neutral-light">
+            <h3 v-if="twoFactorEnabled && !confirming" class="text-lg font-medium text-neutral-light">
                 Omogočili ste dvostopenjsko avtentikacijo.
             </h3>
 
@@ -130,7 +131,8 @@ const disableTwoFactorAuthentication = () => {
 
             <div class="mt-3 max-w-xl text-sm text-neutral-light">
                 <p>
-                    Ko je Dvostopenjska avtentikacija omogočena, boste med prijavo pozvani k vnosu varne, naključne kode. To kodo lahko pridobite iz aplikacije Google Authenticator na svojem telefonu.
+                    Ko je Dvostopenjska avtentikacija omogočena, boste med prijavo pozvani k vnosu varne, naključne
+                    kode. To kodo lahko pridobite iz aplikacije Google Authenticator na svojem telefonu.
                 </p>
             </div>
 
@@ -138,11 +140,14 @@ const disableTwoFactorAuthentication = () => {
                 <div v-if="qrCode">
                     <div class="mt-4 max-w-xl text-sm text-neutral-light">
                         <p v-if="confirming" class="font-semibold">
-                            Za dokončanje omogočanja dvostopenjske avtentikacije skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ in zagotovite generirano OTP (one-time-password) kodo.
+                            Za dokončanje omogočanja dvostopenjske avtentikacije skenirajte spodnjo QR kodo z aplikacijo
+                            za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ in zagotovite generirano
+                            OTP (one-time-password) kodo.
                         </p>
 
                         <p v-else>
-                            Dvostopenjska avtentikacija je zdaj omogočena. Skenirajte spodnjo QR kodo z aplikacijo za avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ.
+                            Dvostopenjska avtentikacija je zdaj omogočena. Skenirajte spodnjo QR kodo z aplikacijo za
+                            avtentikacijo na svojem telefonu ali vnesite nastavitveni ključ.
                         </p>
                     </div>
 
@@ -158,32 +163,29 @@ const disableTwoFactorAuthentication = () => {
                         <InputLabel for="code" value="Koda" />
                         <div class="relative w-full">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <QrCodeIcon class="w-5 h-5 " :class="confirmationForm.errors.code ? 'text-red-500' : 'text-primary'" />
+                                <QrCodeIcon class="w-4 h-4 "
+                                    :class="confirmationForm.errors.code ? 'text-red-500' : 'text-primary'" />
                             </div>
-                            <TextInput
-                                id="code"
-                                v-model="confirmationForm.code"
-                                type="text"
-                                name="code"
-                                class="block mt-1 w-1/2"
-                                inputmode="numeric"
-                                autocomplete="one-time-code"
+                            <TextInput id="code" v-model="confirmationForm.code" type="text" name="code"
+                                class="block mt-1 w-1/2" inputmode="numeric" autocomplete="one-time-code"
                                 @keyup.enter="confirmTwoFactorAuthentication"
-                            />
+                                :has-error="!!confirmationForm.errors.code" />
                         </div>
 
                         <InputError :message="confirmationForm.errors.code" class="mt-2" />
                     </div>
                 </div>
 
-                <div v-if="recoveryCodes.length > 0 && ! confirming">
+                <div v-if="recoveryCodes.length > 0 && !confirming">
                     <div class="mt-4 max-w-xl text-sm text-neutral-light">
                         <p class="font-semibold">
-                            Shranite te obnovitvene kode v varen upravitelj gesel. Uporabite jih lahko za obnovitev dostopa do svojega računa, če izgubite napravo za dvostopenjsko avtentikacijo.
+                            Shranite te obnovitvene kode v varen upravitelj gesel. Uporabite jih lahko za obnovitev
+                            dostopa do svojega računa, če izgubite napravo za dvostopenjsko avtentikacijo.
                         </p>
                     </div>
 
-                    <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-gray-900 dark:text-gray-100 rounded-lg">
+                    <div
+                        class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-gray-900 dark:text-gray-100 rounded-lg">
                         <div v-for="code in recoveryCodes" :key="code">
                             {{ code }}
                         </div>
@@ -192,62 +194,53 @@ const disableTwoFactorAuthentication = () => {
             </div>
 
             <div class="mt-5">
-                <div v-if="! twoFactorEnabled">
+                <div v-if="!twoFactorEnabled">
                     <ConfirmsPassword @confirmed="enableTwoFactorAuthentication">
                         <PrimaryButton type="button" :class="{ 'opacity-25': enabling }" :disabled="enabling">
-                            Omogoči
+                            <Cog8ToothIcon class="w-4 h-4 me-2 animate-spin" v-show="enabling" />
+                            {{ enabling ? 'Omogočam...' : 'Omogoči' }}
                         </PrimaryButton>
                     </ConfirmsPassword>
                 </div>
 
                 <div v-else>
                     <ConfirmsPassword @confirmed="confirmTwoFactorAuthentication">
-                        <PrimaryButton
-                            v-if="confirming"
-                            type="button"
-                            class="me-3"
-                            :class="{ 'opacity-25': enabling }"
-                            :disabled="enabling"
-                        >
-                            Potrdi
+                        <PrimaryButton v-if="confirming" type="button" class="me-3" :class="{ 'opacity-25': confirmationForm.processing }"
+                            :disabled="confirmationForm.processing">
+                            <Cog8ToothIcon class="w-4 h-4 me-2 animate-spin" v-show="confirmationForm.processing" />
+                            {{ confirmationForm.processing ? 'Potrjujem...' : 'Potrdi' }}
+
                         </PrimaryButton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="regenerateRecoveryCodes">
-                        <SecondaryButton
-                            v-if="recoveryCodes.length > 0 && ! confirming"
-                            class="me-3"
-                        >
-                            Znova ustvari obnovitvene kode
+                        <SecondaryButton v-if="recoveryCodes.length > 0 && !confirming" class="me-3">
+                            <Cog8ToothIcon class="w-4 h-4 me-2 animate-spin" v-show="confirming" />
+                            {{ confirming ? 'Ustvarjam obnovitvene kode...' : 'Znova ustvari obnovitvene kode' }}
                         </SecondaryButton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="showRecoveryCodes">
-                        <SecondaryButton
-                            v-if="recoveryCodes.length === 0 && ! confirming"
-                            class="me-3"
-                        >
-                            Prikaži obnovitvene kode
+                        <SecondaryButton v-if="recoveryCodes.length === 0 && !confirming" class="me-3">
+                            <Cog8ToothIcon class="w-4 h-4 me-2 animate-spin" v-show="confirming" />
+                            {{ confirming ? 'Prikazujem obnovitvene kode...' : 'Prikaži obnovitvene kode' }}
+
                         </SecondaryButton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
-                        <SecondaryButton
-                            v-if="confirming"
-                            :class="{ 'opacity-25': disabling }"
-                            :disabled="disabling"
-                        >
-                            Prekliči
+                        <SecondaryButton v-if="confirming" :class="{ 'opacity-25': disabling }" :disabled="disabling">
+                            <Cog8ToothIcon class="w-4 h-4 me-2 animate-spin" v-show="disabling" />
+                            {{ disabling ? 'Preklicujem...' : 'Prekliči' }}
+
                         </SecondaryButton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
-                        <DangerButton
-                            v-if="! confirming"
-                            :class="{ 'opacity-25': disabling }"
-                            :disabled="disabling"
-                        >
-                            Onemogoči
+                        <DangerButton v-if="!confirming" :class="{ 'opacity-25': disabling }" :disabled="disabling">
+                            <Cog8ToothIcon class="w-4 h-4 me-2 animate-spin" v-show="disabling" />
+                            {{ disabling ? 'Onemogočam...' : 'Onemogoči' }}
+
                         </DangerButton>
                     </ConfirmsPassword>
                 </div>

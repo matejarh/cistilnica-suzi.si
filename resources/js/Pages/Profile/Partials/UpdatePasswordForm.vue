@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import KeyIcon from '@/Icons/KeyIcon.vue';
+import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -62,6 +63,7 @@ const updatePassword = () => {
                         type="password"
                         class="mt-1 block w-full"
                         autocomplete="current-password"
+                        :has-error="!!form.errors.current_password"
                     />
                 </div>
                 <InputError :message="form.errors.current_password" class="mt-2" />
@@ -80,6 +82,7 @@ const updatePassword = () => {
                         type="password"
                         class="mt-1 block w-full"
                         autocomplete="new-password"
+                        :has-error="!!form.errors.password"
                     />
                 </div>
                 <InputError :message="form.errors.password" class="mt-2" />
@@ -97,6 +100,7 @@ const updatePassword = () => {
                         type="password"
                         class="mt-1 block w-full"
                         autocomplete="new-password"
+                        :has-error="!!form.errors.password_confirmation"
                     />
                 </div>
                 <InputError :message="form.errors.password_confirmation" class="mt-2" />
@@ -109,7 +113,11 @@ const updatePassword = () => {
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Shrani
+                <Cog8ToothIcon class="w-5 h-5 me-2 animate-spin" v-show="form.processing" />
+                <span v-if="form.processing">Shranjevanje...</span>
+                <span v-else>
+                    Shrani
+                </span>
             </PrimaryButton>
         </template>
     </FormSection>

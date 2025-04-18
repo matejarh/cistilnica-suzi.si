@@ -10,6 +10,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import UserIcon from '@/Icons/UserIcon.vue';
 import AtSymbolIcon from '@/Icons/AtSymbolIcon.vue';
+import Cog8ToothIcon from '@/Icons/Cog8ToothIcon.vue';
 
 const props = defineProps({
     user: Object,
@@ -144,6 +145,7 @@ const clearPhotoFileInput = () => {
                         class="mt-1 block w-full"
                         required
                         autocomplete="name"
+                        :has-error="!!form.errors.name"
                     />
                 </div>
                 <InputError :message="form.errors.name" class="mt-2" />
@@ -163,6 +165,7 @@ const clearPhotoFileInput = () => {
                         class="mt-1 block w-full"
                         required
                         autocomplete="username"
+                        :has-error="!!form.errors.email"
                     />
                 </div>
                 <InputError :message="form.errors.email" class="mt-2" />
@@ -171,7 +174,7 @@ const clearPhotoFileInput = () => {
                     <p class="text-sm mt-2 dark:text-white">
                         Vaš e-poštni naslov ni preverjen.
 
-                        <Link
+                        <inertia-link
                             :href="route('verification.send')"
                             method="post"
                             as="button"
@@ -179,7 +182,7 @@ const clearPhotoFileInput = () => {
                             @click.prevent="sendEmailVerification"
                         >
                             Kliknite tukaj za ponovno pošiljanje potrditvenega e-poštnega sporočila.
-                        </Link>
+                        </inertia-link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
@@ -195,7 +198,11 @@ const clearPhotoFileInput = () => {
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Shrani
+                <Cog8ToothIcon class="w-5 h-5 me-2 animate-spin" v-show="form.processing" />
+                <span v-if="form.processing">Shranjevanje...</span>
+                <span v-else>
+                    Shrani
+                </span>
             </PrimaryButton>
         </template>
     </FormSection>
