@@ -86,5 +86,7 @@
     "Showing": "Prikazujem",
     "to": "do",
     "of": "od",
-    "results": "rezultatov"
+    "results": "rezultatov",
+    "Showing :first to :last of :total results": "Prikazujem od :first do :last od :total rezultatov",
+    "The provided two factor authentication code was invalid.": "Vnesena koda za dvostopenjsko preverjanje pristnosti je napačna."
 }
