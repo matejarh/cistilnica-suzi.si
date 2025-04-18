@@ -9,6 +9,7 @@ import SiteLayout from '@/Layouts/SiteLayout.vue';
 import PromotionCard from '@/Components/PromotionCard.vue';
 import AdminNav from '@/Components/AdminNav.vue';
 import Filters from './Partials/Filters.vue';
+import Paginator from '@/Components/Paginator.vue';
 const CreateEditDialog = defineAsyncComponent(() => import('./Partials/CreateEditDialog.vue'));
 const DeleteConfirmationDialog = defineAsyncComponent(() => import('./Partials/DeleteConfirmationDialog.vue'));
 const SendToSubscribersConfirmationDialog = defineAsyncComponent(() => import('./Partials/SendToSubscribersConfirmationDialog.vue'));

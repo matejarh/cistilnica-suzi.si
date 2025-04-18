@@ -9,6 +9,7 @@ import AdminNav from '@/Components/AdminNav.vue';
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import Filters from './Partials/Filters.vue';
 import SubscriberCard from '@/Components/SubscriberCard.vue';
+import Paginator from '@/Components/Paginator.vue';
 const SendToSubscribersConfirmationDialog = defineAsyncComponent(() => import('./Partials/SendToSubscribersConfirmationDialog.vue'));
 const DeleteConfirmationDialog = defineAsyncComponent(() => import('./Partials/DeleteConfirmationDialog.vue'));
 const SubscriberModal = defineAsyncComponent(() => import('./Partials/SubscriberModal.vue'));
