@@ -14,7 +14,7 @@ const form = useForm({
 });
 
 // Emit events for parent component
-const emit = defineEmits(['submit', 'close', 'clearCurrentINquiry']);
+const emit = defineEmits(['submit', 'close', 'clearCurrentInquiry']);
 
 const handleCancel = () => {
     form.clearErrors();

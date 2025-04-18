@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InquiriesController;
 use App\Http\Controllers\PromotionsController;
 use App\Models\Inquiry;
@@ -48,7 +49,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/nadzorna-plosca', fn() => Inertia::render('Dashboard'))->name('dashboard');
+    Route::get('/nadzorna-plosca', [DashboardController::class, 'show'])->name('dashboard');
 
     Route::prefix('povprasevanja')->name('inquiries.')->group(function () {
         Route::get('/', [InquiriesController::class, 'index'])->name('index');

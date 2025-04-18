@@ -145,7 +145,7 @@ class InquiriesController extends Controller
         $inquiry->delete();
 
         // Redirect back with a success message
-        return $this->flashAndRedirect('Povpraševanje uspešno izbrisano.', 'inquiries.index');
+        return $this->flashAndRedirect('Povpraševanje uspešno izbrisano.');
         // return redirect()->route('inquiries.index')->with('success', 'Inquiry deleted successfully.');
     }
 

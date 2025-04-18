@@ -1,6 +1,7 @@
 <script setup>
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import AdminNav from '@/Components/AdminNav.vue';
+import UnansweredInquiries from './Dashboard/UnansweredInquiries.vue';
 </script>
 
 <template>
@@ -12,8 +13,9 @@ import AdminNav from '@/Components/AdminNav.vue';
         </template> -->
 
         <div class="py-8 md:py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <AdminNav />
+                <UnansweredInquiries />
             </div>
         </div>
     </SiteLayout>

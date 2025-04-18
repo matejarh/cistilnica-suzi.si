@@ -45,7 +45,6 @@ const reset = () => {
 };
 
 const handleReply = (inquiry) => {
-    console.log('handleReply', inquiry);
     inquiryToReply.value = inquiry;
     showReplyDialog.value = true;
 };
