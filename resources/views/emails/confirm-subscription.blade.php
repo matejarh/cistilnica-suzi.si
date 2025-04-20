@@ -19,4 +19,8 @@
 @endsection
 
 
-@section('footer-text', 'Čistilnica Suzi - brezhibna čistoča za vaše perilo.')
+@section('footer-text')
+    <a href="{{ config('app.url') }}" style="text-decoration: none; color: inherit;">
+        Čistilnica Suzi - brezhibna čistoča za vaše perilo.
+    </a>
+@endsection

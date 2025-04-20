@@ -38,4 +38,8 @@
     </div>
 @endsection
 
-@section('footer-text', 'Čistilnica Suzi - vaša prva izbira za čistočo.')
+@section('footer-text')
+    <a href="{{ config('app.url') }}" style="text-decoration: none; color: inherit;">
+        Čistilnica Suzi - vaša prva izbira za čistočo.
+    </a>
+@endsection

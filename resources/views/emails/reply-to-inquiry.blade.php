@@ -35,4 +35,6 @@
 
     </div>
 @endsection
-@section('footer-text', 'Čistilnica Suzi - vaša prva izbira za čistočo.')
+@section('footer-text')
+    <a href="{{ config('app.url') }}" style="color: #0ea5e9; text-decoration: none;">Čistilnica Suzi - vaša prva izbira za čistočo.</a>
+@endsection

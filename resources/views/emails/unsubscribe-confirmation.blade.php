@@ -21,4 +21,6 @@
 
 @endsection
 
-@section('footer-text', 'Čistilnica Suzi - vedno smo tu za vas, ko nas potrebujete.')
+@section('footer-text')
+    <a href="{{ config('app.url') }}" target="_blank">Čistilnica Suzi - vedno smo tu za vas, ko nas potrebujete.</a>
+@endsection

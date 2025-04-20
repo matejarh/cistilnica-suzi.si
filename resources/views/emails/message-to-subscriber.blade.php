@@ -16,7 +16,9 @@
 
 @endsection
 
-@section('footer-text', 'Čistilnica Suzi - brezhibna čistoča za vaše perilo.')
+@section('footer-text')
+    <a href="{{ config('app.url') }}">Čistilnica Suzi - brezhibna čistoča za vaše perilo.</a>
+@endsection
 
 @section('footer')
     <p style="margin: 0;">To sporočilo ste prejeli, ker ste naročeni na akcije. Če želite prenehati prejemati naše e-pošte, se lahko <a href="{{ $unsubscribeUrl }}">odjavite tukaj</a>.</p>
