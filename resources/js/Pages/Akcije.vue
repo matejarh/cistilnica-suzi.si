@@ -51,11 +51,11 @@ const showUnsubscribeModal = ref(false);
                     </p>
                     <div class="mt-4">
                         <ul class="text-neutral-light grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            <li class="rounded-lg p-4 bg-primary-dark/65 flex flex-col justify-center items-center" v-for="promotion in $page.props.active_promotions" :key="promotion.id">
+                            <li class="rounded-lg p-4 bg-primary-dark/65 flex flex-col justify-start items-center" v-for="promotion in $page.props.active_promotions" :key="promotion.id">
                                 <span class="text-sm">od <b>{{ promotion.formatted_start_date }}</b> do <b>{{ promotion.formatted_end_date }}</b></span>
                                 <hr class="w-full border-neutral-light/30 my-2" />
                                 <h3 class="font-bold text-lg mb-2">{{ promotion.name }}</h3>
-                                <div v-html="promotion.description"></div>
+                                <div v-html="promotion.description.replace('\\n', '<br>')"></div>
                             </li>
                         </ul>
                     </div>
@@ -73,7 +73,7 @@ const showUnsubscribeModal = ref(false);
                                 <span class="text-sm">od <b>{{ promotion.formatted_start_date }}</b> do <b>{{ promotion.formatted_end_date }}</b></span>
                                 <hr class="w-full border-neutral-light/30 my-2" />
                                 <h3 class="font-bold text-lg mb-2">{{ promotion.name }}</h3>
-                                <div v-html="promotion.description"></div>
+                                <div v-html="promotion.description.replace('\\n', '<br>')"></div>
                             </li>
                         </ul>
 
